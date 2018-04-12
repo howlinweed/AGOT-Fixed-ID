@@ -1,0 +1,697 @@
+roberts_hammer = {
+    max_amount = 1
+    spawn_date = 8278.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8278 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_iron_throne
+			c_317 = { is_alive = no }
+		}
+		additive_modifier = {
+			value = 100
+			character = 317
+		}
+	}
+    artifacts = {
+        roberts_hammer = {
+            value = 1
+        }
+    }
+}
+forrester_sword = {
+    max_amount = 1
+    spawn_date = 1.1.1
+	
+    spawn_chance = {
+		value = 100
+	}
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_blackgrove
+		}
+	}
+    artifacts = {
+        forrester_sword = {
+            value = 1
+        }
+    }
+}
+royce_bronze_armor = {
+	max_amount = 1
+	spawn_date = 1.1.1
+
+    spawn_chance = {
+		value = 100
+	}
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_runestone
+		}
+	}
+    artifacts = {
+        royce_bronze_armor = {
+            value = 1
+        }
+    }
+}
+##Crowns #now spawned in character history so right crown is equipped
+# aegons_crown = {
+    # max_amount = 1
+    # spawn_date = 7998.1.2
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# year = 8161 #lost with Daeron I in Dorne
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+		# }
+	# }
+    # artifacts = {
+        # aegons_crown = {
+            # value = 1
+        # }
+    # }
+# }
+# aenys_crown = {
+    # max_amount = 1
+    # spawn_date = 8037.9.9
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { year = 8037 }
+		# }
+		# modifier = {
+			# factor = 0
+			# AND = {
+				# NOT = { year = 8038 }
+				# NOT = { month = 8 }
+			# }	
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+		# }
+	# }
+    # artifacts = {
+        # aenys_crown = {
+            # value = 1
+        # }
+    # }
+# }
+# jaehaerys_crown = {
+    # max_amount = 1
+    # spawn_date = 8048.10.1
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { year = 8048 }
+		# }
+		# modifier = {
+			# factor = 0
+			# AND = {
+				# NOT = { year = 8049 }
+				# NOT = { month = 9 }
+			# }	
+		# }
+		# modifier = {
+			# factor = 0
+			# year = 8130 #sold by rhaenyra in the dance
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+			# NOT = { year = 8129 }
+		# }
+		# additive_modifier = {
+			# value = 100
+			# character = 77012 #Rhaenyra
+			# year = 8129
+		# }
+	# }
+    # artifacts = {
+        # jaehaerys_crown = {
+            # value = 1
+        # }
+    # }
+# }
+# aegon_III_crown = {
+    # max_amount = 1
+    # spawn_date = 8131.1.8
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { year = 8131 }
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+		# }
+	# }
+    # artifacts = {
+        # aegon_III_crown = {
+            # value = 1
+        # }
+    # }
+# }
+# baelors_crown = {
+    # max_amount = 1
+    # spawn_date = 8161.1.1
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { year = 8161 }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { c_77017 = { is_alive = yes } }
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+			# character = 77017
+		# }
+	# }
+    # artifacts = {
+        # baelors_crown = {
+            # value = 1
+        # }
+    # }
+# }
+# aegon_IV_crown = {
+    # max_amount = 1
+    # spawn_date = 8172.1.1
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { year = 8172 }
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+		# }
+	# }
+    # artifacts = {
+        # aegon_IV_crown = {
+            # value = 1
+        # }
+    # }
+# }
+# maekars_crown = {
+    # max_amount = 1
+    # spawn_date = 8221.1.1
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { year = 8221 }
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+		# }
+	# }
+    # artifacts = {
+        # maekars_crown = {
+            # value = 1
+        # }
+    # }
+# }
+# crown_of_majesty = { #roberts crown
+    # max_amount = 1
+    # spawn_date = 8284.1.1
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { year = 8284 }
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+		# }
+	# }
+    # artifacts = {
+        # crown_of_majesty = {
+            # value = 1
+        # }
+    # }
+# }
+# joffreys_crown = {
+    # max_amount = 1
+    # spawn_date = 8298.10.28
+	
+	# spawn_chance = {
+		# value = 100
+		# modifier = {
+			# factor = 0
+			# NOT = { e_iron_throne = { has_holder = yes } }
+		# }
+		# modifier = {
+			# factor = 0
+			# NOT = { year = 8298 }
+		# }
+		# modifier = {
+			# factor = 0
+			# AND = {
+				# NOT = { year = 8299 }
+				# NOT = { month = 10 }
+			# }	
+		# }
+	# }
+    
+    # weight = {
+		# value = 0
+		# additive_modifier = {
+			# value = 100
+			# has_landed_title = e_iron_throne
+		# }
+	# }
+    # artifacts = {
+        # joffreys_crown = {
+            # value = 1
+        # }
+    # }
+# }
+crown_of_winter = {
+    max_amount = 1
+    spawn_date = 1000.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			e_iron_throne = { has_holder = yes }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_north
+		}
+	}
+    artifacts = {
+		crown_of_winter = {
+            value = 1
+        }
+    }
+}
+crown_of_winter_robb = {
+    max_amount = 1
+    spawn_date = 8298.12.20
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_north
+		}
+		additive_modifier = {
+			value = 100
+			has_landed_title = d_brotherhood
+			e_north = { has_holder = no }
+		}
+	}
+    artifacts = {
+		crown_of_winter = {
+            value = 1
+        }
+    }
+}
+glass_candle = {
+    max_amount = 20
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			higher_tier_than = COUNT
+			capital_scope = {
+				NOT = { region = world_westeros }
+				NOT = { region = world_stepstones }
+				NOT = { region = world_basilisk_isles }
+			}
+			NOT_mythical_creature_trigger = yes	
+		}
+	}
+    artifacts = {
+        glass_candle = {
+            value = 1
+        }
+    }
+}
+glass_candle_citadel = {
+    max_amount = 1
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_the_citadel
+		}
+	}
+    artifacts = {
+        glass_candle = {
+            value = 4
+        }
+    }
+}
+glass_candle_qarth = {
+    max_amount = 1
+    spawn_date = 8269.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			# character = 100269199 #Urrathon Night Walker
+			c_100269199 = { character = PREV } #Urrathon Night Walker
+		}
+	}
+    artifacts = {
+        glass_candle = {
+            value = 1
+        }
+    }
+}
+glass_candle_marwyn = {
+    max_amount = 1
+    spawn_date = 8290.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			character = 88122 #Marwyn
+		}
+	}
+    artifacts = {
+        glass_candle = {
+            value = 1
+        }
+    }
+}
+lannister_crown = {
+    max_amount = 1
+    spawn_date = 1000.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			e_westerlands = { has_holder = no }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_westerlands
+		}
+	}
+    artifacts = {
+		lannister_crown = {
+            value = 1
+        }
+    }
+}
+falcon_crown = {
+    max_amount = 1
+    spawn_date = 6539.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			e_vale = { has_holder = no }
+		}
+		modifier = {
+			factor = 0
+			NOT = { year = 6539 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_vale
+		}
+	}
+    artifacts = {
+		falcon_crown = {
+            value = 1
+        }
+    }
+}
+gardener_crown = {
+	max_amount = 1
+    spawn_date = 1000.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			e_reach = { has_holder = no }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_reach
+		}
+	}
+    artifacts = {
+		gardener_crown = {
+            value = 1
+        }
+    }
+}
+durrandon_crown = {
+	max_amount = 1
+    spawn_date = 1000.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			e_stormlands = { has_holder = no }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_stormlands
+		}
+	}
+    artifacts = {
+		durrandon_crown = {
+            value = 1
+        }
+    }
+}
+martell_crown = {
+	max_amount = 1
+    spawn_date = 1000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			OR = {
+				has_landed_title = e_dorne
+				has_landed_title = k_dorne
+			}	
+		}
+	}
+    artifacts = {
+		martell_crown = {
+            value = 1
+        }
+    }
+}
+driftwood_crown = {
+	max_amount = 1
+    spawn_date = 1000.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			e_iron_isles = { has_holder = no }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_iron_isles
+		}
+	}
+    artifacts = {
+		driftwood_crown = {
+            value = 1
+        }
+    }
+}
+dragon_binder = {
+    max_amount = 1
+    spawn_date = 6000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			higher_tier_than = BARON
+			culture = high_valyrian
+			NOT = { year = 7886 }
+		}
+		additive_modifier = {
+			value = 100
+			has_landed_title = d_warlocks
+			year = 7886
+			NOT = { year = 8300 }
+		}
+		additive_modifier = {
+			value = 100
+			character = 2107 #Euron
+			year = 8300
+		}
+	}
+    artifacts = {
+        dragon_binder = {
+            value = 1
+        }
+    }
+}

@@ -1,0 +1,3926 @@
+#High Valyrian Events
+#event nos - 999900070-999900099
+#by knuckey
+namespace = high_valyrian
+# 999900070- set initial targaryen flags (merged with roberts_rebellion_events
+#999900079-999900082 => trait_fire_obsessed
+
+# character_event = {
+	# id = 999900070
+	# desc = "EVTDESC999900070"
+	
+	# #major=yes
+	
+	# trigger = {
+		# has_landed_title = c_the_citadel
+		# year = 8282
+		# NOT = { year = 8383 }
+		# NOT = { has_global_flag = targaryens_set }
+	# }
+	
+	# mean_time_to_happen = {
+		# days = 1
+	# }
+	# immediate = {
+		# set_global_flag = targaryens_set
+	# }
+
+	# option = {
+		# name = "OK" 
+		# hidden_tooltip = {
+		
+		# e_iron_throne = {
+			# holder_scope = { 
+				
+			# }
+		# }
+		
+		# }
+	# }
+# }
+#check high valyrian
+character_event = {
+	id = high_valyrian.1
+	desc = "EVTDESC999900071"
+	picture = "GFX_valyria_dragon"
+	
+	hide_from = yes
+	culture = high_valyrian
+	
+	trigger = {		
+		NOT = { has_dynasty_flag = high_valyrian }
+		NOT = { has_character_flag = high_valyrian }
+		has_game_rule = { name = high_valyrian_cull value = on }
+	}
+
+	mean_time_to_happen = {
+		days = 60
+	}
+	
+	immediate = {
+		if = { #Check if they could be western or eastern valyrian
+			limit = {
+				location = {
+					OR = {
+						culture_group = andal
+						culture_group = dornish
+						culture_group = first_men
+						culture_group = free_folk
+						culture_group = iron_isles_culture
+						culture = western_valyrian
+					}
+					NOT = { culture = rhoynar }
+				}
+			}
+			set_character_flag = western_valyrian 
+		}
+		if = { #Check if they could be become high valyrian
+			limit = {
+				OR = { #Location is high valyrian (e.g. valyria in pre-doom)
+					capital_scope = { culture = high_valyrian }
+					AND = {
+						is_ruler = no
+						liege = { capital_scope = { culture = high_valyrian } }
+					}
+				}
+			}
+			set_character_flag = can_become_high_valyrian 
+		}
+	}
+	
+	option = {
+		name = "EVTOPTB999900071" #Valid High Valyrian families
+		trigger = { 
+			high_valyrian_dynasty_trigger = yes
+		}
+		set_dynasty_flag = high_valyrian
+	}	
+
+	option = {
+		name = "EVTOPTA999900071" #Yes
+		trigger = { 
+			ai = yes 
+			NOT = { high_valyrian_dynasty_trigger = yes }
+		}
+		#historical high valyrians
+		if = { 	
+			limit = {  
+				trait = high_valyrian
+			}
+			set_character_flag = high_valyrian
+			hidden_tooltip = { remove_trait = high_valyrian }
+			break = yes
+		}
+		#Randomly generated who can be high valyrian
+		if = { 	
+			limit = {  
+				NOT = { father_even_if_dead = { always = yes } }
+				NOT = { mother_even_if_dead = { always = yes } }
+				NOT = { real_father_even_if_dead = { always = yes } }
+				has_character_flag = can_become_high_valyrian 
+			}
+			random_list = { #50% chance to be high valyrian, else east/west
+				50 = { 
+					modifier = {
+						factor = 0.33
+						is_ruler = yes
+					}
+					if = {
+						limit = { has_character_flag = western_valyrian }
+						culture = western_valyrian 
+						set_graphical_culture = western_valyrian
+					}	
+					else = {
+						culture = eastern_valyrian 
+						set_graphical_culture = eastern_valyrian
+					}
+				}
+				50 = { 
+					modifier = {
+						factor = 0.33
+						dynasty = 0
+					}
+					if = {
+						limit = { dynasty = 0 }
+						set_character_flag = high_valyrian
+					}	
+					else = { set_dynasty_flag = high_valyrian } #dynasty becomes permanently high valyrian
+				}
+			}
+			break = yes
+		}
+		#non-high_valyrian dynasty with high valyrian dynasty parentage
+		if = { 	
+			limit = {  
+				OR = { 	
+					mother_even_if_dead = { 
+						high_valyrian_dynasty_trigger = yes	
+					}
+					father_even_if_dead = { 
+						high_valyrian_dynasty_trigger = yes	
+					}
+					real_father_even_if_dead = {
+						high_valyrian_dynasty_trigger = yes
+					}
+				}
+			}
+			random_list = {
+				95 = { 
+					modifier = {
+						factor = 0.33
+						has_character_flag = can_become_high_valyrian
+						is_ruler = yes
+					}
+					if = {
+						limit = { has_character_flag = western_valyrian }
+						culture = western_valyrian 
+					}	
+					else = {
+						culture = eastern_valyrian 
+					}
+				}
+				5 = { 
+					modifier = {
+						factor = 20
+						has_character_flag = can_become_high_valyrian
+					}
+					modifier = {
+						factor = 0.33
+						has_character_flag = can_become_high_valyrian
+						dynasty = 0
+					}
+					if = {
+						limit = { 
+							NOT = { dynasty = 0 }
+							has_character_flag = can_become_high_valyrian
+						}
+						set_dynasty_flag = high_valyrian #dynasty becomes permanently high valyrian
+					}
+					else = { set_character_flag = high_valyrian }
+				}
+			}
+			break = yes
+		}
+		#non-high_valyrian dynasty with high valyrian parentage
+		if = { 	
+			limit = {  
+				OR = { 
+					mother_even_if_dead = { culture = high_valyrian }
+					father_even_if_dead = { culture = high_valyrian }
+					real_father_even_if_dead = { culture = high_valyrian }
+				}
+			}
+			random_list = {
+				34 = { 
+					if = {
+						limit = { has_character_flag = western_valyrian }
+						culture = western_valyrian 
+					}	
+					else = {
+						culture = eastern_valyrian 
+					}
+				}
+				66 = { 
+					if = {
+						limit = { 
+							NOT = { dynasty = 0 }
+							has_character_flag = can_become_high_valyrian
+						}
+						set_dynasty_flag = high_valyrian #dynasty becomes permanently high valyrian
+					}
+					else = { set_character_flag = high_valyrian }
+				}
+			}
+			break = yes
+		}
+		#Ruler Designer family
+		if = { 	
+			limit = {  
+				OR = {
+					mother = { ai = no  culture = high_valyrian }
+					father = { ai = no  culture = high_valyrian }
+					any_spouse = { ai = no  culture = high_valyrian }
+				}
+			}
+			set_character_flag = high_valyrian
+			break = yes
+		}
+		#non-high_valyrian dynasty with no high_valyrian parentage
+		if = { #Change to west-east valyrian
+			limit = { 
+				OR = {
+					is_patrician = yes #Randomly generated patricians
+					AND = { #Before 50AL high valyrian courtiers may be converted to east/west valyrian
+						NOT = { year = 8050 }
+						liege = { culture_group = valyrian }
+					}
+					AND = { #Spouses of a high valyrian characters change to west-east valyrian
+						is_married = yes
+						any_spouse = { 
+							OR = { 
+								has_character_flag = high_valyrian 
+								has_dynasty_flag = high_valyrian
+							}
+						}
+					}
+				}	
+			} 
+			if = {
+				limit = { has_character_flag = western_valyrian }
+				culture = western_valyrian 
+				set_graphical_culture = western_valyrian
+			}	
+			else = {
+				culture = eastern_valyrian 
+				set_graphical_culture = eastern_valyrian
+			}
+			top_liege = {
+				random_realm_character = {
+					limit = { 
+						culture = ROOT 
+						same_sex = ROOT
+					}
+					ROOT = { set_name = PREV }
+				}
+			}	
+			break = yes
+		}		
+		#If still an invalid high valyrian, convert to local culture
+		character_event = { id = high_valyrian.2 days = 1 random = 9 }
+	}
+	option = {
+		name = "EVTOPTB999900071" #Human Ruler Designer High Valyrian
+		trigger = { 
+			ai = no 
+			NOT = { high_valyrian_dynasty_trigger = yes }
+		}
+		set_dynasty_flag = high_valyrian
+		clr_character_flag = ruler_designer_valyrian
+		custom_tooltip = { text = TOOLTIPi_am_high_valyrian }
+		set_character_flag = high_valyrian
+		any_child = { 
+			limit = { culture = high_valyrian }
+			set_character_flag = high_valyrian 
+		}
+		any_spouse = { 
+			limit = { culture = high_valyrian }
+			set_character_flag = high_valyrian 
+		}
+		any_dynasty_member = { 
+			limit = { culture = high_valyrian }
+			set_character_flag = high_valyrian 
+		}
+	}	
+	option = {
+		name = "EVTOPTChigh_valyrian.1" #Human Ruler Designer High Valyrian w/coin flip
+		trigger = { 
+			ai = no 
+			NOT = { high_valyrian_dynasty_trigger = yes }
+		}
+		set_divine_blood = yes
+		set_dynasty_flag = high_valyrian
+		set_dynasty_flag = coin_flip_dynasty
+		clr_character_flag = ruler_designer_valyrian
+		custom_tooltip = { text = TOOLTIPi_am_high_valyrian }
+		custom_tooltip = { text = TOOLTIPcoin_flip_dynasty }
+		set_character_flag = high_valyrian
+		any_child = { 
+			limit = { culture = high_valyrian }
+			set_character_flag = high_valyrian 
+			hidden_tooltip = {
+				add_character_modifier = {
+					name = "abomination_of_incest"
+					duration = -1
+				}
+			}
+		}
+		any_spouse = { 
+			limit = { culture = high_valyrian }
+			set_character_flag = high_valyrian 
+			dynasty = ROOT
+			hidden_tooltip = {
+				create_character = {
+					age = 60
+					female = yes
+					random_traits = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = ROOT
+				}
+				new_character = {
+					save_event_target_as = new_mother
+					set_character_flag = no_funeral
+					ROOT = { set_mother = PREV }
+					death = yes
+				}
+				set_mother = event_target:new_mother
+			}
+		}
+		any_dynasty_member = { 
+			limit = { culture = high_valyrian }
+			set_character_flag = high_valyrian 
+		}
+	}	
+	
+	after = {
+		clr_character_flag = western_valyrian 
+		clr_character_flag = can_become_high_valyrian 
+	}
+}
+
+character_event = {
+	id = high_valyrian.2
+	desc = "Oh shi..."
+	picture = "GFX_fire_obsessed" 
+	
+	is_triggered_only = yes	
+	culture_group = valyrian
+	
+	trigger = {
+		NOT = { has_dynasty_flag = high_valyrian }
+		NOT = { has_character_flag = high_valyrian }
+	}
+	
+	option = {
+		name = "Goodbye, cruel world"  #Now changes culture to location instead of culling
+		location = {
+			ROOT = {
+				culture = PREV
+				set_graphical_culture = PREV
+				top_liege = {
+					random_realm_character = {
+						limit = { 
+							culture = ROOT 
+							same_sex = ROOT
+						}
+						ROOT = { set_name = PREV }
+						break = yes
+					}
+				}	
+				random_character = {
+					limit = { 
+						culture = ROOT 
+						same_sex = ROOT
+					}
+					ROOT = { set_name = PREV }
+					break = yes
+				}
+			}
+		}
+		# clear_wealth = ROOT
+		# wealth = -500
+		# remove_title = job_chancellor	
+		# remove_title = job_treasurer
+		# remove_title = job_marshal	
+		# remove_title = job_spymaster
+		# remove_title = job_castellan	
+		# if = {
+			# limit = { is_female = yes }
+			# location = {
+				# ROOT = {
+					# liege = {
+						# create_character = {
+							# random_traits = yes
+							# culture = PREVPREV
+							# religion = PREVPREV
+							# dynasty = none
+							# female = yes
+						# }
+						# new_character = {
+							# remove_trait = imbecile
+							# remove_trait = inbred
+							# remove_trait = slow
+							# ROOT = {
+								# any_demesne_title = {
+									# gain_title = PREVPREV
+								# }
+							# }
+							# if = {
+								# limit = {
+									# culture_group = hyrkoon_group	
+								# }
+								# random_list = {
+									# 30 = { add_trait = poor_warrior }
+									# 40 = { add_trait = trained_warrior }
+									# 20 = { add_trait = skilled_warrior }
+								# }
+							# }	
+						# }
+					# }
+				# }	
+			# }	
+		# }
+		# if = {
+			# limit = { is_female = no }
+			# location = {
+				# ROOT = {
+					# liege = {
+						# create_character = {
+							# random_traits = yes
+							# culture = PREVPREV
+							# religion = PREVPREV
+							# dynasty = none
+							# female = no
+							# age = 25
+						# }
+						# new_character = {
+							# random_list = {
+								# 40 = { add_trait = poor_warrior }
+								# 40 = { add_trait = trained_warrior }
+								# 10 = { add_trait = skilled_warrior }
+							# }
+							# remove_trait = imbecile
+							# remove_trait = inbred
+							# remove_trait = slow
+							# ROOT = {
+								# any_demesne_title = {
+									# gain_title = PREVPREV
+								# }
+							# }
+							# if = {
+								# limit = { capital_scope = { region = world_stepstones } }
+								# religion = pirate	
+							# }
+						# }
+					# }
+				# }	
+			# }
+		# }
+		# spouse = { set_character_flag = widow_of_culled_HV }
+		# death = yes
+	}
+}
+#High Valyrian on birth event
+# character_event = {
+	# id = high_valyrian.6 #MERGED WITH BIRTH.990
+	# desc = "DESChigh_valyrian.6"
+	
+	# is_triggered_only = yes
+	# culture = high_valyrian
+
+	# option = {
+		# name = OK
+	# }	
+# }		
+#Targ on birth event
+character_event = {
+	id = high_valyrian.7
+	desc = "How are you even seeing this? (high_valyrian.7)"
+	
+	is_triggered_only = yes
+	culture = high_valyrian
+
+	trigger = {
+		NOT = { has_game_rule = { name = targ_coin_flip value = off } }
+		OR = {
+			has_game_rule = { name = targ_coin_flip value = high_valyrian }
+			AND = {
+				father_even_if_dead = { 
+					is_coin_flip_dynasty_trigger = yes
+					dynasty = ROOT 
+				}
+				NOT = { 
+					real_father_even_if_dead = {  #Does not apply to secret bastards
+						NOT = { 
+							is_coin_flip_dynasty_trigger = yes
+						}
+					}
+				}
+			}	
+			mother_even_if_dead = { 
+				is_coin_flip_dynasty_trigger = yes
+				dynasty = ROOT 
+			}
+		}	
+	}
+	
+	immediate = {
+		if = { 	
+			limit = {	
+				OR = {	
+					has_character_modifier = abomination_of_incest
+					has_character_modifier = grandchild_of_incest
+					father_even_if_dead = {
+						is_coin_flip_dynasty_trigger = yes
+						higher_tier_than = COUNT
+					}
+					mother_even_if_dead = { 	
+						is_coin_flip_dynasty_trigger = yes
+						higher_tier_than = COUNT
+					}
+					higher_tier_than = COUNT		
+					father_even_if_dead = { 	
+						is_coin_flip_dynasty_trigger = yes
+						is_primary_heir = yes
+						OR = {
+							father_even_if_dead = { higher_tier_than = COUNT }
+							mother_even_if_dead = { higher_tier_than = COUNT }
+						}	
+					}	
+					mother_even_if_dead = { 	
+						is_coin_flip_dynasty_trigger = yes
+						is_primary_heir = yes
+						OR = {
+							father_even_if_dead = { higher_tier_than = COUNT }
+							mother_even_if_dead = { higher_tier_than = COUNT }
+						}	
+					}												
+				}	
+			}
+			set_character_flag = flipped
+		}
+	}
+
+	option = {
+		name = "EVTOPTA999900071" #Yes
+		remove_trait = inbred
+		if = { 	
+			limit = {	has_character_flag = flipped }
+			random = {
+				chance = 70
+				character_event = { id = high_valyrian.3 days = 2000 }
+				hidden_tooltip = {
+					remove_trait = slow
+					remove_trait = imbecile
+					remove_trait = genius
+				}
+			}
+		}
+		if = { 	
+			limit = {	NOT = { has_character_flag = flipped } }	
+			random = {
+				chance = 40
+				character_event = { id = high_valyrian.3 days = 2000 }
+				hidden_tooltip = {
+					remove_trait = slow
+					remove_trait = imbecile
+					remove_trait = genius
+				}
+			}
+		}
+		clr_character_flag = flipped	
+	}	
+}		
+#targaryen coin flip
+character_event = {
+	id = high_valyrian.3
+	desc = "EVTDESC999900072"
+	picture = "GFX_targaryen_flip"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA999900072" 
+		random_list = {
+			5 = {
+				add_trait = lunatic
+				hidden_tooltip = {
+					any_dynasty_member = {
+						limit = {
+							ai = no
+							OR = {
+								is_parent_of = ROOT
+								is_grandparent_of = ROOT
+								any_child = { is_grandparent_of = ROOT }
+							}
+						}
+						set_character_flag = lunatic
+						character_event = { id = high_valyrian.4 }
+					}
+				}	
+			}
+			10 = {
+				add_trait = possessed
+				set_character_flag = potential_targ_lunatic
+				hidden_tooltip = {
+					any_dynasty_member = {
+						limit = {
+							ai = no
+							OR = {
+								is_parent_of = ROOT
+								is_grandparent_of = ROOT
+								any_child = { is_grandparent_of = ROOT }
+							}
+						}
+						set_character_flag = possessed
+						character_event = { id = high_valyrian.4 }
+					}
+				}	
+			}
+			15 = {
+				add_trait = paranoid
+				set_character_flag = potential_targ_lunatic
+				hidden_tooltip = {
+					any_dynasty_member = {
+						limit = {
+							ai = no
+							OR = {
+								is_parent_of = ROOT
+								is_grandparent_of = ROOT
+								any_child = { is_grandparent_of = ROOT }
+							}
+						}
+						set_character_flag = paranoid
+						character_event = { id = high_valyrian.4 }
+					}
+				}	
+			}
+			20 = {
+				add_trait = wroth
+				set_character_flag = potential_targ_lunatic
+				hidden_tooltip = {
+					any_dynasty_member = {
+						limit = {
+							ai = no
+							OR = {
+								is_parent_of = ROOT
+								is_grandparent_of = ROOT
+								any_child = { is_grandparent_of = ROOT }
+							}
+						}
+						set_character_flag = wroth
+						character_event = { id = high_valyrian.4 }
+					}
+				}	
+			}
+			20 = {
+				add_trait = diligent
+				set_character_flag = potential_targ_lunatic
+				hidden_tooltip = {
+					any_dynasty_member = {
+						limit = {
+							ai = no
+							OR = {
+								is_parent_of = ROOT
+								is_grandparent_of = ROOT
+								any_child = { is_grandparent_of = ROOT }
+							}
+						}
+						set_character_flag = diligent
+						character_event = { id = high_valyrian.5 }
+					}
+				}	
+			}
+			20 = {
+				add_trait = quick
+				hidden_tooltip = {
+					any_dynasty_member = {
+						limit = {
+							ai = no
+							OR = {
+								is_parent_of = ROOT
+								is_grandparent_of = ROOT
+								any_child = { is_grandparent_of = ROOT }
+							}
+						}
+						set_character_flag = quick
+						character_event = { id = high_valyrian.5 }
+					}
+				}	
+			}
+			10 = {
+				hidden_tooltip = {
+					remove_trait = quick
+				}
+				add_trait = genius	
+				hidden_tooltip = {
+					any_dynasty_member = {
+						limit = {
+							ai = no
+							OR = {
+								is_parent_of = ROOT
+								is_grandparent_of = ROOT
+								any_child = { is_grandparent_of = ROOT }
+							}
+						}
+						set_character_flag = genius	
+						character_event = { id = high_valyrian.5 }
+					}
+				}	
+			}
+		}		
+	}	
+}	
+
+#infrom parents lunatic/possesed/paranoid/wroth
+character_event = {
+	id = high_valyrian.4
+	picture = "GFX_targaryen_flip"
+	
+	desc = {
+		text = "EVTDESC999900072" #Targ + Cadets
+		trigger = { NOT = { has_dynasty_flag = coin_flip_dynasty } }
+	}
+	desc = {
+		text = "EVTDESC999900072" #Custom
+		trigger = { has_dynasty_flag = coin_flip_dynasty }
+	}
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA999900073" 
+		if = {
+			limit = { has_character_flag = lunatic }
+			tooltip = { FROM = { add_trait = lunatic } }
+			clr_character_flag = lunatic
+		}	
+		if = {
+			limit = { has_character_flag = possessed }
+			tooltip = { FROM = { add_trait = possessed } }
+			clr_character_flag = possessed
+		}	
+		if = {
+			limit = { has_character_flag = paranoid }
+			tooltip = { FROM = { add_trait = paranoid } }
+			clr_character_flag = paranoid
+		}	
+		if = {
+			limit = { has_character_flag = wroth }
+			tooltip = { FROM = { add_trait = wroth } }
+			clr_character_flag = wroth
+		}	
+	}	
+}
+#infrom parents diligent/quick/genius
+character_event = {
+	id = high_valyrian.5
+	picture = "GFX_targaryen_flip"
+	
+	desc = {
+		text = "EVTDESC999900072" #Targ + Cadets
+		trigger = { NOT = { has_dynasty_flag = coin_flip_dynasty } }
+	}
+	desc = {
+		text = "EVTDESC999900072A" #Custom
+		trigger = { has_dynasty_flag = coin_flip_dynasty }
+	}
+	
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA999900074" 
+		if = {
+			limit = { has_character_flag = diligent }
+			tooltip = { FROM = { add_trait = diligent } }
+			clr_character_flag = diligent
+		}	
+		if = {
+			limit = { has_character_flag = quick }
+			tooltip = { FROM = { add_trait = quick } }
+			clr_character_flag = quick
+		}	
+		if = {
+			limit = { has_character_flag = genius }
+			tooltip = { FROM = { add_trait = genius } }
+			clr_character_flag = genius
+		}
+	}	
+}
+# #infrom parents genius
+# character_event = {
+	# id = high_valyrian.6
+	# desc = "EVTDESC999900072"
+	# picture = "GFX_targaryen_flip" 
+	
+	# is_triggered_only = yes
+	
+	# option = {
+		# name = "EVTOPTA999900074" 
+		# FROM = { add_trait = genius }
+	# }	
+# }
+
+
+# #Targ Incest event (parent - older girl)
+# character_event = {
+	# id = high_valyrian.11
+	# desc = "EVTDESC999900076"
+	# picture = "GFX_targaryen_incest" 
+	
+	# trigger = {
+		# dynasty = 496
+		# OR = { 
+			# is_female = no
+			# AND = { is_female = yes
+					# OR = { 	spouse = { primary_title = { lower_tier_than = ROOT } }
+							# is_married = no
+							# spouse = { NOT = { dynasty = 496 } }
+					# }
+			# }		
+		# }
+		# any_child = {
+			# NOT = { tier = emperor }
+			# dynasty = 496
+			# is_female = yes
+			# age = 15
+			# NOT = { age = 30 }
+			# is_married = no
+			# is_betrothed = no
+			# NOT = { has_character_flag = no_incest_parent }
+		# }
+		# any_child = {
+			# NOT = { tier = emperor }
+			# NOT = { trait = bastard }
+			# dynasty = 496
+			# is_female = no
+			# age = 12
+			# NOT = { age = 35 }
+			# is_married = no
+			# is_betrothed = no
+			# NOT = { has_character_flag = no_incest_parent }
+		# }
+	# }
+	
+	# mean_time_to_happen = {
+		# days = 30
+	# }
+	
+	# option = {
+		# name = "EVTOPTA999900076" 
+		# ai_chance = {
+			# factor = 90
+			# modifier = {
+				# factor = 1.5
+				# trait = lunatic
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = possessed
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = mystic
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = cruel
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = proud
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = zealous
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = arbitrary
+			# }
+		# }
+		# random_child = {
+			# limit = {
+				# dynasty = 496
+				# NOT = { tier = emperor }
+				# is_female = yes
+				# age = 15
+				# NOT = { age = 30 }
+				# is_married = no
+				# is_betrothed = no
+			# }
+			# random_sibling = {
+				# limit = {
+					# dynasty = 496
+					# NOT = { trait = bastard }
+					# NOT = { tier = emperor }
+					# is_female = no
+					# age = 12
+					# NOT = { age = 35 }
+					# is_married = no
+					# is_betrothed = no
+				# }
+				# add_spouse = PREV
+			# }
+		# }
+		
+	# }
+	
+	# option = {
+		# name = "EVTOPTB999900076" 
+		# ai_chance = {
+			# factor = 10
+			# modifier = {
+				# factor = 1.4
+				# trait = scholar
+			# }
+			# modifier = {
+				# factor = 1.4
+				# trait = kind
+			# }
+			# modifier = {
+				# factor = 1.4
+				# trait = humble
+			# }
+			# modifier = {
+				# factor = 1.4
+				# trait = just
+			# }
+			# modifier = {
+				# factor = 1.4
+				# trait = cynical
+			# }
+			# modifier = {
+				# factor = 1.2
+				# learning = 12
+			# }
+			# modifier = {
+				# factor = 1.2
+				# learning = 15
+			# }
+		# }
+		# hidden_tooltip = {
+			# random_child = {
+				# limit = {
+					# dynasty = 496
+					# NOT = { tier = emperor }
+					# is_female = yes
+					# age = 15
+					# NOT = { age = 30 }
+					# is_married = no
+					# is_betrothed = no
+				# }
+				# set_character_flag = no_incest_parent
+			# }
+			# random_child = {
+				# limit = {
+					# dynasty = 496
+					# NOT = { trait = bastard }
+					# NOT = { tier = emperor }
+					# is_female = no
+					# age = 12
+					# NOT = { age = 35 }
+					# is_married = no
+					# is_betrothed = no
+				# }
+				# set_character_flag = no_incest_parent
+			# }
+		# }
+	# }
+# }
+				
+#Targ Incest event (marriage) (removed because of bugged betrothals)
+#character_event = {
+#	id = high_valyrian.11
+#	desc = "EVTDESC999900076"
+#	picture = "GFX_targaryen_incest" 
+#	
+#	trigger = {
+#		dynasty = 496
+#		is_betrothed = yes
+#		age = 16
+#		NOT = { trait = bastard }
+#		is_female = no
+#		is_married = no
+#		NOT = { has_character_flag = no_incest_parent }
+#		any_sibling = {
+#			has_opinion_modifier = { who = ROOT modifier = opinion_targ_betrothal }
+#			is_betrothed = yes
+#			age = 16
+#			is_female = yes
+#			NOT = { has_character_flag = no_incest_parent }
+#		}
+#	}
+#	
+#	mean_time_to_happen = {
+#		days = 60
+#	}
+#	
+#	option = {
+#		name = "EVTOPTA999900076" 
+#		random_sibling = {
+#			limit = {
+#				has_opinion_modifier = { who = ROOT modifier = opinion_targ_betrothal }
+#				age = 16
+#				is_female = yes
+#				NOT = { has_character_flag = no_incest_parent }
+#			}
+#			add_spouse = ROOT
+#			remove_opinion = { who = PREV modifier = opinion_targ_betrothal }
+#			reverse_remove_opinion = { who = PREV modifier = opinion_targ_betrothal }
+#		}
+#	}
+#
+#}
+
+# #Targ Incest event (sibling)
+# character_event = {
+	# id = high_valyrian.12
+	# desc = "EVTDESC999900076"
+	# picture = "GFX_targaryen_incest" 
+	
+	# min_age = 15
+	# max_age = 35
+	# capable_only = yes
+	# prisoner = no
+	# only_men = yes	
+	
+	# trigger = {
+		# dynasty = 496
+		# NOT = { trait = bastard }
+		# is_married = no
+		# is_betrothed = no
+		# mother = { 	OR = {	is_alive = no 
+							# NOT = { dynasty = 496 } 
+							# primary_title = { lower_tier_than = ROOT } 
+							# AND = {	
+								# ROOT = { demesne_size = 1 }
+								# NOT = { demesne_size = 1 } 
+							# }
+					# }				
+		# }
+		# father = { 	OR = {	is_alive = no 
+							# NOT = { dynasty = 496 } 
+							# primary_title = { lower_tier_than = ROOT } 
+							# AND = {	
+								# ROOT = { demesne_size = 1 }
+								# NOT = { demesne_size = 1 } 
+							# }
+					# }				
+		# }
+		# any_sibling = {
+			# dynasty = 496
+			# NOT = { tier = emperor }
+			# is_female = yes
+			# age = 12
+			# NOT = { age = 30 }
+			# is_married = no
+			# is_betrothed = no
+			# NOT = { has_character_flag = no_incest_sibling }
+		# }	
+	# }
+	
+	# mean_time_to_happen = {
+		# days = 10
+	# }
+	
+	# option = {
+		# name = "EVTOPTA999900076" 
+		# ai_chance = {
+			# factor = 80
+			# modifier = {
+				# factor = 1.5
+				# trait = lunatic
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = possessed
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = mystic
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = cruel
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = proud
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = zealous
+			# }
+			# modifier = {
+				# factor = 1.2
+				# trait = arbitrary
+			# }
+		# }
+		# random_sibling = {
+			# limit = {
+				# dynasty = 496
+				# NOT = { tier = emperor }
+				# is_female = yes
+				# age = 12
+				# NOT = { age = 30 }
+				# is_married = no
+				# is_betrothed = no
+			# }
+			# ROOT = {
+				# add_spouse = PREV
+			# }
+		# }
+	# }
+	
+	# option = {
+		# name = "EVTOPTB999900076" 
+		# ai_chance = {
+			# factor = 10
+			# modifier = {
+				# factor = 1.4
+				# trait = scholar
+			# }
+			# modifier = {
+				# factor = 1.4
+				# trait = kind
+			# }
+			# modifier = {
+				# factor = 1.4
+				# trait = humble
+			# }
+			# modifier = {
+				# factor = 1.4
+				# trait = just
+			# }
+			# modifier = {
+				# factor = 1.4
+				# trait = cynical
+			# }
+			# modifier = {
+				# factor = 1.2
+				# learning = 12
+			# }
+			# modifier = {
+				# factor = 1.2
+				# learning = 15
+			# }
+		# }
+		# hidden_tooltip = {
+			# random_sibling = {
+				# limit = {
+					# dynasty = 496
+					# NOT = { tier = emperor }
+					# is_female = yes
+					# age = 12
+					# NOT = { age = 30 }
+					# is_married = no
+					# is_betrothed = no
+				# }
+				# set_character_flag = no_incest_sibling
+			# }
+		# }
+	# }
+# }
+
+#Finds valyrian stories in library
+character_event = {
+	id = high_valyrian.100
+	desc = "EVTDESChigh_valyrian.100"
+	picture = GFX_evt_library
+	
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+	only_playable = yes
+
+	trigger = {	
+		NOT = { has_global_flag = age_of_dragons }
+		in_command = no
+		location = {
+			OR = {			
+				province_id = 221 #Dragonstone
+				AND = {
+					province_id = 226 #King's Landing
+					has_province_flag = kings_landing_established
+				}
+				AND = {
+					province_id = 306 #Summerhall
+					has_global_flag = summerhall_established
+				}
+				culture_group = valyrian
+				province_id = 795 #Asshai
+			}
+		}	
+		NOT = { has_artifact = dragon_egg }
+		NOT = { any_friend = { trait = dragon is_alive = yes } }
+		NOT = {
+			any_dynasty_member = {
+				is_alive = yes
+				any_friend = { trait = dragon is_alive = yes }
+			}
+		}
+		NOT = { has_character_flag = valyrian_books }	
+	}
+	
+	mean_time_to_happen = {
+		years = 350
+		modifier = {
+			factor = 3
+			NOT = { learning = 2 }
+		}
+		modifier = {
+			factor = 2.5
+			NOT = { learning = 5 }
+		}
+		modifier = {
+			factor = 2.5
+			NOT = { learning = 8 }
+		}
+		modifier = {
+			factor = 0.9
+			learning = 13
+		}
+		modifier = {
+			factor = 0.9
+			learning = 16
+		}
+		modifier = {
+			factor = 0.75
+			learning = 19
+		}
+		modifier = {
+			factor = 0.75
+			trait = scholar
+		}
+		modifier = {
+			factor = 0.9
+			higher_tier_than = DUKE
+		}
+		modifier = {
+			factor = 0.9
+			higher_tier_than = KING
+		}
+		modifier = {
+			factor = 0.8
+			high_valyrian_dynasty_trigger = yes
+		}
+	}
+	
+	immediate = { set_character_flag = valyrian_books }
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.100"  #Read them
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 2
+				trait = scholar
+			}
+		}
+		add_character_modifier = { 
+			name = reading_valyrian_books
+			duration = 730
+		}
+		hidden_tooltip = {
+			character_event = { id = high_valyrian.101 days = 100 random = 50 }
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBhigh_valyrian.100"  #I have no time for books
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 0.5
+				trait = scholar
+			}
+		}	
+		if = {
+			limit = {
+				NOT = { trait = diligent }
+				NOT = { trait = slothful }
+				NOT = { personality_traits = 6 }
+			}
+			change_learning = -2
+			random  = {
+				chance = 20
+				add_trait = diligent
+				hidden_tooltip = {
+					character_event = {
+						id = 38256 #Notify diligent
+					}
+				}
+			}	
+		}	
+	}
+}
+
+#Dragons...
+character_event = {
+	id = high_valyrian.101
+	desc = "EVTDESChigh_valyrian.101"
+	picture = "GFX_valyria_dragon" 
+	
+	is_triggered_only = yes	
+	capable_only = yes
+	prisoner = no	
+	
+	trigger = {
+		has_character_modifier = reading_valyrian_books
+	}
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.101"  #I want a dragon
+		ai_chance = {
+			factor = 33
+			modifier = {
+				factor = 3
+				trait = lunatic
+			}
+			modifier = {
+				factor = 3
+				trait = brave
+			}
+			modifier = {
+				factor = 0.33
+				trait = craven
+			}
+			modifier = {
+				factor = 3
+				trait = ambitious
+			}
+			modifier = {
+				factor = 0.33
+				trait = content
+			}
+		}
+		#set_character_flag = read_about_dragons 
+		hidden_tooltip = {
+			if = {
+				limit = { 
+					any_courtier = {
+						is_female = yes
+						dynasty = ROOT
+						is_ruler = no
+						is_child_of = ROOT
+						is_married = no
+						age = 10
+						NOT = { age = 26 }
+						can_marry = yes
+						NOT = { trait = bastard }
+						NOT = { trait = ugly }
+					}
+				}
+				random_list = {
+					75 = {	character_event = { id = high_valyrian.108 days = 100 random = 50 } }
+					25 = {	character_event = { id = high_valyrian.111 days = 100 random = 50 } }
+				}
+				set_character_flag = available_daughter
+			}	
+			if = {
+				limit = { 
+					NOT = { has_character_flag = available_daughter }
+				}
+				character_event = { id = high_valyrian.111 days = 100 random = 50 }
+			}
+			clr_character_flag = available_daughter
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBhigh_valyrian.101"  #The world shall know of Targaryens
+		trigger = { dynasty = 496 }
+
+		ai_chance = {
+			factor = 33
+			modifier = {
+				factor = 3
+				trait = poet
+			}
+			modifier = {
+				factor = 3
+				trait = proud
+			}
+			modifier = {
+				factor = 0
+				trait = humble
+			}
+		}
+		#set_character_flag = read_about_dragons 
+		hidden_tooltip = {
+			character_event = { id = high_valyrian.102 days = 10 random = 5 }
+		}
+	}
+	
+	option = {
+		name = "EVTOPTChigh_valyrian.101"  #The dragons are dead
+		ai_chance = {
+			factor = 33
+			modifier = {
+				factor = 0.33
+				trait = zealous
+			}
+			modifier = {
+				factor = 3
+				trait = cynical
+			}
+			modifier = {
+				factor = 1.5
+				NOT = { dynasty = 496 }
+			}
+		}
+		remove_character_modifier = reading_valyrian_books
+	}
+}
+
+#Taragryen dragons
+character_event = {
+	id = high_valyrian.102
+	desc = "EVTDESChigh_valyrian.102"
+	picture = "GFX_targaryen_balerion" 
+	
+	is_triggered_only = yes	
+	
+	immediate = {
+		remove_character_modifier = reading_valyrian_books
+	}
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.102"  #dragon statue
+		ai_chance = {
+			factor = 33
+			modifier = {
+				factor = 0.4
+				NOT = { wealth = 100 }
+			}
+		}
+		wealth = -100
+		character_event = { id = high_valyrian.103 days = 30 tooltip = EVTTOOLTIPhigh_valyrian.103 }
+	}
+	option = {
+		ai_chance = {
+			factor = 33
+			modifier = {
+				factor = 0.4
+				NOT = { wealth = 200 }
+			}
+			modifier = {
+				factor = 2
+				trait = duelist
+			}
+			modifier = {
+				factor = 2
+				trait = gregarious
+			}
+			modifier = {
+				factor = 2
+				trait = hedonist
+			}
+			modifier = {
+				factor = 0.5
+				trait = shy
+			}
+		}
+		name = "EVTOPTBhigh_valyrian.102"  #hold dragon tournament
+		trigger = { 
+			religion = the_seven
+			NOT = { has_character_flag = tourny_in_progress }
+			NOT = { any_liege = { has_character_flag = tourny_in_progress } }
+			
+			NOT = { top_liege = { trait = civil_war } }	
+			is_theocracy = no
+			NOT = { trait = kingsguard }
+			NOT = { trait = nightswatch }
+			NOT = { has_landed_title = c_the_citadel }
+			NOT = { has_character_flag = no_kingship }
+			NOT = { has_character_flag = inherit_war }		
+			NOT = { has_character_flag = attending_tournament }
+			NOT = { has_character_flag = danys_eastern_quest }
+			
+			war = no
+			NOT = { any_liege = { war = yes } }
+		}
+		set_character_flag = epic_tournament
+		set_character_flag = tourny_in_progress
+		clr_character_flag = tournament_has_ended
+		wealth = -200
+		prestige = 250
+		add_character_modifier = {
+			name = "holding_epic_tournament"
+			duration = -1
+		}
+		character_event = { id = high_valyrian.104 tooltip = "EVTTOOLTIPhigh_valyrian.104" }
+		hidden_tooltip = {
+			character_event = { id = 70001 days = 30 } # Tournament start
+			character_event = { id = high_valyrian.105 days = 50 } # Dragon fireworks
+		}
+	}
+	option = {
+		ai_chance = {
+			factor = 33
+			modifier = {
+				factor = 2
+				trait = proud
+			}
+			modifier = {
+				factor = 0
+				trait = humble
+			}
+		}
+		name = "EVTOPTChigh_valyrian.102"  #dragon chronicle
+		wealth = -40
+		prestige = 100
+		if = { 	
+			limit = { trait = humble }
+			remove_trait = humble
+		}		
+		add_trait = proud
+	}
+}
+
+#dragon statue
+character_event = {
+	id = high_valyrian.103
+	desc = "EVTDESChigh_valyrian.103"
+	picture = "GFX_valyria_dragon" 
+	
+	is_triggered_only = yes	
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.103"  #dragon statue
+		prestige = 200
+		if = { 	
+			limit = { trait = humble }
+			remove_trait = humble
+		}		
+		add_trait = proud
+	}
+}
+
+#Invitations have gone out
+character_event = {
+	id = high_valyrian.104
+	title = "DRAGONTOURNAMENTTITLE"
+	desc = "EVTDESChigh_valyrian.104"
+	picture = "GFX_targaryen_balerion"
+
+	is_triggered_only = yes
+	
+	immediate = {
+		hidden_tooltip = {
+			top_liege = {
+				any_realm_character = { #Invite participants
+					limit = {	
+						age = 15
+						NOT = { character = ROOT }						
+						OR = {	#Must either
+							#Have placed in a large tourney
+							has_character_flag = grand_tourny_1st
+							has_character_flag = grand_tourny_2nd
+							has_character_flag = grand_tourny_3rd							
+							has_character_flag = normal_tourny_1st		
+							#All of the following....
+							AND = {
+								OR = { #Is either a Lord or liege is a relative
+									higher_tier_than = BARON
+									liege = { 
+										NOT = { tier = BARON }
+										OR = {
+											is_close_relative = PREV
+											dynasty = PREV
+										}	
+									}
+								}
+								OR = { #Is a knight or a trained fighter
+									trait = poor_warrior
+									trait = trained_warrior
+									trait = skilled_warrior
+									trait = master_warrior
+									trait = knight
+								}										
+							}
+							AND = { #Is an awesome knight
+								trait = knight
+								OR = {
+									trait = master_warrior
+									trait = dragon_rider
+									trait = kingsguard
+									prestige = 300
+								}
+							}
+						}
+						NOT = { trait = dragon }
+					}
+					character_event = { id = high_valyrian.107 }
+				}
+				any_realm_lord = { #Invite all lords as spectators
+					limit = {
+						NOT = { character = ROOT }
+						NOT = { tier = BARON }							
+					}
+					clr_character_flag = tournament_has_ended
+					letter_event = { id = 70086 days=7 }
+				}
+			}	
+		}	
+	}
+
+	option = {
+		name = "EVTOPTA70033"
+	}
+}
+
+# Dragon fireworks
+character_event = {
+	id = high_valyrian.105
+	title = "DRAGONTOURNAMENTTITLE"
+	desc = "EVTDESChigh_valyrian.105"
+	picture = GFX_evt_wildfire
+
+	is_triggered_only = yes
+	
+	trigger = { has_character_flag = tourny_in_progress }
+
+	option = {
+		name = "EVTOPTAhigh_valyrian.105"
+		prestige = 50
+		if = {
+			limit = { 
+				has_character_flag = potential_targ_lunatic 
+				NOT = { trait = lunatic }
+			}
+			random = {
+				chance = 15
+				add_trait = lunatic
+				hidden_tooltip = { character_event = { id = 38304 } }
+			}
+		}	
+		hidden_tooltip = {
+			top_liege = {
+				any_realm_lord = {
+					limit = {
+						ai = no
+						has_character_flag = attending_tournament
+						OR = {
+							has_opinion_modifier = { who = ROOT modifier = opinion_attending_tournament }
+							has_opinion_modifier = { who = ROOT modifier = opinion_spectating_tournament }
+						}	
+					}
+					character_event = { id = high_valyrian.106 }
+				}
+			}
+		}	
+	}
+}
+character_event = {
+	id = high_valyrian.106
+	title = "DRAGONTOURNAMENTTITLE"
+	desc = "EVTDESChigh_valyrian.106"
+	picture = "GFX_evt_joust"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.106"
+	}
+}
+
+# Invitation
+character_event = {
+	id = high_valyrian.107
+	title = "DRAGONTOURNAMENTTITLE"
+	desc = "EVTDESChigh_valyrian.107"
+	picture = "GFX_targaryen_balerion"
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_character_flag = tourny_in_progress }
+		NOT = { has_character_flag = attending_tournament }
+		NOT = { has_character_flag = no_tournies_ever }
+		OR = {
+			is_ruler = no
+			is_feudal = yes
+			is_patrician = yes
+			is_tribal = yes
+		}
+		NOT = { has_severe_disability_trigger = yes }
+		
+		NOT = { trait = maester }
+		NOT = { trait = archmaester }
+		NOT = { trait = nightswatch }
+		NOT = { has_priest_trait_trigger = yes }
+		NOT = { trait = slave }
+		
+		OR = {
+			religion = the_seven
+			trait = knight
+			AND = {
+				religion_group = westerosi_religion
+				OR = { 
+					trait = skilled_warrior
+					trait = master_warrior
+				}
+			}	
+		}	
+		OR = {
+			is_female = no
+			AND = {
+				trait = brave
+				is_strong_trigger = yes
+				OR = {
+					trait = trained_warrior
+					trait = skilled_warrior
+					trait = master_warrior
+				}
+			}
+		}
+		OR = {		
+			trait = master_warrior
+			AND = {
+				NOT = { age = 60 }
+				trait = skilled_warrior
+			}
+			AND = {
+				NOT = { age = 50 }
+				trait = trained_warrior
+			}
+			NOT = { age = 40 }
+		}
+		prisoner = no
+		war = no
+	}
+	
+	immediate = {
+		clr_character_flag = king_tourny
+		clr_character_flag = grand_tourny
+		clr_character_flag = normal_tourny
+		clr_character_flag = small_tourny
+		clr_character_flag = medal_assigned
+	}
+
+	option = {
+		name = "EVTOPTA70000"
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.2
+				OR = {
+					has_character_flag = small_tourny_1st
+					has_character_flag = small_tourny_2nd
+					has_character_flag = small_tourny_3rd
+				}	
+			}
+			modifier = {
+				factor = 1.4
+				OR = {
+					has_character_flag = grand_tourny_3rd
+					has_character_flag = normal_tourny_2nd
+					has_character_flag = normal_tourny_3rd
+				}	
+			}
+			modifier = {
+				factor = 2
+				OR = {
+					has_character_flag = grand_tourny_1st
+					has_character_flag = grand_tourny_2nd
+					has_character_flag = normal_tourny_1st
+				}	
+			}
+			modifier = {
+				factor = 4
+				trait = master_warrior
+			}
+			modifier = {
+				factor = 3
+				trait = skilled_warrior
+			}
+			modifier = {
+				factor = 2
+				trait = trained_warrior
+			}
+			modifier = {
+				factor = 2
+				trait = genius
+			}
+			modifier = {
+				factor = 2
+				is_smart_trigger = yes
+			}
+			modifier = {
+				factor = 2
+				trait = brave
+			}
+			modifier = {
+				factor = 3
+				trait = duelist
+			}
+			modifier = {
+				factor = 1.5
+				trait = knight
+			}
+			modifier = {
+				factor = 2
+				trait = tall
+			}
+			modifier = {
+				factor = 2
+				is_strong_trigger = yes
+			}
+			modifier = {
+				factor = 1.5
+				trait = diligent
+			}
+			modifier = {
+				factor = 1.5
+				trait = wroth
+			}
+			modifier = {
+				factor = 1.5
+				trait = gregarious
+			}
+			modifier = {
+				factor = 1.5
+				trait = ambitious
+			}
+			modifier = {
+				factor = 1.3
+				opinion = { who = FROM value =  20 }
+			}
+			modifier = {
+				factor = 1.3
+				opinion = { who = FROM value =  40 }
+			}
+			modifier = {
+				factor = 1.3
+				opinion = { who = FROM value =  60 }
+			}
+			modifier = {
+				factor = 1.5
+				opinion = { who = FROM value =  80 }
+			}
+		}
+		prestige = 20
+		set_character_flag = grand_tourny		
+		set_character_flag = attending_tournament
+		hidden_tooltip = {
+			opinion = {
+				modifier = opinion_attending_tournament
+				who = FROM
+				years = 100
+			}
+			# any_dynasty_member = { 
+				# limit = { is_close_relative = ROOT }
+				# character_event = { id = 70086 days = 7 } 
+			# }
+		}	
+	}
+	option = {
+		name = "EVTOPTB70000"
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 3
+				trait = craven
+			}
+			modifier = {
+				factor = 1.5
+				NOT = { trait = knight }
+			}
+			modifier = {
+				factor = 5
+				NOT = { religion = the_seven }
+				NOT = { trait = knight }
+			}
+			modifier = {
+				factor = 2
+				is_weak_trigger = yes
+			}
+			modifier = {
+				factor = 1.5
+				trait = slothful
+			}
+			modifier = {
+				factor = 1.5
+				trait = shy
+			}
+			modifier = {
+				factor = 1.5
+				trait = content
+			}
+			modifier = {
+				factor = 1.3
+				NOT = { opinion = { who = FROM value =  -20 } }
+			}
+			modifier = {
+				factor = 1.3
+				NOT = { opinion = { who = FROM value =  -40 } }
+			}
+			modifier = {
+				factor = 1.3
+				NOT = { opinion = { who = FROM value =  -60 } }
+			}
+			modifier = {
+				factor = 1.5
+				NOT = { opinion = { who = FROM value =  -80 } }
+			}
+			modifier = {
+				factor = 2
+				trait = dwarf
+			}
+			modifier = {
+				factor = 2
+				is_ill = yes
+			}
+			modifier = {
+				factor = 1.5
+				trait = wounded
+			}
+			
+			modifier = {
+				factor = 2
+				is_dumb_trigger = yes
+			}
+			modifier = {
+				factor = 2
+				trait = imbecile
+			}
+		}
+		if = {
+			limit = {
+				OR = {
+					religion = the_seven
+					trait = knight
+				}	
+			}
+			prestige = -30
+		}	
+	}
+}
+
+#Dragon eggs
+character_event = {
+	id = high_valyrian.108
+	desc = "EVTDESChigh_valyrian.108"
+	picture = "GFX_targaryen_eggs" 
+	
+	is_triggered_only = yes	
+	
+	trigger = {
+		any_courtier = {
+			is_female = yes
+			dynasty = ROOT
+			is_ruler = no
+			is_child_of = ROOT
+			is_married = no
+			age = 10
+			NOT = { age = 26 }
+			can_marry = yes
+			NOT = { trait = bastard }
+			NOT = { trait = ugly }
+		}
+	}
+	
+	immediate = {
+		c_pentos = {
+			holder_scope = {
+				create_character = {
+					random_traits = yes
+					culture = pentosi
+					dynasty = random
+					female = no
+					age = 35
+					trait = midas_touched
+					attributes = {
+						stewardship = 9
+						diplomacy = 6
+					}
+					historical = yes
+				}
+				new_character = {
+					move_character = ROOT
+					remove_trait = imbecile
+					remove_trait = inbred
+					remove_trait = slow
+					wealth = 450
+					set_character_flag = dragon_merchant					
+				}
+			}
+		}	
+	}
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.108"  #Accept offer
+		ai_chance = {
+			factor = 50			
+			modifier = {
+				factor = 3
+				trait = humble
+			}	
+			modifier = {
+				factor = 3
+				trait = ambitious
+			}
+			modifier = {
+				factor = 3
+				trait = ruthless
+			}				
+			modifier = {
+				factor = 3
+				trait = lunatic
+			}
+			modifier = {
+				factor = 1.5
+				trait = charitable
+			}
+			modifier = {
+				factor = 0.66
+				trait = greedy
+			}
+			modifier = {
+				factor = 0.33
+				trait = familyperson
+			}
+			modifier = {
+				factor = 0.33
+				trait = proud
+			}
+			modifier = {
+				factor = 0.33
+				trait = content
+			}
+			modifier = {
+				factor = 0.33
+				trait = honorable
+			}
+		}
+		add_artifact = dragon_egg
+		c_pentos = {
+			holder_scope = {
+				ROOT = {
+					random_courtier = {
+						limit = {
+							is_female = yes
+							dynasty = ROOT
+							is_ruler = no
+							is_child_of = ROOT
+							is_married = no
+							age = 10
+							NOT = { age = 26 }
+							can_marry = yes
+							NOT = { trait = bastard }
+							NOT = { trait = ugly }
+						}	
+						random_courtier = {
+							limit = { has_character_flag = dragon_merchant }
+							add_spouse = PREV
+						}			
+						child_fertility_debuff = yes
+					}
+					random_courtier = {
+						limit = { has_character_flag = dragon_merchant }
+						move_character = PREVPREV
+						hidden_tooltip = { wealth = 200 }
+						clr_character_flag = dragon_merchant
+					}
+				}	
+			}
+		}	
+		wealth = -200
+		tooltip = { prestige = -500 } #This includes automatic -400 from the marriage
+		hidden_tooltip = { prestige = -100 } #Extra 100
+		# hidden_tooltip = {	
+			# random = {
+				# chance = 80
+				# character_event = { id = high_valyrian.109 days = 365 }
+			# }	
+		# }	
+	}
+	option = {
+		ai_chance = {
+			factor = 50
+		}
+		name = "EVTOPTChigh_valyrian.108"  #no thanks
+		hidden_tooltip = {
+			c_pentos = {
+				holder_scope = {
+					ROOT = {
+						random_courtier = {
+							limit = { has_character_flag = dragon_merchant }
+							move_character = PREVPREV
+							add_artifact = dragon_egg
+							clr_character_flag = dragon_merchant
+						}
+					}
+				}	
+			}	
+		}	
+	}
+}
+
+#hatch the dragons!
+# character_event = {
+	# id = high_valyrian.109
+	# desc = "EVTDESChigh_valyrian.109"
+	# picture = "GFX_targaryen_hatching" 
+	
+	# is_triggered_only = yes	
+	
+	# option = {
+		# trigger = { has_landed_title = c_kings_landing }
+		# name = "EVTOPTAhigh_valyrian.109"  #do it!
+		# ai_chance = {
+			# factor = 75
+			# modifier = {
+				# factor = 2
+				# trait = brave
+			# }
+			# modifier = {
+				# factor = 3
+				# trait = lunatic
+			# }
+		# }	
+		# prestige = 50
+		# random = {
+			# chance = 50
+			# random_child = {
+				# limit = { 	is_female = no
+							# age = 16
+				# }
+				# death = { death_reason = death_accident }
+			# }
+		# }	
+		# random = {
+			# chance = 50
+			# random_child = {
+				# limit = { 	is_female = yes
+							# age = 16
+				# }
+				# death = { death_reason = death_accident }
+			# }
+		# }	
+		# random = {
+			# chance = 50
+			# spouse = {
+				# death = { death_reason = death_accident }
+			# }
+		# }	
+		# random = {
+			# chance = 50
+			# remove_trait = dragon_egg
+			# death = { death_reason = death_accident }
+			# hidden_tooltip = {
+				# any_vassal = {
+					# character_event = { id = 999900092 days = 5 }
+				# }	
+			# }	
+		# }	
+		# hidden_tooltip = {
+			# character_event = { id = high_valyrian.110 days = 5 }
+		# }
+	# }
+	# option = {
+		# trigger = { NOT = { has_landed_title = c_kings_landing } }
+		# name = "EVTOPTBhigh_valyrian.109"  #do it!
+		# ai_chance = {
+			# factor = 75
+			# modifier = {
+				# factor = 2
+				# trait = brave
+			# }
+			# modifier = {
+				# factor = 3
+				# trait = lunatic
+			# }
+		# }	
+		# prestige = 50
+		# random = {
+			# chance = 50
+			# random_child = {
+				# limit = { 	is_female = no
+							# age = 16
+				# }
+				# death = { death_reason = death_accident }
+			# }
+		# }	
+		# random = {
+			# chance = 50
+			# random_child = {
+				# limit = { 	is_female = yes
+							# age = 16
+				# }
+				# death = { death_reason = death_accident }
+			# }
+		# }	
+		# random = {
+			# chance = 50
+			# spouse = {
+				# death = { death_reason = death_accident }
+			# }
+		# }	
+		# random = {
+			# chance = 50
+			# death = { death_reason = death_accident }
+			# hidden_tooltip = {
+				# any_vassal = {
+					# character_event = { id = 999900092 days = 5 }
+				# }	
+			# }	
+		# }	
+		# hidden_tooltip = {
+			# character_event = { id = high_valyrian.110 days = 5 }
+		# }
+	# }
+	# option = {
+		# ai_chance = {
+			# factor = 25
+			# modifier = {
+				# factor = 2
+				# trait = craven
+			# }
+			# modifier = {
+				# factor = 3
+				# NOT = { trait = lunatic }
+			# }
+		# }
+		# name = "EVTOPTChigh_valyrian.109"  #too dangerous
+		# prestige = -50
+	# }
+# }
+
+# #unsuccessful hatching
+# character_event = {
+	# id = high_valyrian.110
+	# desc = "EVTDESChigh_valyrian.110"
+	# picture = "GFX_targaryen_eggs" 
+	
+	# is_triggered_only = yes	
+	
+	# option = {
+		# name = "EVTOPTAhigh_valyrian.110"  #seven hells!
+	# }
+# }
+
+
+#Dragon egg depression
+character_event = {
+	id = high_valyrian.111
+	desc = "EVTDESChigh_valyrian.111"
+	picture = "GFX_evt_lunatic"
+	
+	is_triggered_only = yes	
+	
+	immediate = {
+		remove_character_modifier = reading_valyrian_books
+	}
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.111"  #oh
+		if = {
+			limit = { 
+				has_character_flag = potential_targ_lunatic 
+				NOT = { trait = lunatic }
+			}
+			random = {
+				chance = 25
+				add_trait = lunatic
+				hidden_tooltip = { character_event = { id = 38304 } }
+			}
+		}	
+		random_list = {
+			25 = {
+				add_trait = depressed
+				hidden_tooltip = { character_event = { id = 38288 } }
+			}
+			25 = {
+				add_trait = mystic
+			}
+			25 = {
+				add_trait = scholar
+			}
+			25 = {
+				add_trait = poet
+			}
+		}	
+	}
+}
+
+#Drink Wildfire and become dragon?
+character_event = {
+	id = high_valyrian.15
+	desc = "EVT_DESC_high_valyrian_15"
+	picture = "GFX_evt_lunatic"
+	
+	min_age = 16
+	only_capable = yes
+	prisoner = no
+	
+	trigger = {
+		OR = {					
+			dynasty = 496 #Targaryan
+			dynasty = 7000 #Bittersteel
+			dynasty = 57 #Blackfyre
+			dynasty = 497 #Aegons "of Essos"
+			culture_group = valyrian
+		}
+		OR = {
+			trait = lunatic
+			trait = fire_obsessed
+		}
+	}
+	
+	mean_time_to_happen = {
+		years = 750
+		modifier = {
+			factor = 0.5
+			NOT = { learning = 3 }
+		}
+		modifier = {
+			factor = 0.65
+			NOT = { learning = 6 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { learning = 9 }
+		}
+		modifier = {
+			factor = 1.5
+			learning = 13
+		}
+		modifier = {
+			factor = 2
+			learning = 16
+		}
+		modifier = {
+			factor = 3
+			learning = 19
+		}
+		modifier = {
+			factor = 1.5
+			trait = scholar
+		}
+		modifier = {
+			factor = 0.7
+			trait = lunatic
+		}
+	}
+	
+	option = {
+		name = {
+			text = "EVT_OPTA_high_valyrian_15"  #Yes - Before Brightflame		
+			trigger = {
+				NOT = {
+					c_77033 = {
+						is_alive = no
+						death_reason = death_suicide_drank_wildfire
+					}
+				}
+			}
+		}	
+		name = {
+			text = "EVT_OPTB_high_valyrian_15"  #Yes - After Brightflame
+			trigger = {
+				c_77033 = {
+					is_alive = no
+					death_reason = death_suicide_drank_wildfire
+				}
+			}
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 3
+				trait = lunatic
+			}
+			modifier = {
+				factor = 2
+				trait = possessed
+			}
+			modifier = {
+				factor = 1.5
+				trait = mystic
+			}
+			modifier = {
+				factor = 2.5
+				trait = fire_obsessed
+			}
+			modifier = {
+				factor = 1.2
+				religion = valyrian_rel
+			}
+		}
+		hidden_tooltip = {
+			random_list = {
+				84 = {
+					character_event = { id = high_valyrian.16 }
+				}
+				15 = {
+					character_event = { id = high_valyrian.17 }
+				}
+				1 = {
+					modifier = {
+						factor = 0
+						NOT = { magic_returned_trigger = yes }
+					}
+					random_list = {
+						50 = {
+							character_event = { id = high_valyrian.17 }
+						}
+						50 = {							
+							character_event = { id = high_valyrian.19 }
+						}	
+					}
+				}
+			}
+		}	
+	}
+	option = {
+		name = "EVT_OPTC_high_valyrian_15"  #No
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 3
+				trait = genius
+			}
+			modifier = {
+				factor = 2
+				is_smart_trigger = yes
+			}
+			modifier = {
+				factor = 1.5
+				NOT = { trait = fire_obsessed }
+			}
+			modifier = {
+				factor = 2.5
+				NOT = { trait = lunatic }
+			}
+			modifier = {
+				factor = 1.2
+				NOT = { religion = valyrian_rel }
+			}
+		}
+	}
+}
+
+#Failed to become the Dragon
+character_event = {
+	id = high_valyrian.16
+	desc = "EVT_DESC_high_valyrian_16"
+	picture = "GFX_evt_lunatic"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVT_OPTA_high_valyrian_16"  #Death
+		death = { death_reason = death_suicide_drank_wildfire }
+	}
+}
+
+#Success, turns into a "dragon"
+character_event = {
+	id = high_valyrian.17
+	desc = "EVT_DESC_high_valyrian_17"
+	picture = "GFX_targaryen_balerion"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVT_OPTA_high_valyrian_17"  #I AM THE DRAGON!
+		custom_tooltip = {
+			text = TOOLTIPbecome_dragon_success
+			hidden_tooltip = {
+				give_nickname = nick_the_dragon_fake
+				prestige = 500
+				add_trait = dragon_fake
+				piety = -250
+				top_liege = {
+					any_realm_character = {
+						limit = { trait = lunatic }
+						opinion = {
+							modifier = become_dragon_good
+							who = ROOT
+							years = 2
+						}
+					}
+					any_realm_character = {
+						limit = { NOT = { trait = lunatic } }
+						opinion = {
+							modifier = become_dragon_bad
+							who = ROOT
+							years = 2
+						}
+					}
+				}	
+				narrative_event = { id = high_valyrian.18 }
+			}
+		}
+	}
+}
+
+narrative_event = {
+	id = high_valyrian.18
+	desc = EVT_DESC_high_valyrian_18
+	title = EVT_TITLE_high_valyrian_18
+	picture = GFX_targaryen_balerion
+	
+	is_triggered_only = yes
+	
+	major = yes
+	
+	option = {
+		name = EVT_OPTA_high_valyrian_18
+		trigger = {
+			trait = lunatic
+		}
+	}
+	option = {
+		name = EVT_OPTB_high_valyrian_18
+		trigger = {
+			NOT = { trait = lunatic }
+		}
+	}
+}
+
+#Success, turns into a dragon
+character_event = {
+	id = high_valyrian.19
+	desc = "EVT_DESC_high_valyrian_17"
+	picture = "GFX_targaryen_balerion"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVT_OPTA_high_valyrian_17"  #I AM THE DRAGON!
+		custom_tooltip = {
+			text = TOOLTIPbecome_dragon_success
+			hidden_tooltip = {
+				if = {
+					limit = { is_ruler = yes }
+					current_heir = { ROOT = { abdicate_to = PREV } }
+				}	
+				prestige = 500
+				religion = dragon_rel
+				culture = dragon_culture
+				dynasty = father_bastard
+				set_graphical_culture = dragon_culture
+				add_trait = dragon
+				change_martial = 20
+				random_list = {
+					1 = { add_trait = dragon_1 }
+					1 = { add_trait = dragon_2 }
+					1 = { add_trait = dragon_3 }
+					1 = { add_trait = dragon_4 }
+					1 = { add_trait = dragon_5 }
+					1 = { add_trait = dragon_6 }
+					1 = { add_trait = dragon_7 }
+					1 = { add_trait = dragon_8 }
+					1 = { add_trait = dragon_9 }
+					1 = { add_trait = dragon_10 }
+					1 = { add_trait = dragon_11 }
+					1 = { add_trait = dragon_12 }
+					1 = { add_trait = dragon_13 }
+					1 = { add_trait = dragon_14 }
+					1 = { add_trait = dragon_15 }
+					1 = { add_trait = dragon_16 }
+					1 = { add_trait = dragon_17 }
+					1 = { add_trait = dragon_18 }
+					1 = { add_trait = dragon_19 }
+					1 = { add_trait = dragon_20 }
+					1 = { add_trait = dragon_21 }
+					1 = { add_trait = dragon_22 }
+					1 = { add_trait = dragon_23 }
+					1 = { add_trait = dragon_24 }
+					1 = { add_trait = dragon_25 }
+					1 = { add_trait = dragon_26 }
+					1 = { #Balerion
+						modifier = {
+							factor = 0.05
+						}
+						add_trait = dragon_27 
+					}
+				}
+				set_variable = { which = "tyrant" value = 0 }
+				set_variable = { which = "dishonorable" value = 0 }
+				character_event = { id = maintenance.1 }
+				character_event = { id = maintenance.3 }
+				remove_education_effect = yes
+				remove_lifestyle_trait_effect = yes
+				remove_trait = poor_warrior
+				remove_trait = trained_warrior
+				remove_trait = skilled_warrior
+				remove_trait = master_warrior
+				remove_trait = squire
+				remove_trait = knight
+				remove_trait = drowned
+				any_spouse = { remove_spouse = PREV }
+				any_consort = { remove_consort = PREV }
+				any_friend = { remove_friend = PREV }
+				character_event = { id = dragon.8 }
+				piety = -250
+				narrative_event = { id = high_valyrian.18 }
+			}
+		}
+	}
+}
+#Valyrian Priest
+character_event = {
+	id = high_valyrian.20
+	desc = EVT_DESC_high_valyrian_19
+	picture = GFX_targaryen_balerion
+	
+	only_rulers = yes
+	min_age = 16
+	only_capable = yes
+	prisoner = no
+		
+	trigger = {
+		demesne_size = 1
+		NOT = { trait = dragon }
+		NOT = { religion = valyrian_rel }
+		OR = {					
+			dynasty = 496 #Targaryan
+			dynasty = 7000 #Bittersteel
+			dynasty = 57 #Blackfyre
+			dynasty = 497 #Aegons "of Essos"
+			culture_group = valyrian
+		}
+		is_devil_worshiper_trigger = no
+	}
+	
+	mean_time_to_happen = { 
+		years = 800
+		modifier = {
+			factor = 0.5
+			capital_scope = { religion = valyrian_rel }
+		}
+		modifier = {
+			factor = 0.5
+			OR = {
+				dynasty = 496 #Targaryan
+				dynasty = 57 #Blackfyre
+				dynasty = 7000 #Bittersteel
+				dynasty = 497 #Aegons "of Essos"
+			}
+		}
+		modifier = {
+			factor = 0.25
+			trait = lunatic
+		}
+		modifier = {
+			factor = 0.8
+			trait = fire_obsessed
+		}
+		modifier = {
+			factor = 0.6
+			trait = possessed
+		}
+	}	
+	
+	immediate = {
+		create_character = {
+			min_age = 20
+			max_age = 60
+			religion = valyrian_rel
+			culture = eastern_valyrian
+			random_traits = yes
+			dynasty = none
+		}	
+		new_character = {
+			change_stewardship = 2
+			change_intrigue = 4
+			change_diplomacy = 4
+			change_learning = 10
+			move_character = ROOT
+			set_character_flag = valyrian_priest
+		}
+	}
+	
+	option = {
+		name = "EVT_OPTA_high_valyrian_19" # Embrace this new religion!
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 5
+				capital_scope = { religion = valyrian_rel }
+			}
+		}
+		tooltip = {
+			if = {
+				limit = { trait = pirate }
+				remove_trait = pirate
+				if = {
+					limit = { government = pirate_government }
+					set_government_type = feudal_government
+				}
+			}
+		}
+		if = {
+			limit = { 
+				NOT = { trait = zealous } 
+				NOT = { trait = cynical }
+			}
+			random = {
+				chance = 50
+				add_sympathy_trait_effect = yes			
+			}
+		}
+		if = {
+			limit = { trait = cynical }
+			add_sympathy_trait_effect = yes			
+		}
+		random_courtier = {
+			limit = { has_character_flag = valyrian_priest }
+			clr_character_flag = valyrian_priest
+			tooltip = { show_portrait = yes }
+			ROOT = { religion = PREV }
+		}
+	}
+	
+	option = {
+		name = "EVT_OPTB_high_valyrian_19" # Have this heretic jailed!
+		trigger = { NOT = { trait = cynical } }
+		ai_chance = {
+			factor = 45
+			modifier = {
+				factor = 10
+				trait = zealous
+			}
+		}
+		piety = 25
+		if = { 
+			limit = { 
+				NOT = { trait = zealous }
+				NOT = { trait = cynical } 	
+				NOT = { personality_traits = 6 }
+			}
+			random = {
+				chance = 15
+				add_trait = zealous
+				hidden_tooltip = { character_event = { id = 38269 }  }
+			}
+		}	
+		random_courtier = {
+			limit = { has_character_flag = valyrian_priest }
+			clr_character_flag = valyrian_priest
+			hidden_tooltip = {
+				k_volantis = {
+					holder_scope = {
+						reverse_banish = PREVPREV
+					}
+				}
+			}	
+			imprison = ROOT			
+		}
+	}
+		
+	option = {
+		name = "EVT_OPTC_high_valyrian_19" # Ignore him.
+		ai_chance = { 
+			factor = 45 
+			modifier = {
+				factor = 10
+				trait = cynical
+			}
+		}
+		random_courtier = {
+			limit = { has_character_flag = valyrian_priest }
+			clr_character_flag = valyrian_priest
+			tooltip = { show_portrait = yes }	
+		}
+		if = { 
+			limit = { 
+				NOT = { trait = zealous }
+				NOT = { trait = cynical } 	
+				NOT = { personality_traits = 6 }
+			}
+			random = {
+				chance = 15
+				add_trait = cynical
+				hidden_tooltip = {
+					character_event = {
+						id = 38258 #Notify Cynical
+					}
+				}
+			}
+		}		
+	}
+}
+#Taken on an extra wife
+character_event = {
+	id = high_valyrian.21
+	desc = "EVT_DESC_high_valyrian_21"
+	picture = "GFX_evt_marriage"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.21
+	}
+}	
+character_event = { #Inform realm
+	id = high_valyrian.22
+	desc = "EVT_DESC_high_valyrian_22"
+	picture = "GFX_evt_marriage"
+	
+	is_triggered_only = yes
+	show_from_from = yes
+	
+	option = {
+		name = {
+			text = EVTOPTAhigh_valyrian.22
+			trigger = { NOT = { is_close_relative = FROM } }
+		}	
+		name = {
+			text = EVTOPTAhigh_valyrian.22B
+			trigger = { is_close_relative = FROM }
+		}
+		FROM = { show_portrait = yes }
+	}
+}	
+###Dragon Dreams
+# Child starts having dragon dreams
+character_event = {
+	id = high_valyrian.25
+	desc = EVTDESChigh_valyrian.25
+	picture = GFX_fire_obsessed
+	
+	is_triggered_only = yes
+	
+	min_age = 6
+	max_age = 16
+	
+	trigger = {
+		NOT = { trait = dragon_dreams }
+		OR = {
+			has_character_modifier = abomination_of_incest
+			has_character_modifier = grandchild_of_incest
+		}
+		OR = {
+			graphical_culture = valyriangfx
+			is_coin_flip_dynasty_trigger = yes
+			real_father_even_if_dead = { is_coin_flip_dynasty_trigger = yes }
+			AND = {		
+				NOT = { real_father_even_if_dead = { always = yes } }
+				father_even_if_dead = { is_coin_flip_dynasty_trigger = yes }							
+			}
+			mother_even_if_dead = { is_coin_flip_dynasty_trigger = yes }
+		}
+	}
+	
+	weight_multiplier = {
+		days = 1
+		
+		modifier = {
+			factor = 2
+			OR = {
+				graphical_culture = valyriangfx
+				culture = high_valyrian
+			}	
+		}
+		modifier = {
+			factor = 1.5
+			OR = {
+				has_silver_hair_ethnicity_trigger = yes
+				culture_group = valyrian
+			}
+		}
+		modifier = {
+			factor = 2
+			trait = mystic
+		}
+		modifier = {
+			factor = 0.5
+			NOT = { learning = 7 }
+		}
+		modifier = {
+			factor = 2
+			learning = 10
+		}
+		modifier = {
+			factor = 2
+			learning = 13
+		}
+		modifier = {
+			factor = 2
+			learning = 16
+		}
+		modifier = {
+			factor = 1.75
+			has_character_flag = potential_targ_lunatic
+		}
+		modifier = {
+			factor = 1.75
+			dynasty = 496
+		}
+		modifier = {
+			factor = 0.5
+			is_dumb_trigger = yes
+		}
+		modifier = {
+			factor = 0.25
+			trait = imbecile 
+		}
+		modifier = {
+			factor = 2
+			has_character_modifier = abomination_of_incest
+		}
+	}
+
+	option = {
+		name = EVTOPTAhigh_valyrian.25
+		educator = {
+			character_event = { id = high_valyrian.26 tooltip = EVTTOOLTIPhigh_valyrian.25	}
+		}
+	}
+}
+# Guardian decides what to do about dreams
+character_event = {
+	id = high_valyrian.26
+	desc = EVTDESChigh_valyrian.26
+	picture = GFX_fire_obsessed
+	
+	is_triggered_only = yes
+	
+	option = { # It was just a dream - nothing more, nothing less
+		name = EVTOPTAhigh_valyrian.26
+		trigger = {
+			NOR = {
+				religion = valyrian_rel
+				trait = dragon_dreams
+				dynasty = 496 #Targaryen
+				dynasty = 7000 #Bittersteel
+				dynasty = 57 #Blackfyre
+				dynasty = 497 #Aegons "of Essos"
+				#Targ cadets
+				dynasty = 450204
+				dynasty = 450205
+				dynasty = 450206
+				dynasty = 450207
+			}
+		}
+		ai_chance = {
+			factor = 2
+			modifier = {
+				factor = 5
+				trait = scholar
+			}
+			modifier = {
+				factor = 5
+				trait = mastermind_theologian
+			}
+			modifier = {
+				factor = 4
+				trait = scholarly_theologian
+			}
+			modifier = {
+				factor = 3
+				trait = martial_cleric
+			}
+			modifier = {
+				factor = 2
+				trait = detached_priest
+			}
+			modifier = {
+				factor = 10
+				trait = cynical
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					NOT = { trait = shy }
+					NOT = { trait = brave }
+				}	
+			}	
+			FROM = {			
+				random = {
+					chance = 50
+					add_trait = shy
+					hidden_tooltip = {
+						ROOT = {
+							character_event = {
+								id = 38163 #Notify
+							}
+						}
+						character_event = {
+							id = 38263 #Notify
+						}
+					}
+				}
+			}	
+		}
+		FROM = { hidden_tooltip = {character_event = { id = high_valyrian.27 } } }
+	}
+	option = { # It is not unheard of
+		name = EVTOPTBhigh_valyrian.26
+		trigger = {
+			NOR = {
+				religion = valyrian_rel
+				trait = dragon_dreams
+				dynasty = 496 #Targaryen
+				dynasty = 7000 #Bittersteel
+				dynasty = 57 #Blackfyre
+				dynasty = 497 #Aegons "of Essos"
+				#Targ cadets
+				dynasty = 450204
+				dynasty = 450205
+				dynasty = 450206
+				dynasty = 450207
+			}
+		}
+		ai_chance = {
+			factor = 2
+			modifier = {
+				factor = 5
+				trait = mystic
+			}
+			modifier = {
+				factor = 2
+				trait = kind
+			}
+			modifier = {
+				factor = 2
+				is_smart_trigger = yes
+			}
+			modifier = {
+				factor = 5
+				trait = genius
+			}
+			modifier = {
+				factor = 1.5
+				trait = maester
+			}
+		}
+		
+		random_list = {
+			40 = {}
+			40 = {FROM =  {change_diplomacy = 1}}
+			20 = {FROM =  {change_diplomacy = 2}}
+		}
+		
+		random_list = {
+			40 = {}
+			40 = {change_diplomacy = 1}
+			20 = {change_diplomacy = 2}
+		}
+		
+		FROM = {
+			opinion = {
+				modifier = opinion_happy_with_guardian
+				who = ROOT
+				years = 2
+			}
+			hidden_tooltip = {
+				character_event = { id = high_valyrian.28 } #Encouraged
+				random = {
+					chance = 5
+					add_trait = dragon_dreams
+				}
+			}
+		}
+	}
+	option = { # Let me explain to you dragon dreams
+		name = EVTOPTChigh_valyrian.26
+		
+		trigger = {
+			OR = {
+				religion = valyrian_rel
+				trait = dragon_dreams
+				dynasty = 496 #Targaryen
+				dynasty = 7000 #Bittersteel
+				dynasty = 57 #Blackfyre
+				dynasty = 497 #Aegons "of Essos"
+				#Targ cadets
+				dynasty = 450204
+				dynasty = 450205
+				dynasty = 450206
+				dynasty = 450207
+			}
+		}
+		
+		ai_chance = {
+			factor = 2
+			modifier = {
+				factor = 5
+				OR = {
+					trait = mystic
+					trait = zealous
+					is_smart_incl_genius_trigger = yes
+					trait = dragon_dreams
+				}
+			}
+			modifier = {
+				factor = 10
+				dynasty = 496 #Targaryen
+			}
+			modifier = {
+				factor = 5
+				OR = {
+					dynasty = 7000 #Bittersteel
+					dynasty = 57 #Blackfyre
+					dynasty = 497 #Aegons "of Essos"
+					#Targ cadets
+					dynasty = 450204
+					dynasty = 450205
+					dynasty = 450206
+					dynasty = 450207
+				}
+			}
+		}
+		
+		random_list = {
+			40 = {}
+			40 = {FROM =  {change_learning = 1}}
+			20 = {FROM =  {change_learning = 2}}
+		}
+		
+		random_list = {
+			40 = {}
+			40 = {change_learning = 1}
+			20 = {change_learning = 2}
+		}
+		
+		FROM = {			
+			random = {
+				chance = 60
+				add_trait = dragon_dreams
+			}		
+			random = {
+				chance = 20
+				add_trait = mystic
+			}
+			hidden_tooltip = { character_event = { id = high_valyrian.29 } } #Recognised
+			opinion = {
+				modifier = opinion_happy_with_guardian
+				who = ROOT
+				years = 2
+			}
+		}
+   }
+}
+
+# Child Notification - Was told it was just a dream
+character_event = {
+	id = high_valyrian.27
+	desc = EVTDESChigh_valyrian.27
+	picture = GFX_sad_aria
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.27
+	}
+}
+# Child Notification - Was encoraged
+character_event = {
+	id = high_valyrian.28
+	desc = EVTDESChigh_valyrian.28
+	picture = GFX_sad_aria
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.28
+		if = { 
+			limit = { trait = dragon_dreams }
+			tooltip = { add_trait = dragon_dreams }
+		}
+	}
+}
+# Child Notification - Was explained about dragon dreams
+character_event = {
+	id = high_valyrian.29
+	desc = EVTDESChigh_valyrian.29
+	picture = GFX_sad_aria
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.29
+		if = { 
+			limit = { trait = dragon_dreams }
+			tooltip = { add_trait = dragon_dreams }
+		}
+	}
+}
+# Plot revealed in dreams
+character_event = { #Success
+	id = high_valyrian.30	
+	picture = GFX_fire_obsessed
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	
+	desc = {
+		text = EVTDESChigh_valyrian.30
+		trigger = { NOT = { has_character_flag = failed_to_find_target } }
+	}
+	desc = {
+		text = EVTDESChigh_valyrian.31
+		trigger = { has_character_flag = failed_to_find_target }
+	}
+	
+	immediate = {
+		clear_event_target = dragon_dream_plotter_reveal
+		#find plot to reveal
+		random_unknown_plotter = {
+			limit = { 
+				plot_target_char = { always = yes }
+				NOT = { has_plot = plot_rescue_prisoner } 
+				NOT = { plot_is_known_by = ROOT }
+				NOT = { character = ROOT }
+				NOT = { character = event_target:dragon_dreamer }
+			}
+			save_event_target_as = dragon_dream_plotter_reveal
+			break = yes
+		}
+		random_close_relative = {
+			limit = {
+				any_unknown_plotter = {
+					plot_target_char = { always = yes }
+					NOT = { has_plot = plot_rescue_prisoner }
+					NOT = { plot_is_known_by = ROOT }
+					NOT = { character = ROOT }
+					NOT = { character = event_target:dragon_dreamer }
+				}
+			}
+			random_unknown_plotter = {
+				limit = { 
+					plot_target_char = { always = yes }
+					NOT = { has_plot = plot_rescue_prisoner } 
+					NOT = { plot_is_known_by = ROOT }
+					NOT = { character = ROOT }
+					NOT = { character = event_target:dragon_dreamer }
+				}
+				save_event_target_as = dragon_dream_plotter_reveal
+				break = yes
+			}
+		}
+		random_spouse = {
+			limit = {
+				any_unknown_plotter = {
+					plot_target_char = { always = yes }
+					NOT = { has_plot = plot_rescue_prisoner }
+					NOT = { plot_is_known_by = ROOT }
+					NOT = { character = ROOT }
+					NOT = { character = event_target:dragon_dreamer }
+				}
+			}
+			random_unknown_plotter = {
+				limit = { 
+					plot_target_char = { always = yes }
+					NOT = { has_plot = plot_rescue_prisoner } 
+					NOT = { plot_is_known_by = ROOT }
+					NOT = { character = ROOT }
+					NOT = { character = event_target:dragon_dreamer }
+				}
+				save_event_target_as = dragon_dream_plotter_reveal
+				break = yes
+			}
+		}
+		set_character_flag = failed_to_find_target
+	}
+	
+	option = {
+		name = {
+			text = EVTOPTAhigh_valyrian.30
+			trigger = { NOT = { has_character_flag = failed_to_find_target } }
+		}
+		name = {
+			text = EVTOPTAhigh_valyrian.31
+			trigger = { has_character_flag = failed_to_find_target }
+		}
+		show_portrait = event_target:dragon_dreamer
+		show_portrait = event_target:dragon_dream_plotter_reveal
+		event_target:dragon_dream_plotter_reveal = {
+			hidden_tooltip = { character_event = { id = high_valyrian.32 } }
+			plot_target_char = { show_portrait = yes }
+			reveal_plot = ROOT
+		}
+		if = {
+			limit = { NOT = { has_character_flag = failed_to_find_target } }
+			hidden_tooltip = { remove_character_modifier = dragon_dreams_reveal_plots_timer }
+		}
+		else = {		
+			clr_character_flag = failed_to_find_target
+		}	
+	}
+}
+character_event = { #Fail
+	id = high_valyrian.31
+	desc = EVTDESChigh_valyrian.31
+	picture = GFX_fire_obsessed
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.31
+		show_portrait = event_target:dragon_dreamer
+		piety = -25
+		if = { 
+			limit = { NOT = { trait = dragon_dreams } }
+			event_target:dragon_dreamer = { piety = -25 }
+		}
+	}
+}
+character_event = { #Inform plotter
+	id = high_valyrian.32
+	desc = EVTDESChigh_valyrian.32
+	picture = GFX_fire_obsessed
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.32
+	}
+}
+
+###Glass Candle Events###
+character_event = { #Inform player glass candle is burning
+	id = high_valyrian.50
+	desc = EVTDESChigh_valyrian.50
+	picture = GFX_evt_comet
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.50
+	}
+}
+# Plot revealed by candle
+character_event = { #Success
+	id = high_valyrian.51
+	desc = EVTDESChigh_valyrian.51
+	picture = GFX_fire_obsessed
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clear_event_target = glass_candle_plotter_reveal
+		#find plot to reveal
+		random_unknown_plotter = {
+			limit = { 
+				plot_target_char = { always = yes }
+				NOT = { has_plot = plot_rescue_prisoner } 
+				NOT = { plot_is_known_by = ROOT }
+				NOT = { character = ROOT }
+			}
+			save_event_target_as = glass_candle_plotter_reveal
+			break = yes
+		}
+		random_close_relative = {
+			limit = {
+				any_unknown_plotter = {
+					plot_target_char = { always = yes }
+					NOT = { has_plot = plot_rescue_prisoner }
+					NOT = { plot_is_known_by = ROOT }
+					NOT = { character = ROOT }
+				}
+			}
+			random_unknown_plotter = {
+				limit = { 
+					plot_target_char = { always = yes }
+					NOT = { has_plot = plot_rescue_prisoner } 
+					NOT = { plot_is_known_by = ROOT }
+					NOT = { character = ROOT }
+				}
+				save_event_target_as = glass_candle_plotter_reveal
+				break = yes
+			}
+		}
+		random_spouse = {
+			limit = {
+				any_unknown_plotter = {
+					plot_target_char = { always = yes }
+					NOT = { has_plot = plot_rescue_prisoner }
+					NOT = { plot_is_known_by = ROOT }
+					NOT = { character = ROOT }
+				}
+			}
+			random_unknown_plotter = {
+				limit = { 
+					plot_target_char = { always = yes }
+					NOT = { has_plot = plot_rescue_prisoner } 
+					NOT = { plot_is_known_by = ROOT }
+					NOT = { character = ROOT }
+				}
+				save_event_target_as = glass_candle_plotter_reveal
+				break = yes
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.51" 
+		event_target:glass_candle_plotter_reveal = {
+			hidden_tooltip = { character_event = { id = high_valyrian.53 } }
+			show_portrait = yes
+			plot_target_char = { show_portrait = yes }
+			reveal_plot = ROOT
+		}
+		hidden_tooltip = { remove_character_modifier = glass_candle_reveal_plots_timer }
+		if = { 
+			limit = { NOT = { trait = mystic } }
+			random = {
+				chance = 10
+				add_trait = mystic
+				hidden_tooltip = { character_event = { id = trait_notification.19 } }
+			}				
+		}	
+	}
+}
+character_event = { #Fail
+	id = high_valyrian.52
+	desc = EVTDESChigh_valyrian.52
+	picture = GFX_fire_obsessed
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.52
+		piety = -25
+		if = { 
+			limit = { NOT = { trait = mystic } }
+			random = {
+				chance = 5
+				add_trait = mystic
+				hidden_tooltip = { character_event = { id = trait_notification.19 } }
+			}				
+		}
+		if = { 
+			limit = { NOT = { trait = lunatic } }
+			random = {
+				chance = 5
+				add_trait = lunatic 
+				hidden_tooltip = { character_event = { id = 38304 } }
+			}	
+		}
+	}
+}
+character_event = { #Inform plotter
+	id = high_valyrian.53
+	desc = EVTDESChigh_valyrian.53
+	picture = GFX_fire_obsessed
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.53
+	}
+}
+# Give bad visions to enemy
+character_event = { #Success
+	id = high_valyrian.54
+	desc = EVTDESChigh_valyrian.54
+	picture = GFX_fire_obsessed
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	show_from_from = yes
+	
+	option = {
+		name = "EVTOPTAhigh_valyrian.54" 
+		event_target:glass_candle_victim = {
+			show_portrait = yes
+			hidden_tooltip = { character_event = { id = high_valyrian.56 } }
+			tooltip = {
+				random_list = {
+					25 = {
+						trigger = { NOT = { trait = stressed } }
+						add_trait = stressed
+					}
+					25 = {
+						trigger = { NOT = { trait = depressed } }
+						add_trait = depressed
+					}
+					5 = {
+						trigger = { 
+							NOT = { personality_traits = 6 }
+							NOT = { trait = kind }
+							NOT = { trait = cruel }
+						}
+						add_trait = cruel
+					}
+					5 = {
+						trigger = { 
+							NOT = { personality_traits = 6 }
+							NOT = { trait = wroth }
+							NOT = { trait = patient }
+						}
+						add_trait = wroth
+					}
+					5 = {
+						trigger = { 
+							NOT = { personality_traits = 6 }
+							NOT = { trait = ruthless }
+							NOT = { trait = honorable }
+						}
+						add_trait = ruthless
+					}
+					5 = {
+						trigger = { 
+							NOT = { personality_traits = 6 }
+							NOT = { trait = paranoid }
+							NOT = { trait = trusting }
+						}
+						add_trait = paranoid
+					}
+					5 = {
+						trigger = { 
+							is_dumb_trigger = no
+							is_smart_incl_genius_trigger = no
+							NOT = { trait = imbecile }  
+						}
+						add_trait = dull
+					}
+					5 = {
+						trigger = { NOT = { trait = possessed } }
+						add_trait = possessed
+					}
+					5 = {
+						trigger = { NOT = { trait = lunatic } }
+						add_trait = lunatic
+					}
+					5 = {
+						trigger = { NOT = { trait = mystic } }
+						add_trait = mystic
+					}
+				}
+			}	
+		}
+		if = { 
+			limit = { NOT = { trait = mystic } }
+			random = {
+				chance = 10
+				add_trait = mystic
+				hidden_tooltip = { character_event = { id = trait_notification.19 } }
+			}				
+		}	
+	}
+}
+character_event = { #Fail
+	id = high_valyrian.55
+	desc = EVTDESChigh_valyrian.55
+	picture = GFX_evt_bad_news
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.55
+		piety = -25
+		random_list = {
+			100 = { }	
+			20 = {
+				trigger = { NOT = { trait = stressed } }
+				add_trait = stressed
+				hidden_tooltip = { character_event = { id = 38182 } }
+			}
+			20 = {
+				trigger = { NOT = { trait = depressed } }
+				add_trait = depressed
+				hidden_tooltip = { character_event = { id = 38188 } }
+			}
+			20 = {
+				trigger = { NOT = { trait = lunatic } }
+				add_trait = lunatic 
+				hidden_tooltip = { character_event = { id = 38304 } }
+			}
+			5 = {
+				trigger = { NOT = { trait = blinded } }
+				add_trait = blinded
+				#hidden_tooltip = { character_event = { id = trait_notification.19 } }
+			}
+		}
+	}
+}
+character_event = { #Inform victim
+	id = high_valyrian.56
+	desc = EVTDESChigh_valyrian.56
+	picture = GFX_evt_bad_news
+	border = GFX_event_normal_frame_intrigue
+	
+	is_triggered_only = yes
+	hide_from = yes
+	
+	option = {
+		name = EVTOPTAhigh_valyrian.56
+		random_list = {
+			25 = {
+				trigger = { NOT = { trait = stressed } }
+				add_trait = stressed
+				hidden_tooltip = { character_event = { id = 38182 } }
+			}
+			25 = {
+				trigger = { NOT = { trait = depressed } }
+				add_trait = depressed
+				hidden_tooltip = { character_event = { id = 38188 } }
+			}
+			5 = {
+				trigger = { 
+					NOT = { personality_traits = 6 }
+					NOT = { trait = kind }
+					NOT = { trait = cruel }
+				}
+				add_trait = cruel
+				hidden_tooltip = { character_event = { id = 38159 } }
+			}
+			5 = {
+				trigger = { 
+					NOT = { personality_traits = 6 }
+					NOT = { trait = wroth }
+					NOT = { trait = patient }
+				}
+				add_trait = wroth
+				hidden_tooltip = { character_event = { id = 38154 } }
+			}
+			5 = {
+				trigger = { 
+					NOT = { personality_traits = 6 }
+					NOT = { trait = ruthless }
+					NOT = { trait = honorable }
+				}
+				add_trait = ruthless
+				hidden_tooltip = { character_event = { id = trait_notification.201 } }
+			}
+			5 = {
+				trigger = { 
+					NOT = { personality_traits = 6 }
+					NOT = { trait = paranoid }
+					NOT = { trait = trusting }
+				}
+				add_trait = paranoid
+				hidden_tooltip = { character_event = { id = 38175 } }
+			}
+			5 = {
+				trigger = { 
+					is_dumb_trigger = no
+					is_smart_incl_genius_trigger = no
+					NOT = { trait = imbecile } 
+				}
+				add_trait = dull
+				#hidden_tooltip = { character_event = { id = 38188 } }
+			}
+			5 = {
+				trigger = { NOT = { trait = possessed } }
+				add_trait = possessed
+				hidden_tooltip = { character_event = { id = 38315 } }
+			}
+			5 = {
+				trigger = { NOT = { trait = lunatic } }
+				add_trait = lunatic
+				hidden_tooltip = { character_event = { id = 38304 } }
+			}
+		}
+	}
+}
+character_event = { #AI yearly pulse for glass candle victim
+	id = high_valyrian.57
+	
+	is_triggered_only = yes
+	hide_window = yes
+	min_age = 16
+	capable_only = yes
+	ai = yes
+	
+	trigger = {
+		any_artifact = {
+			artifact_type = glass_candle
+			is_artifact_active = yes
+		}
+		OR = {
+			trait = ruthless
+			trait = cruel
+			trait = arbitrary
+			trait = wroth
+		}
+		NOT = { trait = honorable }
+		NOT = { trait = honest }
+		NOT = { trait = kind }
+	}
+	
+	immediate = {
+		#find target, rivals/plot target first
+		random_list = {
+			200 = {
+				trigger = {
+					OR = {
+						has_plot = plot_kill_character
+						has_plot = plot_kill_spouse
+					}
+					plot_target_char = {
+						age = 10
+						OR = {
+							NOT = { trait = stressed }
+							NOT = { trait = depressed }
+						}
+						NOT = { character = ROOT }
+					}
+				}
+				plot_target_char = {
+					save_event_target_as = glass_candle_victim
+					break = yes
+				}
+			}
+			33 = {
+				random_rival = {
+					limit = {
+						age = 10
+						OR = {
+							NOT = { trait = stressed }
+							NOT = { trait = depressed }
+						}
+						NOT = { character = ROOT }
+					}
+					save_event_target_as = glass_candle_victim
+					break = yes
+				}
+			}
+			66 = {
+				random_opinion_modifier_target = {
+					limit = {
+						ROOT = { is_foe = PREV }
+						NOT = { reverse_opinion = { who = ROOT value = 0 } }
+						NOT = { is_child_of = ROOT }
+						OR = {
+							NOT = { is_close_relative = ROOT }
+							ROOT = { 
+								trait = ruthless
+								NOT = { trait = familyperson }
+							}
+						}
+						age = 10
+						OR = {
+							NOT = { trait = stressed }
+							NOT = { trait = depressed }
+						}
+						NOT = { character = ROOT }
+					}
+					save_event_target_as = glass_candle_victim
+					break = yes
+				}
+			}
+		}
+		#Hated courtier
+		random_courtier = {
+			limit = {
+				NOT = { reverse_opinion = { who = ROOT value = -79 } }
+				NOT = { is_child_of = ROOT }
+				OR = {
+					NOT = { is_close_relative = ROOT }
+					ROOT = { 
+						trait = ruthless
+						NOT = { trait = familyperson }
+					}
+				}
+				age = 10
+				OR = {
+					NOT = { trait = stressed }
+					NOT = { trait = depressed }
+				}
+				NOT = { character = ROOT }
+			}
+			save_event_target_as = glass_candle_victim
+			break = yes
+		}
+		#Enemy
+		random_current_enemy = {
+			limit = {
+				NOT = { reverse_opinion = { who = ROOT value = 0 } }
+				NOT = { is_child_of = ROOT }
+				OR = {
+					NOT = { is_close_relative = ROOT }
+					ROOT = { 
+						trait = ruthless
+						NOT = { trait = familyperson }
+					}
+				}
+				age = 10
+				OR = {
+					NOT = { trait = stressed }
+					NOT = { trait = depressed }
+				}
+			}
+			save_event_target_as = glass_candle_victim
+			break = yes
+		}
+		#Lunatic goes for random
+		if = {
+			limit = { trait = lunatic }
+			top_liege = {
+				random_realm_character = {
+					limit = {
+						age = 10
+						OR = {
+							is_vassal_or_below = ROOT
+							liege = { character = ROOT }
+							same_liege = ROOT
+							higher_tier_than = COUNT
+							prestige = 750
+							is_close_relative = ROOT
+							is_rival = ROOT
+							is_friend = ROOT
+						}
+						OR = {
+							NOT = { trait = stressed }
+							NOT = { trait = depressed }
+						}
+						NOT = { character = ROOT }
+					}
+					save_event_target_as = glass_candle_victim
+					break = yes
+				}
+			}	
+		}		
+	}
+	
+	option = {
+		name = OK
+		if = {
+			limit = { event_target:glass_candle_victim = { always = yes } }
+			random_list = {
+				50 = {
+					custom_tooltip = {
+						text = TOOLTIPglass_candle_visionsSUCCESS
+						hidden_tooltip = { ROOT = { character_event = { id = high_valyrian.54 } } }
+					}
+					
+					modifier = {
+						factor = 2
+						trait = mystic
+					}
+					modifier = {
+						factor = 1.5
+						religion = valyrian_rel
+					}
+					
+					modifier = {
+						factor = 0.66
+						NOT = { learning = 4 }
+					}
+					modifier = {
+						factor = 0.66
+						NOT = { learning = 8 }
+					}
+					modifier = {
+						factor = 1.5
+						learning = 12
+					}
+					modifier = {
+						factor = 1.5
+						learning = 16
+					}
+					modifier = {
+						factor = 1.5
+						learning = 20
+					}
+					
+					modifier = {
+						factor = 0.66
+						NOT = { intrigue = 4 }
+					}
+					modifier = {
+						factor = 0.66
+						NOT = { intrigue = 8 }
+					}
+					modifier = {
+						factor = 1.5
+						intrigue = 12
+					}
+					modifier = {
+						factor = 1.5
+						intrigue = 16
+					}
+					modifier = {
+						factor = 1.5
+						intrigue = 20
+					}
+				}
+				50 = {
+					custom_tooltip = {
+						text = TOOLTIPglass_candle_visionsFAIL
+						hidden_tooltip = { ROOT = { character_event = { id = high_valyrian.55 } } }
+					}	
+				}
+			}
+		}	
+	}
+}	

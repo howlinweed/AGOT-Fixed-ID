@@ -1,0 +1,289 @@
+1.1.1 = { 
+	law = slavery_2
+	law = succ_primogeniture
+	law = centralization_0
+}
+2000.1.1 = { 
+	holder=100777308 #Bloodstone Emperor
+}
+2010.1.1 = { holder = 0 }
+
+2100.1.1 = { 
+	holder=10055956 #Har Loi, grey emperor
+	effect = {
+		c_10055956 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_grey_emperor
+		}
+	}	
+}
+2135.1.1 = { holder=0 }
+
+2256.1.1 = { 
+	holder=10055957 #Choq Choq, indigo emperor
+	effect = {
+		c_10055957 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_indigo_emperor
+		}
+	}
+}
+2293.1.1 = { holder=0 }
+
+2360.1.1 = { 
+	holder=10055955 #Mengo Quen, jade-green emperor
+	effect = {
+		c_10055955 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_jadegreen_emperor
+		}
+	}
+}
+2391.1.1 = { holder=0 }
+
+2590.1.1 = { 
+	holder=10065961 #Lo Tho, twenty-second of the scarlet emperors
+	effect = {
+		c_10065961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_scarlett_emperor
+		}
+	}
+}
+2678.1.1 = { holder=0 }
+
+2737.1.1 = { 
+	holder=10365961 #Lo Doq, thirty-fourth scarlet emperor
+	effect = {
+		c_10365961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_scarlett_emperor
+		}
+	}
+}
+2767.1.1 = { holder=0 }
+
+#Nine Eunuchs
+2800.1.1 = { 
+	holder=10055961 
+	effect = {
+		c_10055961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # Qaun (nc)
+2819.1.1 = { 
+	holder=10155961 
+	effect = {
+		c_10155961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # An (nc)
+2839.1.1 = {
+	holder=10355961 
+	effect = {
+		c_10355961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # Gai (nc)
+2858.1.1 = { 
+	holder=10455961 
+	effect = {
+		c_10455961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # Mao (nc)
+2866.1.1 = { 
+	holder=10555961 
+	effect = {
+		c_10555961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # Tho (nc)
+2881.1.1 = { 
+	holder=10655961 
+	effect = {
+		c_10655961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # Kim (nc)
+2905.1.1 = { 
+	holder=10755961 
+	effect = {
+		c_10755961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # Dong (nc)
+2931.1.1 = { 
+	holder=10855961 
+	effect = {
+		c_10855961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # Quan (nc)
+2940.1.1 = { 
+	holder=10955961 
+	effect = {
+		c_10955961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_pearlwhite_emperor
+		}
+	}
+} # Huu (nc)
+2945.1.1 = { holder=0 }
+##
+
+
+2950.1.1 = { 
+	holder=10055958 #Jar Har, sixth sea-green emperor
+	effect = {
+		c_10055958 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_seagreen_emperor
+		}
+	}
+}
+2993.1.1 = { 
+	holder=20055958 #Jar Joq, seventh sea-green emperor
+	effect = {
+		c_20055958 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_seagreen_emperor
+		}
+	}
+}
+3017.1.1 = { 
+	holder=30055958 #Jar Han, eight sea-green emperor
+	effect = {
+		c_30055958 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_seagreen_emperor
+		}
+	}
+}
+3038.1.1 = { holder=0 }
+
+#Scarlet Emperors
+6380.1.1 = { 
+	holder=10065961 #Lo Tho, twenty-second of the scarlet emperors
+	effect = {
+		c_10065961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_scarlett_emperor
+		}
+	}
+}
+6429.1.1 = { holder=0 }
+6506.1.1 = { 
+	holder=10365961 #Lo Doq, thirty-fourth scarlet emperor
+	effect = {
+		c_10365961 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_scarlett_emperor
+		}
+	}
+}
+6520.1.1 = { holder=0 }
+6670.1.1 = { 
+	holder=10065963 #Lo Han, forty-second scarlet emperor
+	effect = {
+		c_10065963 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_scarlett_emperor
+		}
+	}
+}
+6698.1.1 = { 
+	holder=10165963 #Lo HBu, forty-third and last scarlet emperor
+	effect = {
+		c_10165963 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_scarlett_emperor
+		}
+	}
+}
+6700.1.1 = { holder=0 }
+
+
+7278.1.1 = { 
+	holder=10065962 #Chai Duq, Yellow Emperor
+	effect = {
+		c_10065962 = {	
+			remove_trait = dead_target
+			set_special_character_title = nick_yellow_emperor
+		}
+		# dead_target = {	
+			# limit = { character = 10065962 }
+			# remove_trait = dead_target
+			# set_special_character_title = nick_yellow_emperor
+		# }
+	}
+}
+7312.1.1 = { holder=0 }
+
+
+7996.1.1 = { 
+	holder=10055954 # Gafur (nc)
+	effect = {
+		set_title_flag = azure_emperor
+		holder_scope = {
+			set_dynasty_flag = azure_emperor
+			set_dynasty_flag = yi_ti_emperor_colour_assigned
+			father_even_if_dead = {
+				set_special_character_title = nick_azure_emperor
+				father_even_if_dead = {
+					set_special_character_title = nick_azure_emperor
+					father_even_if_dead = {
+						set_special_character_title = nick_azure_emperor
+						father_even_if_dead = {
+							set_special_character_title = nick_azure_emperor
+							father_even_if_dead = {
+								set_special_character_title = nick_azure_emperor
+								father_even_if_dead = {
+									set_special_character_title = nick_azure_emperor
+									father_even_if_dead = {
+										set_special_character_title = nick_azure_emperor
+										father_even_if_dead = {
+											set_special_character_title = nick_azure_emperor
+											father_even_if_dead = {
+												set_special_character_title = nick_azure_emperor
+												father_even_if_dead = {
+													set_special_character_title = nick_azure_emperor
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+} 
+8027.1.1 = { holder=10155954 } # Hasan_Hasan (nc)
+8056.1.1 = { holder=10655954 } # Mukhtar (nc)
+8079.1.1 = { holder=10755954 } # Azam (nc)
+8081.1.1 = { holder=11155954 } # Fadil (nc)
+8123.1.1 = { holder=11455954 } # Mukhtar (nc)
+8156.1.1 = { holder=11755954 } # Ramadan (nc)
+8165.1.1 = { holder=11955954 } # Jibril (nc)
+8197.1.1 = { holder=12155954 } # Uways (nc)
+8221.1.1 = { holder=12355954 } # Burhanaddin (nc)
+8252.1.1 = { holder=13055954 } # Bakr (nc)

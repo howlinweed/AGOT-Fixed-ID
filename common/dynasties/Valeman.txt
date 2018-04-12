@@ -1,0 +1,791 @@
+##non-canon for random##
+801000 = {
+	name = Spurr
+	culture = valeman
+}
+801001 = {
+	name = Slumberwood
+	culture = valeman
+}
+801002 = {
+	name = Armenter
+	culture = valeman
+}
+801003 = {
+	name = Garnett
+	culture = valeman
+}
+801004 = {
+	name = Hewrey
+	culture = valeman
+}
+801005 = {
+	name = Correll
+	culture = valeman
+}
+801006 = {
+	name = Eastyng
+	culture = valeman
+}
+801007 = {
+	name = Gladmore
+	culture = valeman
+}
+801008 = {
+	name = Minwell
+	culture = valeman
+}
+801009 = {
+	name = Rodsford
+	culture = valeman
+}
+801010 = {
+	name = Walding
+	culture = valeman
+}
+801011 = {
+	name = Mobrey
+	culture = valeman
+}
+801012 = {
+	name = Wollard
+	culture = valeman
+}
+801013 = {
+	name = Lightwood
+	culture = valeman
+}
+801014 = {
+	name = Dogwell
+	culture = valeman
+}
+801015 = {
+	name = Sheffingham
+	culture = valeman
+}
+801016 = {
+	name = Foxhall
+	culture = valeman
+}
+801017 = {
+	name = Peybridge
+	culture = valeman
+}
+801018 = {
+	name = Gadiffer
+	culture = valeman
+}
+801019 = {
+	name = Updyke
+	culture = valeman
+}
+801020 = {
+	name = Lindhorn
+	culture = valeman
+}
+801021 = {
+	name = Lymondly
+	culture = valeman
+}
+801022 = {
+	name = Renwyck
+	culture = valeman
+}
+801023 = {
+	name = Septley
+	culture = valeman
+}
+801024 = {
+	name = Cocklesbury
+	culture = valeman
+}
+801025 = {
+	name = Herryng
+	culture = valeman
+}
+801026 = {
+	name = Charrington
+	culture = valeman
+}
+801027 = {
+	name = Dalham
+	culture = valeman
+}
+801028 = {
+	name = Waddingham
+	culture = valeman
+}
+801029 = {
+	name = Ayleswood
+	culture = valeman
+}
+801030 = {
+	name = Tyndale
+	culture = valeman
+}
+801031 = {
+	name = Bladeholt
+	culture = valeman
+}
+801032 = {
+	name = Cheyne
+	culture = valeman
+}
+801033 = {
+	name = Tabbett
+	culture = valeman
+}
+801034 = {
+	name = Moontower
+	culture = valeman
+}
+801035 = {
+	name = Lakewood
+	culture = valeman
+}
+801036 = {
+	name = Wickenden
+	culture = valeman
+}
+801037 = {
+	name = Greyfair
+	culture = valeman
+}
+801038 = {
+	name = Mallin
+	culture = valeman
+}
+801039 = {
+	name = Moulton
+	culture = valeman
+}
+801040 = {
+	name = Bushnell
+	culture = valeman
+}
+801041 = {
+	name = Orcastle
+	culture = valeman
+}
+801042 = {
+	name = Summerby
+	culture = valeman
+}
+801043 = {
+	name = Crewett
+	culture = valeman
+}
+801044 = {
+	name = Blaise
+	culture = valeman
+}
+801045 = {
+	name = Shell
+	culture = valeman
+}
+801046 = {
+	name = Brightstone
+	culture = valeman
+}
+801047 = {
+	name = Breakstone
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 26
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+801048 = {
+	name = Lipps
+	culture = valeman
+}
+801049 = {
+	name = Aerin
+	culture = valeman
+}
+801050 = {
+	name = Vaele
+	culture = valeman
+}
+801051 = {
+	name = Glovelyn
+	culture = valeman
+}
+801052 = {
+	name = Greyfair
+	culture = valeman
+}
+801053 = {
+	name = Ryser
+	culture = valeman
+}
+801054 = {
+	name = Thaller
+	culture = valeman
+}
+801055 = {
+	name = Perke
+	culture = valeman
+}
+801056 = {
+	name = Byrnie
+	culture = valeman
+}
+801057 = {
+	name = Slaite
+	culture = valeman
+}
+801058 = {
+	name = Slayte
+	culture = valeman
+}
+801059 = {
+	name = Mullyn
+	culture = valeman
+}
+801061 = {
+	name = Skyfall
+	culture = valeman
+}
+801062 = {
+	name = Lowvale
+	culture = valeman
+}
+801063 = {
+	name = Highvale
+	culture = valeman
+}
+801064 = {
+	name = Skybreaker
+	culture = valeman
+}
+801065 = {
+	name = Runebrace
+	culture = valeman
+}
+801066 = {
+	name = Stonefall
+	culture = valeman
+}
+801067 = {
+	name = Runeston
+	culture = valeman
+}
+801068 = {
+	name = Hardmantle
+	culture = valeman
+}
+801069 = {
+	name = Greatarm
+	culture = valeman
+}
+801070 = {
+	name = Rumblestone
+	culture = valeman
+}
+801071 = {
+	name = Silvervale
+	culture = valeman
+}
+801072 = {
+	name = Bronzebrooke
+	culture = valeman
+}
+801073 = {
+	name = Strongstone
+	culture = valeman
+}
+801074 = {
+	name = Glorystone
+	culture = valeman
+}
+801075 = {
+	name = Hammerstar
+	culture = valeman
+}
+801076 = {
+	name = Greatstar
+	culture = valeman
+}
+
+##canon##
+161 = {
+	name="Belmore"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 2
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+162 = {
+	name="Tollett"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 25
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+163 = {
+	name="Hersy"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 11
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+
+167 = {
+	name="Pryor"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 17
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+168 = {
+	name="Elesham"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 8
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+169 = {
+	name="Coldwater"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 4
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+170 = {
+	name="Upcliff"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 27
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+171 = {
+	name="Baelish" # Original
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 1
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+	used_for_random = no
+	can_appear = no
+}
+601 = {
+	name="Baelish" # Baelish Mockingbird
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 37
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+	used_for_random = no
+	can_appear = no
+}
+172 = {
+	name="Templeton"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 24
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+173 = {
+	name="Donniger"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 6
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+174 = {
+	name="Lynderly"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 14
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+175 = {
+	name="Egen"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 7
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+176 = {
+	name="Corbray"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 5
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+177 = {
+	name="Hunter"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 12
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+178 = {
+	name="Arryn"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 0
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+450472 = {
+	name="Arryn of Gulltown"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 0
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+	used_for_random = no
+	can_appear = no
+}
+179 = {
+	name="Moore"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 16
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+180 = {
+	name="Wydman"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 30
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+181 = {
+	name="Melcolm"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 15
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+182 = {
+	name="Waynwood"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 29
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+183 = {
+	name="Redfort"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 18
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+184 = {
+	name="Hardyng"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 10
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+185 = {
+	name="Shett"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 22
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+186 = {
+	name="Grafton"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 9
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+187 = {
+	name="Royce"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 19
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+188 = {
+	name="Ruthermont"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 21
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+189 = {
+	name="Waxley"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 28
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+174357 = {
+	name="Long"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 13
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+174359 = {
+	name="Hungerford"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 20
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}
+
+174437 = {
+	name="Shadyglen"
+	culture = valeman
+	coat_of_arms = {
+		template = 0
+		layer = {
+			texture = 6
+			texture_internal = 35
+			emblem = 0
+			color = 0
+			color = 0
+			color = 0
+		}
+	}
+}

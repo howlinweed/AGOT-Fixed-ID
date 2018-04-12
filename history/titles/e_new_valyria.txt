@@ -1,0 +1,35 @@
+7886.1.1 = {
+	holder = 50012300 #Emperor Aurion
+	law = succ_feudal_elective
+	effect = {
+		c_50012300 = {	
+			remove_trait = dead_target
+			set_government_type = feudal_government
+		}
+		# dead_target = {	
+			# limit = { character = 50012300 }
+			# remove_trait = dead_target
+			# set_government_type = feudal_government
+		# }
+	}
+}
+7887.1.1 = {
+	holder = 0
+}
+7979.1.1 = {
+	law = slavery_2
+	holder=100174396  # Qoherys (Volantis)
+	law = centralization_2
+	law = first_night_0
+}
+7995.1.1 = {
+	law = republic_triarch_for_life
+}
+7996.12.16 = {
+	law = succ_feudal_elective
+	law = cognatic_succession
+	law = republic_law_0
+	law = first_night_1
+	holder=0
+	#effect = { copy_title_history = d_kingsmoot } #Remove Volantis from history
+}

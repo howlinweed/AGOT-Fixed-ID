@@ -1,0 +1,1796 @@
+77990000 = {
+	name="Unknown Dragon"
+
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 50
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	
+	disallow_random_traits = yes
+	
+	7820.1.1={
+		birth="7820.1.1"
+	}	
+	7918.1.1={
+		death="7918.1.1"
+	}
+}
+#Balerion the Black Dread
+77990001 = {
+	name="Balerion"
+	dynasty=496 #Made a temp targ to make sure he isnt culled
+	#dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 100
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = strong_dragon
+	add_trait=wroth_dragon
+	add_trait=affectionate_dragon
+	add_trait=dragon_27
+	
+	disallow_random_traits = yes
+	
+	#father = 77990000
+	father = 77001
+	
+	7885.1.1={
+		birth="7885.1.1"
+		effect = { 
+			set_character_flag = tamed_dragon 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			add_friend = 77000 #Aegon
+			c_dragonstone = {
+				holder_scope = {					
+					ROOT = { move_character = PREV }
+				}	
+			}
+			dynasty = 497000
+			give_nickname = nick_black_dread
+		}
+	}
+	8037.9.9 = {
+		effect = {
+			e_iron_throne = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}	
+			}
+			add_friend = 77005 #Maegor
+		}	
+	}
+	8090.1.1={
+		effect = {
+			add_friend = 77009 #Viserys
+		}
+	}
+	8094.1.1={
+		death="8094.1.1"
+		dynasty = 497000
+	}
+}
+77990002 = {
+	name="Meraxes"
+	female=yes
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 74
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_5
+	add_trait=playful_dragon
+	add_trait=obedient_dragon
+	
+	disallow_random_traits = yes
+	
+	#father = 77003 
+	father = 77990001
+	
+	7925.1.1={
+		birth="7925.1.1"
+		effect = { 
+			set_character_flag = tamed_dragon						
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 77003 #Rhaenys
+			random_friend = {
+				limit = { character = 77003 }				
+				liege = { ROOT = { move_character = PREV } }
+			}
+		}
+	}
+	8010.1.1={
+		death= {death_reason = death_battle} # Rhaenys died in Dorne along with Meraxes
+	}
+}
+77990003 = {
+	name="Vhagar"
+	female=yes
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 46
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_8
+	
+	add_trait=wroth_dragon
+	add_trait=lazy_dragon
+	add_trait=ravenous_dragon
+	
+	disallow_random_traits = yes
+	
+	#father = 77002 #Visenya
+	father = 77990001
+	
+	7949.1.1={ #181 years old when she died
+		birth="7949.1.1"
+		effect = { 
+			set_character_flag = tamed_dragon 		
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			if = {
+				limit = { e_iron_throne = { has_holder = yes } }
+				e_iron_throne = {
+					holder_scope = {
+						ROOT = { move_character = PREV }
+					}	
+				}
+			}
+			if = {
+				limit = { e_iron_throne = { has_holder = no } }
+				c_dragonstone = {
+					holder_scope = {
+						ROOT = { move_character = PREV }
+					}	
+				}
+			}
+		}
+	}
+	7968.1.1={
+		effect = { 
+			add_friend = 77002 #Visenya			
+		}
+	}
+	8025.1.1={
+		effect = { change_martial = 9 }
+	}
+	8050.1.1={
+		effect = { change_martial = 9 }
+	}
+	8069.1.1={
+		effect = {
+			add_friend = 77008 #Baelon the Brave
+			random_friend = {
+				limit = { character = 77008 }
+				if = {
+					limit = { is_ruler = no }
+					liege = { ROOT = { move_character = PREV } }
+				}	
+				if = {
+					limit = { is_ruler = yes }
+					ROOT = { move_character = PREV }
+				}
+			}
+		}	
+	}
+	8075.1.1={
+		effect = { change_martial = 9 }
+	}
+	8100.1.1={
+		effect = { change_martial = 9 }
+	}
+	8104.1.1 = {
+		effect = {
+			add_friend = 28052 #Laena Velaryon
+			random_friend = {
+				limit = { character = 28052 }
+				if = {
+					limit = { is_ruler = no }
+					liege = { ROOT = { move_character = PREV } }
+				}	
+				if = {
+					limit = { is_ruler = yes }
+					ROOT = { move_character = PREV }
+				}
+			}
+		}
+	}
+	8120.6.1 = {
+		effect = {
+			add_friend = 77014 #Aemond
+		}
+	}
+	8125.1.1={
+		effect = { change_martial = 10 }
+	}
+	8130.5.22={
+		death = {
+			# Killed by Daemon Targaryen
+			death_reason = death_battle
+			killer = 77990009
+		}
+		add_trait=wroth_dragon
+		#father=77014
+		martial = 92
+	}
+}
+77990004 = {
+	name="Quicksilver"
+	dynasty = 496
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_6
+	
+	disallow_random_traits = yes
+	
+	mother = 77990002
+	#father = 77004 #Aenys
+	
+	8009.1.1={ 
+		birth="8009.1.1"
+		effect = { 
+			dynasty = 497000
+			set_character_flag = tamed_dragon 	
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 77004
+			random_friend = {					
+				liege = { ROOT = { move_character = PREV } }
+			}
+		}
+	}
+	8018.1.1={
+		effect = { change_martial = 4 }
+	}
+	8020.1.1={
+		effect = { change_martial = 4 }
+	}
+	8023.1.1={
+		effect = { change_martial = 8 }
+	}
+	8033.1.1={
+		effect = { change_martial = 8 }
+	}
+	8042.1.1={ #Aenys' death, Aegon becomes new rider
+		effect = {
+			add_friend = 60650496 #Aegon
+		}	
+	}
+	8043.1.2={
+		death = {
+			# Killed by Balerion
+			death_reason = death_battle
+			killer = 77990001
+		}
+		dynasty = 497000
+	}
+}
+77990005 = {
+	name="Vermithor"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_7
+	add_trait = strong_dragon
+	
+	disallow_random_traits = yes
+	
+	mother = 77990003 #Vhagar
+	#father = 77006 #Jahaerys
+	
+	8032.1.1={ #almost 100 years in the dance
+		birth="8032.1.1"
+		effect = { 
+			set_character_flag = tamed_dragon 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 77006
+			random_friend = {
+				limit = { character = 77006 }				
+				liege = { ROOT = { move_character = PREV } }
+			}
+			give_nickname = nick_bronze_fury
+		}
+	}
+	8037.1.1={
+		effect = { change_martial = 4 }
+	}
+	8042.1.1={
+		effect = { change_martial = 5 }
+	}
+	8052.1.1={
+		effect = { change_martial = 9 }
+	}
+	8072.1.1={
+		effect = { change_martial = 9 }
+	}
+	8082.1.1={
+		effect = { change_martial = 9 }
+	}
+	8092.1.1={
+		effect = { change_martial = 9 }
+	}
+	8102.1.1={
+		effect = { change_martial = 9 }
+	}
+	8103.1.1={ #makes lair in dragonmont on jaehaerys' death
+		effect = {
+			b_derlyn = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}	
+			}
+		}	
+	}
+	8112.1.1={
+		effect = { change_martial = 9 }
+	}
+	8122.1.1={
+		effect = { change_martial = 9 }
+	}	
+	8129.4.1 = { #Hugh the Hammer tames
+		effect = {
+			add_friend = 30509002
+			random_friend = {
+				# limit = { character = 30509002 }						
+				limit = { c_30509002 = { character = PREV } }
+				liege = { ROOT = { move_character = PREV } }
+			}
+		}
+	}
+	8130.5.8={
+		death = {
+			death_reason = death_battle # Died in the second battle of Tumbleton
+			#killer = blue queen
+		}
+		martial = 75
+	}
+}
+77990006 = {
+	name="Dreamfyre"
+	female=yes
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_18
+	
+	disallow_random_traits = yes
+	
+	mother = 77990003
+	#father = 60540496 #Rhaena
+	
+	8033.1.1={ 
+		birth="8033.1.1"
+		effect = { 
+			set_character_flag = tamed_dragon 
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 60540496
+			random_friend = {						
+				liege = { ROOT = { move_character = PREV } }
+			}
+		}
+	}
+	8037.1.1={
+		effect = { change_martial = 4 }
+	}
+	8041.1.1={
+		effect = { change_martial = 4 }
+	}	
+	8051.1.1={
+		effect = { change_martial = 6 }
+	}
+	8061.1.1={
+		effect = { change_martial = 6 }
+	}
+	8071.1.1={
+		effect = { change_martial = 6 }
+	}
+	8071.1.1={ #Rhaena's death
+		effect = {
+			e_iron_throne = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}	
+			}
+			add_character_modifier = {
+				name = locked_in_dragonpit
+				duration = -1
+			}
+		}	
+	}
+	8081.1.1={
+		effect = { change_martial = 6 }
+	}
+	8091.1.1={
+		effect = { change_martial = 6 }
+	}
+	8101.1.1={
+		effect = { change_martial = 6 }
+	}
+	8111.1.1={
+		effect = { change_martial = 6 }
+	}
+	8121.1.1={
+		effect = { change_martial = 6 }
+	}	
+	8123.1.1={
+		effect = {
+			add_friend = 77120 #Helaena
+			remove_character_modifier = locked_in_dragonpit
+		}
+	}
+	8130.5.22={
+		death = {
+			death_reason = death_rabble #Died in the storming of the dragonpit
+		}
+		#father = 77120
+		martial = 66
+	}
+}
+77990007 = {
+	name="Silverwing"
+	female=yes
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_6
+	
+	disallow_random_traits = yes
+	
+	mother = 77990003
+	#father = 77007 #Alysanne
+	
+	8033.1.1={ 
+		birth="8033.1.1"
+		effect = { 
+			set_character_flag = tamed_dragon 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+
+			add_friend = 77007
+			random_friend = {
+				limit = { character = 77007 }			
+				liege = { ROOT = { move_character = PREV } }
+			}
+		}
+	}
+	8037.1.1={
+		effect = { change_martial = 4 }
+	}
+	8041.1.1={
+		effect = { 
+			change_martial = 4 
+			add_lover = 77990005 #Vermithor
+		}
+	}
+	8051.1.1={
+		effect = { change_martial = 7 }
+	}
+	8061.1.1={
+		effect = { change_martial = 7 }
+	}
+	8071.1.1={
+		effect = { change_martial = 7 }
+	}	
+	8081.1.1={
+		effect = { change_martial = 7 }
+	}	
+	8091.1.1={
+		effect = { change_martial = 7 }
+	}
+	8100.8.1={ #Alysanne's death
+		effect = {
+			d_dragonstone = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}	
+			}
+		}	
+	}
+	8101.1.1={
+		effect = { change_martial = 6 }
+	}
+	8111.1.1={
+		effect = { change_martial = 6 }
+	}
+	8121.1.1={
+		effect = { change_martial = 6 }
+	}	
+	8129.4.1 = {
+		effect = {
+			add_friend = 30509003 #Ulf White
+		}
+	}
+	8138.1.1={ #alive after dance, dead by 8153
+		death="8138.1.1"
+		martial = 66
+	}
+}
+77990008 = {
+	name="Meleys"
+	female=yes
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_9
+	add_trait = lazy_dragon
+	
+	disallow_random_traits = yes
+	
+	mother = 77990003 #Vhagar
+	#father = 60520496 #Aemon
+	
+	8020.1.1={
+		birth="8020.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }			
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			c_dragonstone = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}	
+			}
+		}
+	}
+	8025.1.1={
+		effect = { change_martial = 4 }
+	}	
+	8030.1.1={
+		effect = { change_martial = 4 }
+	}
+	8040.1.1={
+		effect = { change_martial = 8 }
+	}
+	8050.1.1={
+		effect = { change_martial = 8 }
+	}
+	8060.1.1={
+		effect = { change_martial = 8 }
+	}
+	8064.1.1={
+		give_nickname = nick_red_queen
+		effect = { 
+			set_character_flag = tamed_dragon
+			add_friend = 60520496 #Aemon
+			random_friend = {
+				# limit = { character = 60520496 }					
+				limit = { c_60520496 = { character = PREV } }
+				liege = { ROOT = { move_character = PREV } }
+			}
+		}
+	}
+	8070.1.1={
+		effect = { change_martial = 8 }
+	}
+	8080.1.1={
+		effect = { change_martial = 8 }
+	}
+	8090.1.1={
+		effect = { change_martial = 8 }
+	}
+	8092.6.8={ #Aemon's death
+		effect = {
+			c_driftmark = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}	
+			}
+		}	
+	}
+	8092.6.8={
+		effect = {
+			add_friend = 60530496 #Rhaenys
+		}
+	}
+	8100.1.1={
+		effect = { change_martial = 8 }
+	}
+	8110.1.1={
+		effect = { change_martial = 8 }
+	}
+	8115.1.1={
+		effect = { change_martial = 4 }
+	}
+	8120.1.1={
+		effect = { change_martial = 8 }
+	}	
+	8129.9.2= {
+		death = {
+			# Killed with Rhaenys at battle of Rook's Rest
+			death_reason = death_battle
+			killer = 77990003
+		}
+		martial = 79
+		#father = 60530496
+	}
+}
+77990009 = {
+	name="Caraxes"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_20
+	
+	disallow_random_traits = yes
+	
+	father = 77990004 #Quicksilver
+	
+	8042.1.1={
+		birth="8042.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			c_dragonstone = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}
+		}
+	}
+	8047.1.1={
+		effect = { change_martial = 4 }
+	}
+	8052.1.1={
+		effect = { change_martial = 4 }
+	}
+	8062.1.1={
+		effect = { change_martial = 9 }
+	}
+	8072.1.1={
+		effect = { change_martial = 9 }
+	}
+	8087.1.1={
+		effect = { change_martial = 9 }
+	}
+	8094.1.1={
+		#father = 779496
+		effect = {
+			set_character_flag = tamed_dragon 
+			add_friend = 779496 #Daemon
+			random_friend = {						
+				liege = { ROOT = { move_character = PREV } }
+			}
+			give_nickname = nick_blood_wyrm
+		}
+	}	
+	8102.1.1={
+		effect = { change_martial = 10 }
+	}
+	8112.1.1={
+		effect = { change_martial = 9 }
+	}	
+	8122.1.1={
+		effect = { change_martial = 9 }
+	}
+	8130.5.22={
+		death = {
+			# Killed by Vhagar and Aemond Targaryen at the God's Eye
+			death_reason = death_duel
+			killer = 77990003
+		}
+		martial = 65
+	}
+}
+77990010 = {
+	name="Seasmoke"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_5
+	add_trait="nimble_dragon"
+	
+	disallow_random_traits = yes
+	
+	mother = 77990007 #Silverwing
+	father = 77990005 #Vermithor
+	
+	8075.1.1={
+		birth="8075.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			b_derlyn = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}
+		}
+	}
+	8080.1.1={
+		effect = { change_martial = 4 }
+	}
+	8085.1.1={
+		effect = { change_martial = 4 }
+	}
+	8095.1.1={
+		effect = { change_martial = 7 }
+	}
+	8101.1.1 = {
+		#father = 39052
+		effect = {
+			set_character_flag = tamed_dragon 
+			add_friend = 39052  #Laenor velaryon
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }
+			}
+		}
+	}
+	8105.1.1={
+		effect = { change_martial = 7 }
+	}
+	8115.1.1={
+		effect = { change_martial = 6 }
+	}
+	8125.1.1={
+		effect = { change_martial = 6 }
+	}	
+	8129.2.12 = {
+		effect = {
+			set_character_flag = tamed_dragon 
+			add_friend =  25052 #Addam velaryon
+		}
+	}
+	8130.3.5 = {
+		death= {
+			death_reason = death_battle
+			killer = 77990005 #Vermithor
+		}
+		martial = 43
+		#father = 25052
+	}
+}
+77990011 = {
+	name="Syrax"
+	female = yes
+	dynasty = 496 #Made a temp targ so she isnt culled
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_10
+	
+	disallow_random_traits = yes
+	
+	father = 77990009 #Caraxes
+	
+	8072.1.1={
+		birth="8072.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			e_iron_throne = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}
+			dynasty = 497000
+		}
+	}
+	8077.1.1={
+		effect = { change_martial = 4 }
+	}
+	8082.1.1={
+		effect = { change_martial = 4 }
+	}
+	8092.1.1={
+		effect = { change_martial = 9 }
+	}
+	8102.1.1={
+		effect = { change_martial = 9 }
+	}
+	8104.1.1={
+		effect = {
+			set_character_flag = tamed_dragon 
+			add_friend = 77012
+			random_friend = {				
+				if = {
+					limit = { is_ruler = yes }
+					ROOT = { move_character = PREV }
+				}							
+			}	
+		}
+	}
+	8112.1.1={
+		effect = { change_martial = 7 }
+	}	
+	8122.1.1={
+		effect = { change_martial = 7 }
+	}
+	8130.5.22={
+		death = {
+			death_reason = death_rabble #Died in the storming of the dragonpit
+		}
+		#father = 77012
+		martial = 45
+		dynasty = 497000
+	}
+}
+77990012 = {
+	name="Sunfyre"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait=fair_dragon
+	add_trait = dragon_11
+	
+	disallow_random_traits = yes
+	
+	mother = 77990006 #Dreamfyre
+	
+	8090.1.1={
+		birth="8090.1.1"
+		employer = 77006		#Jaehaerys I 'the Conciliator'
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			e_iron_throne = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}
+			add_character_modifier = {
+				name = locked_in_dragonpit
+				duration = -1
+			}
+		}
+	}
+	8095.1.1={
+		effect = { change_martial = 6 }
+	}
+	8100.1.1={
+		effect = { change_martial = 6 }
+	}
+	8103.1.1={
+		employer = 77009		#Viserys I
+	}	
+	8110.1.1={
+		effect = { change_martial = 6 }
+	}
+	8120.1.1={
+		effect = { change_martial = 6 }
+	}
+	8121.1.1={
+		#father = 77013
+		effect = {
+			set_character_flag = tamed_dragon 
+			add_friend = 77013 #Aegon
+			random_friend = {						
+				liege = { ROOT = { move_character = PREV } }
+			}
+			give_nickname = nick_golden
+			remove_character_modifier = locked_in_dragonpit
+		}
+	}	
+	8128.1.1={
+		effect = { change_martial = 6 }
+	}	
+	8129.3.3={
+		employer = 77013		#Aegon II
+	}
+	8129.9.2= {
+		add_trait = maimed_dragon
+	}
+	8130.12.1 = {
+		death = {
+			death_reason = death_trait 
+		}
+		martial = 32
+	}
+}
+77990013 = {
+	name="Tessarion"
+	female = yes
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_12
+	add_trait="nimble_dragon"
+	
+	disallow_random_traits = yes
+	
+	mother = 77990006 #Dreamfyre
+	
+	8087.1.1={
+		birth="8087.1.1"
+		employer = 77006		#Jaehaerys I 'the Conciliator'
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			e_iron_throne = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}
+			add_character_modifier = {
+				name = locked_in_dragonpit
+				duration = -1
+			}
+		}
+	}
+	8092.1.1={
+		effect = { change_martial = 4 }
+	}
+	8097.1.1={
+		effect = { change_martial = 4 }
+	}
+	8103.1.1={
+		employer = 77009		#Viserys I
+	}	
+	8107.1.1={
+		effect = { change_martial = 7 }
+	}
+	8117.1.1={
+		effect = { change_martial = 7 }
+	}
+	8127.1.1={
+		#father = 77119
+		effect = {
+			set_character_flag = tamed_dragon 
+			add_friend = 77119 #Daeron	
+			random_friend = {					
+				liege = { ROOT = { move_character = PREV } }
+			}
+			give_nickname = nick_blue_queen
+			remove_character_modifier = locked_in_dragonpit
+		}
+	}	
+	8127.1.1={
+		effect = { change_martial = 7 }
+	}	
+	8129.3.3={
+		employer = 77013		#Aegon II
+	}
+	8130.5.8={
+		add_trait = wounded_dragon
+		death = {
+			death_reason = death_battle 
+		}
+		martial = 25
+	}
+}
+77990014 = {
+	name="Vermax"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_7
+	
+	disallow_random_traits = yes
+	
+	mother = 77990011 #Syrax
+	#father = 33561496 #Jacaerys Velaryon
+	
+	8115.1.1={
+		birth="8115.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 33561496
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}	
+		}
+	}
+	8120.1.1={
+		effect = { change_martial = 4 }
+	}
+	8125.1.1={
+		effect = { change_martial = 4 }
+	}
+	8129.1.1={
+		effect = { change_martial = 4 }
+	}	
+	8129.1.1={
+		effect = { set_character_flag = tamed_dragon  }
+	}	
+	8130.4.7={	
+		death = {
+			death_reason = death_battle # Battle of the Gullet, killed by the Tyroshi fleet
+		}
+		martial = 13
+	}
+}
+77990015 = {
+	name="Arrax"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_17
+	add_trait="nimble_dragon"
+	
+	disallow_random_traits = yes
+	
+	mother = 77990011 #Syrax
+	#father = 33562496 #Lucerys Velaryon
+	
+	8115.1.1={
+		birth="8115.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 33562496
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}
+		}
+	}
+	8120.1.1={
+		effect = { change_martial = 6 }
+	}
+	8125.1.1={
+		effect = { change_martial = 6 }
+	}	
+	8129.1.1={
+		effect = { set_character_flag = tamed_dragon  }
+	}	
+	8129.6.1={ 		
+		death = {
+			# Killed by Aemond and Vhagar One-eyed in Storm's End.
+			death_reason = death_duel
+			killer = 77990003
+		}
+		martial = 13
+	}
+}
+77990016 = {
+	name="Tyraxes"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_20
+	add_trait="nimble_dragon"
+	
+	disallow_random_traits = yes
+	
+	mother = 77990011 #Syrax
+	
+	8115.1.1={
+		birth="8115.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			c_dragonstone = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}
+		}
+	}
+	8116.1.1={
+		effect = {
+			add_friend = 33563496 #Joffrey
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}
+		}
+	}
+	8120.1.1={
+		effect = { change_martial = 4 }
+	}
+	8125.1.1={
+		effect = { change_martial = 4 }
+	}
+	8129.1.1={
+		effect = { change_martial = 3 }
+	}	
+	8130.5.22={
+		death = {
+			death_reason = death_rabble #Died in the storming of the dragonpit
+		}
+		martial = 12
+		#father = 33563496
+	}
+}
+77990017 = {
+	name="Moondancer"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 6
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait="fair_dragon"
+	add_trait="nimble_dragon"
+	add_trait = dragon_8
+	
+	disallow_random_traits = yes
+	
+	father = 77990009 #Caraxes
+	#father = 550052 #Baela Targaryen
+	
+	8125.1.1={
+		birth="8125.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 550052
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}
+		}
+	}	
+	8129.1.1={
+		effect = { change_martial = 4 set_character_flag = tamed_dragon }
+	}
+	8130.6.1={
+		death = {
+			# Killed by Sunfyre
+			death_reason = death_duel
+			killer = 77990012
+		}
+	}
+}
+77990018 = {
+	name="Stormcloud"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 4
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_4
+	
+	disallow_random_traits = yes
+	
+	mother = 77990008 #Meleys
+	#father = 77015 #Aegon
+	
+	8124.4.1 = {
+		birth="8124.4.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 77015
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}
+		}
+	}	
+	8129.1.1={
+		effect = { change_martial = 4 }
+	}
+	8129.12.1={
+		add_trait = wounded_dragon
+		death = {
+			death_reason = death_trait
+		}
+	}
+}
+77990019 = {
+	name="Morghul"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 4
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_11
+	
+	mother = 77990006 #Dreamfyre
+	#father = 77138 #Jaehaera
+	
+	disallow_random_traits = yes
+	
+	8128.1.1 = {
+		birth="8128.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 77138
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}
+		}
+	}	
+	8129.1.1={
+		effect = { change_martial = 1 }
+	}
+	8130.5.22={
+		death = {
+			death_reason = death_rabble #Died in the storming of the dragonpit
+		}
+	}
+}
+77990020 = {
+	name="Shrykos"
+	dynasty = 497000
+	female=yes
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 4
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_3
+	
+	disallow_random_traits = yes
+	
+	mother = 77990006 #Dreamfyre
+	#father = 60500496 #Jaehaerys
+	
+	8128.1.1 = {
+		birth="8128.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }	
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon	
+			
+			add_friend = 60500496 
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}
+		}
+	}	
+	8129.1.1={
+		effect = { change_martial = 1 }
+	}
+	8130.5.22={
+		death = {
+			death_reason = death_rabble #Died in the storming of the dragonpit
+		}
+	}
+}
+77990021 = {
+	name="Cannibal"
+	dynasty=496 #Made a temp targ to make sure he isnt culled
+		
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_1
+	add_trait = wroth_dragon
+	add_trait = lunatic_dragon
+	add_trait = ravenous_dragon
+	
+	disallow_random_traits = yes
+	
+	father = 77990001 #balerion
+	
+	8053.1.1 = {
+		birth="8053.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			b_derlyn = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}			
+			dynasty = 497000
+		}
+	}	
+	8057.1.1={
+		effect = { change_martial = 4 }
+	}
+	8062.1.1={
+		effect = { change_martial = 4 }
+	}
+	8072.1.1={
+		effect = { change_martial = 8 }
+	}
+	8082.1.1={
+		effect = { change_martial = 8 }
+	}
+	8092.1.1={
+		effect = { change_martial = 8 }
+	}
+	8102.1.1={
+		effect = { change_martial = 8 }
+	}
+	8112.1.1={
+		effect = { change_martial = 8 }
+	}	
+	8122.1.1={
+		effect = { change_martial = 7 }
+	}
+	8142.1.1={ #alive after dance, dead by 8153
+		death="8142.1.1"
+		martial = 62
+		dynasty = 497000
+	}
+}
+77990022 = {
+	name="Sheepstealer"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_13
+	add_trait = ugly_dragon
+	add_trait = wroth_dragon
+	add_trait = ravenous_dragon
+	
+	disallow_random_traits = yes
+	
+	mother = 77990007 #Silverwing
+	father = 77990005 #Vermithor
+	
+	8058.1.1 = {
+		birth="8058.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			b_derlyn = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}			
+		}
+	}	
+	8063.1.1={
+		effect = { change_martial = 4 }
+	}
+	8068.1.1={
+		effect = { change_martial = 4 }
+	}
+	8078.1.1={
+		effect = { change_martial = 6 }
+	}
+	8088.1.1={
+		effect = { change_martial = 6 }
+	}
+	8098.1.1={
+		effect = { change_martial = 6 }
+	}
+	8108.1.1={
+		effect = { change_martial = 6 }
+	}
+	8118.1.1={
+		effect = { change_martial = 6 }
+	}	
+	8128.1.1={
+		effect = { change_martial = 5 }
+	}
+	8129.4.1 = {
+		effect = {		
+			add_friend = 30509001 #Nettles
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}
+		}
+	}
+	8131.1.8={ #Never seen again after the dance
+		death = {
+			death_reason = death_missing 
+		}
+		martial=48
+		#father=30509001
+	}
+}
+77990023 = {
+	name="Grey Ghost"
+	dynasty = 497000
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_6
+	add_trait = shy_dragon
+	
+	disallow_random_traits = yes
+	
+	mother = 77990007 #Silverwing
+	father = 77990005 #Vermithor
+	
+	8073.1.1={
+		birth="8073.1.1"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			b_derlyn = {
+				holder_scope = {
+					ROOT = { move_character = PREV }
+				}
+			}			
+		}
+	}
+	8077.1.1={
+		effect = { change_martial = 4 }
+	}
+	8082.1.1={
+		effect = { change_martial = 4 }
+	}
+	8092.1.1={
+		effect = { change_martial = 8 }
+	}
+	8102.1.1={
+		effect = { change_martial = 7 }
+	}
+	8112.1.1={
+		effect = { change_martial = 7 }
+	}	
+	8122.1.1={
+		effect = { change_martial = 7 }
+	}
+	8130.5.1={
+		death = {
+			# Killed by Sunfyre
+			death_reason = death_duel
+			killer = 77990012
+		}
+		martial = 39
+	}
+}
+#The last dragon
+77990024 = {
+	name="Morning"
+	dynasty = 497000
+	female=yes
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 2
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_15
+	
+	disallow_random_traits = yes
+	
+	mother = 77990011 #Syrax
+	
+	8129.5.1={
+		birth="8129.5.1"
+		add_trait=sickly_dragon
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			add_friend = 31052 #Rhaena
+			random_friend = {
+				liege = { ROOT = { move_character = PREV } }						
+			}
+		}
+	}	
+	8130.1.1={
+		effect = { change_martial = 4 set_character_flag = tamed_dragon }
+	}
+	8153.1.1 = {
+		add_trait = sickly_dragon
+		death = {
+			death_reason = death_sickly_dragon
+		}
+	}
+}
+###Dany's Dragons###
+77990026 = {
+	name="Drogon"
+	dynasty = 497001
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_1
+	add_trait = strong_dragon
+	add_trait = wroth_dragon
+	
+	disallow_random_traits = yes
+	
+	father = 77990029 #unknown dragon
+	mother = 77041 #Dany
+	
+	8298.10.10={
+		birth="8298.10.10"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			mother = {
+				liege = {
+					ROOT = { move_character = PREV }
+				}
+				add_friend = ROOT
+			}			
+		}
+	}	
+	8300.1.1={
+		effect = { 			
+			change_martial = 7
+		}
+	}	
+}
+77990027 = {
+	name="Rhaegal"
+	dynasty = 497001
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_2
+	add_trait = wroth_dragon
+	
+	disallow_random_traits = yes
+	
+	father = 77990029 #unknown dragon
+	mother = 77041 #Dany
+	
+	8298.10.10={
+		birth="8298.10.10"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			set_character_flag = dany_dragon #stops him being nicked by someone
+			mother = {
+				liege = {
+					ROOT = { move_character = PREV }
+				}
+			}			
+		}
+	}	
+	8300.1.1={
+		effect = { 			
+			change_martial = 4
+		}
+	}	
+}
+77990028 = {
+	name="Viserion"
+	dynasty = 497001
+	
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 0
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_3
+	
+	disallow_random_traits = yes
+	
+	father = 77990029 #unknown dragon
+	mother = 77041 #Dany
+	
+	8298.10.10={
+		birth="8298.10.10"
+		effect = { 			
+			#character_event = { id = dragon.0 }
+			remove_trait = dragon #This ensures the dragon is 'immortal/incapable'
+			add_trait = dragon
+			
+			set_character_flag = dany_dragon #stops him being nicked by someone
+			mother = {
+				liege = {
+					ROOT = { move_character = PREV }
+				}
+			}
+		}
+	}	
+	8300.1.1={
+		effect = { 			
+			change_martial = 4
+		}
+	}	
+}
+77990029 = {
+	name="Unknown Dragon"
+	dynasty = 497001
+
+	religion="dragon_rel"
+	culture="dragon_culture"
+	
+	martial = 62
+	
+	add_trait="dragon"
+	add_trait="misguided_warrior"
+	add_trait = dragon_1
+	add_trait = wroth_dragon
+	add_trait = lunatic_dragon
+	
+	disallow_random_traits = yes
+	
+	8053.1.1 = {
+		birth="8053.1.1"
+		effect = { death = yes }
+	}	
+	8142.1.1={
+		death="8142.1.1"
+	}
+}
+#Nagga the Sea Dragon
+1836582 = {
+	name = "Nagga"
+	dynasty = 1836582
+	
+	religion = dragon_rel
+	culture="dragon_culture"
+	
+	martial = 120
+	
+	add_trait = dragon
+	add_trait = misguided_warrior
+	add_trait = dragon_12
+	add_trait = strong_dragon
+	add_trait = wroth_dragon
+	
+	disallow_random_traits = yes
+	
+	father = 750066
+	
+	1.1.2 = {
+		birth="1.1.2"
+		give_nickname = nick_sea_dragon
+		effect = { 			
+			#character_event = { id = dragon.0 }		
+		}
+	}
+	300.1.1 = {
+		death = {
+			# Killed by the Grey King
+			death_reason = death_duel
+			killer = 750066
+		}
+	}
+}

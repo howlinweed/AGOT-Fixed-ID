@@ -1,0 +1,62 @@
+#CODE;ENGLISH;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+REVOKE_TITLE_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! revoked a landed title from §Y[Recipient.GetTitledName]§!;[Actor.Get_Le_Title]§Y[Actor.GetTitledName]§! a révoqué un titre terrien [Recipient.Get_du_Title]§Y[Recipient.GetTitledName]§!;§Y[Actor.GetTitledName]§! hat §Y[Recipient.GetTitledName]§! einen Landtitel entzogen;;§Y[Actor.GetTitledName]§! retiró un título a §Y[Recipient.GetTitledName]§!;;;;;;;;;x
+GRANT_LANDED_TITLE_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! granted a landed title to §Y[Recipient.GetTitledName]§!;[Actor.Get_Le_Title]§Y[Actor.GetTitledName]§! a accordé un titre terrien [Recipient.Get_au_Title]§Y[Recipient.GetTitledName]§!;§Y[Actor.GetTitledName]§! hat §Y[Recipient.GetTitledName]§! einen Landtitel gewährt;;§Y[Actor.GetTitledName]§! otorgó un título a §Y[Recipient.GetTitledName]§!;;;;;;;;;x
+IMPRISON_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! imprisoned §Y[Recipient.GetTitledName]§!;[Actor.Get_Le_Title]§Y[Actor.GetTitledName]§! a emprisonné [Recipient.Get_le_Title]§Y[Recipient.GetTitledName]§!;§Y[Actor.GetTitledName]§! kerkerte §Y[Recipient.GetTitledName]§! ein;;§Y[Actor.GetTitledName]§! encarcela a §Y[Recipient.GetTitledName]§!;;;;;;;;;x
+EXILE_IMPRISONED_VOTE;§Y[Actor.GetTitledName]§! banished §Y[Recipient.GetTitledName]§!;[Actor.Get_Le_Title]§Y[Actor.GetTitledName]§! a banni [Recipient.Get_le_Title]§Y[Recipient.GetTitledName]§!;§Y[Actor.GetTitledName]§! verbannte §Y[Recipient.GetTitledName]§!;;§Y[Actor.GetTitledName]§! destierra a §Y[Recipient.GetTitledName]§!;;;;;;;;;x
+EXECUTE_IMPRISONED_VOTE;§Y[Actor.GetTitledName]§! executed §Y[Recipient.GetTitledName]§!;[Actor.Get_Le_Title]§Y[Actor.GetTitledName]§! a exécuté [Recipient.Get_le_Title]§Y[Recipient.GetTitledName]§!;§Y[Actor.GetTitledName]§! richtete §Y[Recipient.GetTitledName]§! hin;;§Y[Actor.GetTitledName]§! ejecuta a §Y[Recipient.GetTitledName]§!;;;;;;;;;x
+RANSOM_CHARACTER_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! ransomed §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+COUNCIL_VOTE_FOR_SETUP;Voted For;A voté pour;Stimmte für;;Votado a favor;;;;;;;;;x
+COUNCIL_VOTE_FOR_LOG;$INTERACTION$\nThe Council voted for it:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$.;$INTERACTION$\nLe Conseil a voté pour :\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$.;$INTERACTION$\nDer Rat stimmte dafür:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$.;;$INTERACTION$\nEl Consejo votó a favor:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$.;;;;;;;;;x
+COUNCIL_VOTE_AGAINST_SETUP;Voted Against;A voté contre;Stimmte gegen;;Votado en contra;;;;;;;;;x
+COUNCIL_VOTE_AGAINST_LOG;$INTERACTION$\nThe Council voted against it:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$.;$INTERACTION$\nLe Conseil a voté contre :\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$ a voté contre.;$INTERACTION$\nDer Rat stimmte dagegen:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$.;;$INTERACTION$\nEl Consejo votó en contra:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$ votó en contra.;;;;;;;;;x
+COUNCIL_VOTE_ABSTAINED_SETUP;Vote Abstained ;Abstention ;Stimme enthalten ;;Abstención;;;;;;;;;x
+COUNCIL_VOTE_ABSTAINED_LOG;$INTERACTION$\nThe Council abstained from voting:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$.;$INTERACTION$\nLe Conseil s'est abstenu de voter :\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$ a voté contre.;$INTERACTION$\nDer Rat kam zu keiner Einigung:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$ stimmte dagegen.;;$INTERACTION$\nEl Consejo se abstuvo de votar:\n$COUNCIL_RESULT$\n$CHARACTER_RESULT|Y$ votó contra él.;;;;;;;;;x
+REVOKE_FREEHOLD_VOTE;§Y[Actor.GetTitledName]§! revoked a freehold from §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+GRANT_LP_VOTE;§Y[Actor.GetTitledName]§! granted a lord paramount to §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+GRANT_LP_LANDLESS_VOTE;§Y[Actor.GetTitledName]§! granted a lord paramount to §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+GRANT_ROYAL_PRIVILEGE_VOTE;§Y[Actor.GetTitledName]§! granted a royal privilege to §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+REVOKE_ROYAL_PRIVILEGE_VOTE;§Y[Actor.GetTitledName]§! revoked a royal privilege from §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+SEEK_RAIDING_REDRESS_VOTE;§Y[Actor.GetTitledName]§! declared a war to seek raiding redress from §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+DEMAND_RETURN_OF_VALYRIAN_STEEL_VOTE;§Y[Actor.GetTitledName]§! declared a war to reclaim their cherished valyrian steel from the dastardly §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+ASSIGN_VOTER_TITLE_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! has assigned §Y[Recipient.GetTitledName]§! to the council;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+REVOKE_VOTER_TITLE_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! has removed §Y[Recipient.GetTitledName]§! from the council;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+ABSORB_CLAN_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! has abosorbed §Y[Recipient.GetTitledName]§!'s clan;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+DECLARE_FEUD_VOTE;§Y[Actor.GetTitledName]§! has declared a feud with §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+INSULT_CHARACTER_VOTE;§Y[Actor.GetTitledName]§! has sent a formal insult to §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+NW_GRANT_COMMAND_VOTE;§Y[Actor.GetTitledName]§! has granted a command to §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+RANSOM_ALL_VOTE;§Y[Actor.GetTitledName]§! has decided to ransom all [Actor.GetHerHis] prisoners;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+VASSAL_CASTRATE_DECISION_AGOT_VOTE;§Y[Actor.GetTitledName]§! has decided to castrate §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+VASSAL_BLINDING_DECISION_AGOT_VOTE;§Y[Actor.GetTitledName]§! has decided to blind §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+BANISH_PRISONER_VOTE;§Y[Actor.GetTitledName]§! has decided to banish §Y[Recipient.GetTitledName]§! from [Actor.GetHerHis] realm;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+TAKE_PRISONER_AS_WIFE_VOTE;§Y[Actor.GetTitledName]§! has decided to take §Y[Recipient.GetTitledName]§! as [Actor.GetHerHis] concubine;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+TORTURE_PRISONER_VOTE;§Y[Actor.GetTitledName]§! has decided to torture §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+PRISONER_TO_OBILETTE_VOTE;§Y[Actor.GetTitledName]§! has decided to send §Y[Recipient.GetTitledName]§! to the obilette;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+PRISONER_TORTURE_VOTE;§Y[Actor.GetTitledName]§! has decided to torture §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+PRISONER_MUTILATE_VOTE;§Y[Actor.GetTitledName]§! has decided to mutilate §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+PRISONER_HUMILIATION_VOTE;§Y[Actor.GetTitledName]§! has decided to humiliate §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+SELL_PRISONER_VOTE;§Y[Actor.GetTitledName]§! has decided to sell §Y[Recipient.GetTitledName]§! into slavery;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+ENSLAVE_PRISONER_VOTE;§Y[Actor.GetTitledName]§! has decided to enslave §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+RECRUIT_PRISONER_VOTE;§Y[Actor.GetTitledName]§! has decided to grant §Y[Recipient.GetTitledName]§! [Recipient.GetHerHis] freedom and employ [Recipient.GetHerHim];FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+BREAK_NON_AGRESSION_PACT_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! has broken the Non-Agression_pact with §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+DISSOLVE_ALLIANCE_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! has dissolved [Actor.GetHerHis] alliance with §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+FORM_NON_AGRESSION_PACT_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! has formed a Non-Agression_pact with §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+FORM_ALLIANCE_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! has formed an alliance with §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+MAKE_NOBLE_VOTE;§Y[Actor.GetTitledName]§! has raised §Y[Recipient.GetTitledName]§! to nobility;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+NOMINATE_PRINCE_VOTE;§Y[Actor.GetTitledName]§! has princed §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+NAME_CO_TRIARCH_FOR_LIFE_VOTE;§Y[Actor.GetTitledName]§! has named §Y[Recipient.GetTitledName]§! as [Actor.GetHerHis] Co-Triarch For Life;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+TRANSFER_VASSAL_INTERACTION_VOTE;§Y[Actor.GetTitledName]§! has transfered a vassal contract to  §Y[Recipient.GetTitledName]§!;FRENCH;GERMAN;;SPANISH;;;;;;;;;x
+
+# law_voting_power_0
+# law_voting_power_1
+# banish_voting_power_0
+# banish_voting_power_1
+# execution_voting_power_0
+# execution_voting_power_1
+# revoke_title_voting_power_0
+# revoke_title_voting_power_1
+# grant_title_voting_power_0
+# grant_title_voting_power_1
+# imprison_voting_power_0
+# imprison_voting_power_1
+# war_voting_power_0
+# war_voting_power_1

@@ -1,0 +1,429 @@
+namespace = dynamic_coa
+
+#on game load/start, update CoAs
+character_event = {
+	id = dynamic_coa.0
+	
+	is_triggered_only = yes
+	only_rulers = yes
+	hide_window = yes
+	
+	trigger = { 
+		NOT = { has_game_rule = { name = dynamic_coa value = off } }
+		has_landed_title = e_rebels
+	}
+	
+	immediate = {
+		if = {
+			limit = { NOT = { has_global_flag = dynamic_coa_initialised } }
+			any_character = {
+				limit = {
+					OR = {
+						dynasty = 496  
+						dynasty = 57  
+						dynasty = 7000  
+						dynasty = 52  
+						dynasty = 364  
+						dynasty = 38  
+						dynasty = 30  
+						dynasty = 1440  
+						dynasty = 36  
+						dynasty = 50  
+						dynasty = 41  
+						dynasty = 174411  
+						dynasty = 42  
+						dynasty = 1197  
+						dynasty = 174410  
+						dynasty = 51  
+						dynasty = 45  
+						dynasty = 46  
+						dynasty = 59
+						dynasty = 87
+						dynasty = 1559
+						dynasty = 93  
+						dynasty = 89  
+						dynasty = 80  
+						dynasty = 62  
+						dynasty = 68  
+						dynasty = 79  
+						dynasty = 84  
+						dynasty = 126  
+						dynasty = 102  
+						dynasty = 63859  
+						dynasty = 1443  
+						dynasty = 70  
+						dynasty = 83  
+						dynasty = 101  
+						dynasty = 60  
+						dynasty = 61  
+						dynasty = 88  
+						dynasty = 104  
+						dynasty = 105  
+						dynasty = 106  
+						dynasty = 159  
+						dynasty = 601  
+						dynasty = 127  
+						dynasty = 150  
+						dynasty = 128  
+						dynasty = 153  
+						dynasty = 157  
+						dynasty = 137  
+						dynasty = 174435  
+						dynasty = 174430  
+						dynasty = 174432  
+						dynasty = 174399  
+						dynasty = 355  
+						dynasty = 146  
+						dynasty = 356  
+						dynasty = 143  
+						dynasty = 359  
+						dynasty = 178  
+						dynasty = 161  
+						dynasty = 174  
+						dynasty = 187  
+						dynasty = 177  
+						dynasty = 182  
+						dynasty = 186  
+						dynasty = 176  
+						dynasty = 189  
+						dynasty = 190  
+						dynasty = 197  
+						dynasty = 196  
+						dynasty = 227  
+						dynasty = 228  
+						dynasty = 221  
+						dynasty = 208  
+						dynasty = 216  
+						dynasty = 233  
+						dynasty = 199
+						dynasty = 207  
+						dynasty = 213  
+						dynasty = 230  
+						dynasty = 217  
+						dynasty = 225  
+						dynasty = 200  
+						dynasty = 212  
+						dynasty = 203  
+						dynasty = 253  
+						dynasty = 1254  
+						dynasty = 296  
+						dynasty = 285  
+						dynasty = 281  
+						dynasty = 235  
+						dynasty = 250  
+						dynasty = 298  
+						dynasty = 270  
+						dynasty = 1428  
+						dynasty = 288  
+						dynasty = 261  
+						dynasty = 247  
+						dynasty = 258  
+						dynasty = 265  
+						dynasty = 260  
+						dynasty = 317 
+						dynasty = 498						
+						dynasty = 1544  
+						dynasty = 316  
+						dynasty = 330  
+						dynasty = 329  
+						dynasty = 306  
+						dynasty = 307  
+						dynasty = 319  
+						dynasty = 54  
+						dynasty = 303  
+						dynasty = 301  
+						dynasty = 9110  
+						dynasty = 302  
+						dynasty = 304  
+						dynasty = 321  
+						dynasty = 327  
+						dynasty = 322  
+						dynasty = 311  
+						dynasty = 1  
+						dynasty = 16  
+						dynasty = 14  
+						dynasty = 12  
+						dynasty = 13  
+						dynasty = 10  
+						dynasty = 9  
+						dynasty = 15  
+						dynasty = 18  
+						dynasty = 20  
+						dynasty = 4  
+						dynasty = 107  
+						dynasty = 66  
+						dynasty = 110  
+						dynasty = 120  
+						dynasty = 116  
+						dynasty = 118  
+						dynasty = 174421  
+						dynasty = 174419  
+						dynasty = 174420  
+						dynasty = 122  
+						dynasty = 112  
+						dynasty = 121  
+						dynasty = 114  
+						dynasty = 119  
+						dynasty = 109
+						dynasty = 149
+						dynasty = 450204  
+						dynasty = 450205  
+						dynasty = 450206  
+						dynasty = 450207  
+						dynasty = 450228  
+						dynasty = 450229  
+						dynasty = 450230  
+						dynasty = 450231  
+						dynasty = 450200  
+						dynasty = 450201  
+						dynasty = 450202  
+						dynasty = 450203  
+						dynasty = 450209  
+						dynasty = 450210  
+						dynasty = 450208  
+						dynasty = 450214  
+						dynasty = 450215  
+						dynasty = 450216  
+						dynasty = 450217  
+						dynasty = 450218  
+						dynasty = 450219  
+						dynasty = 450236  
+						dynasty = 450237  
+						dynasty = 450238  
+						dynasty = 450239  
+						dynasty = 450220  
+						dynasty = 450211  
+						dynasty = 450212  
+						dynasty = 450213  
+						dynasty = 450224  
+						dynasty = 450225  
+						dynasty = 450226  
+						dynasty = 450227  
+						dynasty = 450232  
+						dynasty = 450233  
+						dynasty = 450234  
+						dynasty = 450235  
+						dynasty = 237
+						dynasty = 234
+						dynasty = 248
+						dynasty = 496029
+						dynasty = 184
+						dynasty = 450221
+						dynasty = 450222
+						dynasty = 450223
+					}
+				}
+				set_dynasty_flag = has_dynamic_coa
+			}
+			set_global_flag = dynamic_coa_initialised
+		}
+		any_title = {
+			limit = {
+				NOT = { tier = BARON }
+				has_holder = yes		
+			}
+			reset_coa = THIS
+			clr_title_flag = has_dynamic_coa
+		}
+		any_playable_ruler = {
+			limit = {
+				higher_tier_than = COUNT 
+				has_dynasty_flag = has_dynamic_coa
+			}
+			character_event = { id = dynamic_coa.1 days = 1 }
+		}
+	}
+}	
+character_event = { #also called from events when a ruler changes dynasty
+	id = dynamic_coa.1
+	
+	is_triggered_only = yes
+	only_rulers = yes
+	hide_window = yes
+	
+	trigger = { 
+		NOT = { tier = BARON }	
+		OR = {
+			has_game_rule = { name = dynamic_coa value = default }
+			AND = {
+				has_game_rule = { name = dynamic_coa value = dynasty_head }
+				dynasty_head = { character = ROOT }
+			}
+		}		
+	}
+	
+	immediate = {
+		if = {
+			limit = {
+				NAND = {
+					higher_tier_than = COUNT
+					has_dynasty_flag = has_dynamic_coa
+					can_press_claims_trigger = yes
+					is_republic = no
+					is_theocracy = no
+					NOT = { is_in_interregnum_trigger = yes }
+				}	
+			}
+			any_demesne_title = {
+				limit = {
+					NOT = { tier = BARON }
+					has_title_flag = has_dynamic_coa
+				}
+				reset_coa = THIS
+				clr_title_flag = has_dynamic_coa
+			}			
+			break = yes
+		}
+		any_demesne_title = {
+			limit = {
+				NOT = { tier = BARON }
+				has_title_flag = has_dynamic_coa
+				NOR = {
+					title = e_iron_throne
+					title = e_new_valyria
+					is_primary_holder_title = yes
+					ROOT = {
+						capital_scope = {
+							OR = {
+								county = { title = PREVPREVPREV }
+								duchy = { title = PREVPREVPREV }
+								kingdom = { title = PREVPREVPREV }
+								empire = { title = PREVPREVPREV }
+							}
+						}
+					}
+				}
+			}
+			reset_coa = THIS
+			clr_title_flag = has_dynamic_coa
+		}
+		any_demesne_title = {
+			limit = {
+				NOT = { tier = BARON }
+				is_landless_type_title = no
+				controls_religion = no
+				OR = {
+					title = e_iron_throne
+					title = e_new_valyria
+					is_primary_holder_title = yes
+					ROOT = {
+						capital_scope = {
+							OR = {
+								county = { title = PREVPREVPREV }
+								duchy = { title = PREVPREVPREV }
+								kingdom = { title = PREVPREVPREV }
+								empire = { title = PREVPREVPREV }
+							}
+						}
+					}
+				}
+			}
+			set_title_flag = has_dynamic_coa
+			set_dynamic_coa_effect = yes
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}
+#Check CoAs on new holder
+character_event = {
+	id = dynamic_coa.2
+	
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = {	
+		FROM = { NOT = { tier = BARON } }
+		higher_tier_than = COUNT
+		has_dynasty_flag = has_dynamic_coa
+		OR = {
+			has_game_rule = { name = dynamic_coa value = default }
+			AND = {
+				has_game_rule = { name = dynamic_coa value = dynasty_head }
+				dynasty_head = { character = ROOT }
+			}
+		}
+		is_republic = no
+		is_theocracy = no
+		NOT = { is_in_interregnum_trigger = yes }
+		NOR = {
+			trait = kingsguard
+			trait = nightswatch
+			trait = dosh_khaleen
+			trait = maester
+			trait = archmaester
+			trait = red_priest
+			trait = grace
+			trait = warlock
+			trait = shadowbinder
+			trait = bearded_priest
+			trait = septa
+			trait = septon
+			trait = love_priest
+		}
+		FROM = {
+			is_landless_type_title = no
+			controls_religion = no
+			OR = {
+				title = e_iron_throne
+				title = e_new_valyria
+				is_primary_holder_title = yes
+				ROOT = {
+					capital_scope = {
+						OR = {
+							county = { title = ROOT_FROM }
+							duchy = { title = ROOT_FROM }
+							kingdom = { title = ROOT_FROM }
+							empire = { title = ROOT_FROM }
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	immediate = {	
+		FROM = {
+			reset_coa = THIS
+			set_title_flag = has_dynamic_coa
+			set_dynamic_coa_effect = yes			
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}
+character_event = {
+	id = dynamic_coa.3
+	
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = { 
+		NOT = { has_game_rule = { name = dynamic_coa value = off } }
+		FROM = { 
+			NOT = { tier = BARON } 
+			has_title_flag = has_dynamic_coa
+		}
+		OR = {
+			NOT = { has_dynasty_flag = has_dynamic_coa }
+			is_republic = yes
+			is_theocracy = yes
+			is_in_interregnum_trigger = yes
+		}	
+	}
+	
+	immediate = {
+		FROM = {
+			reset_coa = THIS
+			clr_title_flag = has_dynamic_coa
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}

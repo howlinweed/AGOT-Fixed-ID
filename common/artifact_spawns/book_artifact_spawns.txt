@@ -1,0 +1,909 @@
+book_blood_and_fire = {
+    max_amount = 1
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_the_citadel
+		}
+	}
+    artifacts = {
+        book_blood_and_fire = {
+            value = 1
+        }
+    }
+}
+book_annals_of_the_rivers = {
+    max_amount = 1
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = b_peasedale
+		}
+	}
+    artifacts = {
+        book_annals_of_the_rivers = {
+            value = 1
+        }
+    }
+}
+book_seven_pointed_star = {
+    max_amount = 15
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			religion = the_seven
+			is_ruler = yes
+			learning = 10
+			OR = {
+				trait = zealous
+				is_theocracy = yes
+			}
+		}
+	}
+    artifacts = {
+        book_seven_pointed_star = {
+            value = 1
+        }
+    }
+}
+book_of_lost_books = {
+    max_amount = 2
+    spawn_date = 8290.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8290 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			OR = {
+				character = 88122 #Marwyn
+				character = 122 #Rodrik the Reader
+			}
+		}
+	}
+    artifacts = {
+        book_of_lost_books = {
+            value = 1
+        }
+    }
+}
+book_conquest_of_dorne = {
+    max_amount = 1
+    spawn_date = 8158.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8158 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_iron_throne
+		}
+	}
+    artifacts = {
+		book_conquest_of_dorne = {
+            value = 1
+        }
+    }
+}
+book_dragonkin = {
+    max_amount = 1
+    spawn_date = 8250.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8250 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = d_nightswatch
+		}
+	}
+    artifacts = {
+		book_dragonkin = {
+            value = 1
+        }
+    }
+}
+book_dragons_wyrms_and_wyverns = { #pre-burning
+    max_amount = 20
+    spawn_date = 8080.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8080 }
+		}
+		modifier = {
+			factor = 0
+			year = 8165 #Baelor burnt the book
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			OR = {
+				has_landed_title = e_iron_throne
+				has_landed_title = c_the_citadel
+				# character = 2000777
+				c_2000777 = { character = PREV }
+			}	
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = BARON
+			capital_scope = { 
+				region = world_westeros 
+				NOT = { region = world_beyond_the_wall }
+			}		
+			NOT_mythical_creature_trigger = yes
+		}
+		modifier = {
+			factor = 2
+			higher_tier_than = DUKE			
+		}
+	}
+    artifacts = {
+		book_dragons_wyrms_and_wyverns = {
+            value = 1
+        }
+    }
+}
+book_dragons_wyrms_and_wyverns_RARE = { #post burning
+    max_amount = 3
+    spawn_date = 8165.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8165 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 2
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = BARON
+			capital_scope = { 
+				region = world_westeros 
+				NOT = { region = world_beyond_the_wall }
+			}	
+			NOT_mythical_creature_trigger = yes		
+		}
+		modifier = {
+			factor = 2
+			higher_tier_than = DUKE			
+		}
+	}
+    artifacts = {
+		book_dragons_wyrms_and_wyverns = {
+            value = 1
+        }
+    }
+}
+book_engines_of_war = {
+    max_amount = 7
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			OR = {
+				has_landed_title = c_winterfell
+				has_landed_title = c_the_citadel
+			}	
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				NOT = { region = world_beyond_the_wall }
+				NOT = { region = world_stepstones }
+				NOT = { region = world_basilisk_isles }
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+		modifier = {
+			factor = 2
+			capital_scope = {
+				OR = {
+					region = world_north_valyria
+					region = world_volantis
+				}	
+			}			
+		}
+	}
+    artifacts = {
+		book_engines_of_war = {
+            value = 1
+        }
+    }
+}
+book_fires_of_the_freehold = {
+    max_amount = 5
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				NOT = { region = world_westeros }
+				NOT = { region = world_stepstones }
+				NOT = { region = world_basilisk_isles }
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+		modifier = {
+			factor = 2
+			capital_scope = {
+				OR = {
+					region = world_north_valyria
+					region = world_volantis
+				}	
+			}			
+		}
+	}
+    artifacts = {
+		book_fires_of_the_freehold = {
+            value = 1
+        }
+    }
+}
+book_history_of_rhoynish_wars = {
+    max_amount = 1
+    spawn_date = 8000.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8000 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_iron_throne
+		}
+	}
+    artifacts = {
+		book_history_of_rhoynish_wars = {
+            value = 1
+        }
+    }
+}
+book_jade_compendium = {
+    max_amount = 1
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = d_nightswatch
+		}
+	}
+    artifacts = {
+		book_jade_compendium = {
+            value = 1
+        }
+    }
+}
+book_lineages_of_westeros = {
+    max_amount = 1
+    spawn_date = 8000.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8000 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_iron_throne
+		}
+	}
+    artifacts = {
+		book_lineages_of_westeros = {
+            value = 1
+        }
+    }
+}
+book_lives_of_four_kings = {
+    max_amount = 3
+    spawn_date = 8209.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8209 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			capital_scope = { 
+				region = world_westeros 
+				NOT = { region = world_beyond_the_wall }
+			}	
+			NOT_mythical_creature_trigger = yes		
+		}
+	}
+    artifacts = {
+		book_lives_of_four_kings = {
+            value = 1
+        }
+    }
+}
+book_lives_of_four_kings_B = { #the copy joffrey destroyed
+    max_amount = 1
+    spawn_date = 8209.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8209 }
+		}
+		modifier = {
+			factor = 0
+			year = 8299
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 9999
+			age = 21
+			character = 5190 #Tyrion		
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			capital_scope = { 
+				region = world_westeros 
+				NOT = { region = world_beyond_the_wall }
+			}	
+			NOT_mythical_creature_trigger = yes	
+		}	
+	}
+    artifacts = {
+		book_lives_of_four_kings = {
+            value = 1
+        }
+    }
+}
+book_lives_of_the_high_septons = {
+    max_amount = 1
+    spawn_date = 8200.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8200 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = k_dorne
+		}
+	}
+    artifacts = {
+		book_lives_of_the_high_septons = {
+            value = 1
+        }
+    }
+}
+book_signs_and_portents = {
+    max_amount = 1
+    spawn_date = 7950.1.1
+	
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 7950 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 9999
+			character = 88122 #Marwyn
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				NOT = { region = world_westeros }
+				NOT = { region = world_stepstones }
+				NOT = { region = world_basilisk_isles }
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+	}
+    artifacts = {
+		book_signs_and_portents = {
+            value = 1
+        }
+    }
+}
+book_summer_and_winter_annals = {
+    max_amount = 8
+    spawn_date = 7000.1.1
+	
+	spawn_chance = {
+		value = 100
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 9999
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				NOT = { region = world_westeros }
+				NOT = { region = world_stepstones }
+				NOT = { region = world_basilisk_isles }
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+		modifier = {
+			factor = 2
+			capital_scope = {
+				region = world_sarnor
+			}			
+		}
+	}
+    artifacts = {
+		book_summer_and_winter_annals = {
+            value = 1
+        }
+    }
+}
+book_the_world_of_ice_and_fire = {
+    max_amount = 1
+    spawn_date = 8300.1.1
+	
+	spawn_chance = {
+		value = 100
+		
+		modifier = {
+			factor = 0
+			NOT = { year = 8300 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = e_iron_throne
+		}
+	}
+    artifacts = {
+		book_the_world_of_ice_and_fire = {
+            value = 1
+        }
+    }
+}
+book_remnants_of_the_dragonlords = {
+    max_amount = 3
+    spawn_date = 8221.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8221 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				NOT = { region = world_westeros }
+				NOT = { region = world_stepstones }
+				NOT = { region = world_basilisk_isles }
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+	}
+    artifacts = {
+		book_remnants_of_the_dragonlords= {
+            value = 1
+        }
+    }
+}
+book_the_testimony_of_mushroom = { #pre-burning
+    max_amount = 16
+    spawn_date = 8129.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8129 }
+		}
+		modifier = {
+			factor = 0
+			year = 8165 #Baelor burnt the book
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			OR = {
+				has_landed_title = e_iron_throne
+				has_landed_title = c_the_citadel
+				# character = 2000777
+				c_2000777 = { character = PREV }
+			}	
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = BARON
+			capital_scope = { 
+				region = world_westeros 
+				NOT = { region = world_beyond_the_wall }
+			}		
+			NOT_mythical_creature_trigger = yes
+		}
+		modifier = {
+			factor = 2
+			higher_tier_than = DUKE			
+		}
+	}
+    artifacts = {
+		book_the_testimony_of_mushroom= {
+            value = 1
+        }
+    }
+}
+book_the_testimony_of_mushroom_RARE = {  #post burning
+    max_amount = 2
+    spawn_date = 8165.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8165 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 2
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = BARON
+			capital_scope = { 
+				region = world_westeros 
+				NOT = { region = world_beyond_the_wall }
+			}	
+			NOT_mythical_creature_trigger = yes		
+		}
+		modifier = {
+			factor = 2
+			higher_tier_than = DUKE			
+		}
+	}
+    artifacts = {
+		book_the_testimony_of_mushroom= {
+            value = 1
+        }
+    }
+}
+book_triumphs_and_defeats = {
+    max_amount = 3
+    spawn_date = 8090.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8090 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				region = world_westeros
+				NOT = { region = world_beyond_the_wall }
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+	}
+    artifacts = {
+		book_triumphs_and_defeats= {
+            value = 1
+        }
+    }
+}
+book_true_account_addam_duskendales_journeys = {
+    max_amount = 5
+    spawn_date = 7980.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 7980 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 1
+			higher_tier_than = BARON
+			capital_scope = { 
+				region = world_westeros 
+				NOT = { region = world_beyond_the_wall }
+			}	
+			NOT_mythical_creature_trigger = yes		
+		}
+		modifier = {
+			factor = 2
+			higher_tier_than = DUKE			
+		}
+	}
+    artifacts = {
+		book_true_account_addam_duskendales_journeys= {
+            value = 1
+        }
+    }
+}
+book_inventories = {
+    max_amount = 3
+    spawn_date = 8009.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8009 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				region = world_westeros
+				NOT = { region = world_beyond_the_wall }	
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+	}
+    artifacts = {
+		book_inventories = {
+            value = 1
+        }
+    }
+}
+book_the_measures_of_the_days = {
+    max_amount = 2
+    spawn_date = 7836.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 7836 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				NOT = { region = world_stepstones }
+				NOT = { region = world_basilisk_isles }
+				NOT = { region = world_beyond_the_wall }
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+	}
+    artifacts = {
+		book_the_measures_of_the_days = {
+            value = 1
+        }
+    }
+}
+book_observations_stepstones = {
+    max_amount = 3
+    spawn_date = 8263.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 8263 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			# character = 696969100  #Pycell			
+			c_696969100 = { character = PREV }  #Pycell
+		}
+		additive_modifier = {
+			value = 100
+			has_landed_title = c_the_citadel
+		}
+		additive_modifier = {
+			value = 1
+			higher_tier_than = COUNT
+			is_nomadic = no
+			capital_scope = { 
+				region = world_westeros
+				NOT = { region = world_beyond_the_wall }	
+			}	
+			NOT_mythical_creature_trigger = yes
+		}
+	}
+    artifacts = {
+		book_observations_stepstones = {
+            value = 1
+        }
+    }
+}
+book_before_the_dragons = {
+    max_amount = 5
+    spawn_date = 7890.1.1
+	spawn_chance = {
+		value = 100
+		modifier = {
+			factor = 0
+			NOT = { year = 7890 }
+		}
+	}
+    
+    weight = {
+		value = 0
+		additive_modifier = {
+			value = 100
+			has_landed_title = k_lorath
+		}
+		additive_modifier = {
+			value = 100
+			has_landed_title = k_pentos
+		}
+		modifier = {
+			factor = 2
+			capital_scope = {
+				region = world_free_cities
+			}			
+		}
+	}
+    artifacts = {
+		book_before_the_dragons = {
+            value = 1
+        }
+    }
+}

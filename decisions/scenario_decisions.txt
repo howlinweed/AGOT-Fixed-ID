@@ -1,0 +1,816 @@
+decisions = {
+	young_griff_targaryen = {
+		is_high_prio = yes
+		only_playable = yes
+		potential = {
+			demesne_size = 1
+			OR = {
+				has_landed_title = e_iron_throne
+				war = no
+			}	
+			OR = {
+				AND = {
+					OR = {
+						character = 125009
+						father_even_if_dead = { character = 125009 dynasty = ROOT }
+					}
+					NOT = { dynasty = 496 }	
+					NOT = { dynasty = 57 }				
+				}	
+				spouse = { 
+					character = 125009 
+					NOT = { dynasty = 496 }
+					NOT = { dynasty = 57 }	
+				}
+			}	
+			NOT = { trait = bastard }
+		}
+		allow = {
+			OR = {
+				has_landed_title = e_iron_throne
+				war = no
+			}
+			independent = yes
+			NOT = { is_inaccessible_trigger = yes }			
+		}
+		effect = {
+			if = {
+				limit = { character = 125009 }
+				custom_tooltip = { text = TOOLTIPAEGONSHERITAGE }
+				hidden_tooltip = { character_event = { id = invasions.105 } }#Set young griff's targaryen ancestry
+			}	
+			if = {
+				limit = { spouse = { character = 125009 } }
+				spouse = {
+					custom_tooltip = { text = TOOLTIPAEGONSHERITAGE }
+					hidden_tooltip = { character_event = { id = invasions.105 } }#Set young griff's targaryen ancestry
+				}	
+			}
+			if = {
+				limit = { father_even_if_dead = { character = 125009 dynasty = ROOT } }
+				any_child = {
+					limit = { dynasty = ROOT }
+					dynasty=496
+					clr_character_flag = high_valyrian
+					any_child = {
+						limit = { dynasty = ROOT }
+						dynasty=496
+						clr_character_flag = high_valyrian
+						any_child = {
+							limit = { dynasty = ROOT }
+							dynasty=496
+							clr_character_flag = high_valyrian
+						}
+					}
+				}			
+				any_sibling = {
+					limit = { dynasty = ROOT }
+					dynasty=496
+					clr_character_flag = high_valyrian
+					any_child = {
+						limit = { dynasty = ROOT }
+						dynasty=496
+						clr_character_flag = high_valyrian
+						any_child = {
+							limit = { dynasty = ROOT }
+							dynasty=496
+							clr_character_flag = high_valyrian
+							any_child = {
+								limit = { dynasty = ROOT }
+								dynasty=496
+								clr_character_flag = high_valyrian
+							}
+						}
+					}
+				}
+				dynasty=496
+				clr_character_flag = high_valyrian
+				has_missing = {
+					limit = { character = 77043 }
+					father_even_if_dead = {
+						ROOT = { father_even_if_dead = { dynasty=496 set_father = PREVPREV } }
+					}
+					mother_even_if_dead = {
+						ROOT = { father_even_if_dead = { set_mother = PREVPREV } }
+					}
+				}
+			}	
+			hidden_tooltip = {
+				create_character = {
+					female = yes
+					dynasty = random
+					age = 25
+				}
+				new_character = {
+					has_missing = { 
+						limit = { character = 77043 }
+						set_mother = PREV 
+						dynasty = PREV 
+					}
+					death = yes
+				}
+				create_character = {
+					female = no
+					dynasty = random
+					age = 25
+				}
+				new_character = {
+					has_missing = { 
+						limit = { character = 77043 }
+						set_father = PREV 
+						remove_trait = has_missing
+					}
+					death = yes
+				}
+				if = {
+					limit = { has_landed_title = e_iron_throne }
+					e_iron_throne = { set_coa = d_daemons_host }
+				}
+				if = {
+					limit = { has_landed_title = e_new_valyria }
+					e_new_valyria = { set_coa = d_daemons_host }
+				}
+				recalc_succession = yes
+			}	
+		}
+		ai_check_interval = 3
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	reveal_sansa = {
+		is_high_prio = yes
+		only_playable = yes
+		potential = {
+			is_ruler = yes
+			OR = {
+				AND = {
+					character = 94043 #Littlefinger
+					c_9266059 = {
+						is_alive = yes
+						is_ruler = no
+						liege = { character = ROOT }
+						NOT = { dynasty = 59 }
+					}
+				}
+				AND = {
+					character = 94027 #Harry the Heir
+					# forbid_marriage = {
+						# character = 9266059
+						# is_alive = yes
+						# has_character_flag = betrothed_to_harry_the_heir 
+						# NOT = { dynasty = 59 }
+						# OR = {
+							# father_even_if_dead = { is_alive = no }
+							# any_liege = { character = ROOT }
+						# }	
+					# }
+					c_9266059 = {
+						trait = forbid_marriage
+						is_alive = yes
+						has_character_flag = betrothed_to_harry_the_heir
+						NOT = { dynasty = 59 }
+						OR = {
+							father_even_if_dead = { is_alive = no }
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}	
+		}
+		allow = {
+			
+		}
+		effect = {
+			if = {
+				limit = { character = 94043 } #Littlefinger
+				c_9266059 = {
+					character_event = { id = feast_for_crows.26 tooltip = TOOLTIPfeast_for_crows.26 }
+					if = {
+						limit = { has_character_flag = betrothed_to_littlefinger }
+						clr_character_flag = betrothed_to_littlefinger
+						ROOT = { 
+							add_spouse = PREV 
+							hidden_tooltip = { remove_trait = forbid_marriage }
+						}
+					}
+					if = {
+						limit = { 
+							has_character_flag = betrothed_to_harry_the_heir 
+							forbid_marriage = { is_alive = yes character = 94027 }
+						}
+						clr_character_flag = betrothed_to_harry_the_heir 
+						forbid_marriage = {
+							limit = {
+								character = 94027
+								is_alive = yes
+							}
+							hidden_tooltip = { remove_trait = forbid_marriage }
+							add_spouse = PREV 
+						}
+					}
+				}
+			}
+			if = {
+				limit = { character = 94027 } #Harry the Heir
+				hidden_tooltip = { remove_trait = forbid_marriage }
+				c_9266059 = {
+					character_event = { id = feast_for_crows.26 tooltip = TOOLTIPfeast_for_crows.26 }
+					clr_character_flag = betrothed_to_harry_the_heir 
+					clr_character_flag = betrothed_to_harry_the_heir 
+					ROOT = { add_spouse = PREV }
+				}
+				# forbid_marriage = {
+					# limit = { character = 9266059 }
+					# character_event = { id = feast_for_crows.26 tooltip = TOOLTIPfeast_for_crows.26 }
+					# clr_character_flag = betrothed_to_harry_the_heir 
+					# clr_character_flag = betrothed_to_harry_the_heir 
+					# ROOT = { add_spouse = PREV }
+				# }
+			}
+			e_iron_throne = {
+				holder_scope = {
+					if = {
+						limit = {
+							OR = {
+								dynasty = 317
+								dynasty = 190
+							}
+						}
+						opinion = { who = ROOT modifier = opinion_traitor }
+					}
+				}
+			}
+		}
+		ai_check_interval = 4
+		ai_will_do = {
+			factor = 1
+			
+			modifier = {
+				factor = 0.4
+			}
+			modifier = {
+				factor = 10
+				k_vale = { holder_scope = { character = 94027 } }
+				any_courtier = { has_character_flag = betrothed_to_harry_the_heir }
+			}
+			modifier = {
+				factor = 10
+				character = 94027
+			}
+		}
+	}
+	
+	enforce_victory_AFFC = { #Decision to end wierd gridlock in Stormlands in AFFC
+		is_high_prio = yes
+		only_playable = yes
+		potential = {
+			is_ruler = yes
+			liege = { character = ROOT }
+			war = yes
+			OR = {
+				AND = { #Young griff vs Stannis
+					character = 125009
+					any_war = {
+						attacker = { character = ROOT }						
+						defender = { dynasty = 317 }
+						war_score = 100
+						using_cb = claim_stormlands_ACOK
+					}
+				}
+				AND = { #Iron throne vs Stannis
+					has_landed_title = e_iron_throne
+					any_war = {
+						defender = { character = ROOT }						
+						attacker = { dynasty = 317 }
+						NOT = { war_score = -99 }
+						using_cb = claim_iron_throne_ACOK
+					}
+				}					
+			}	
+		}
+		allow = {
+			
+		}
+		effect = {
+			if = { #Iron throne vs Stannis
+				limit = { 
+					has_landed_title = e_iron_throne
+					any_war = {
+						defender = { character = ROOT }						
+						attacker = { dynasty = 317 }
+						NOT = { war_score = -99 }
+						using_cb = claim_iron_throne_ACOK
+					}
+				}
+				any_war = {
+					limit = {
+						defender = { character = ROOT }						
+						attacker = { dynasty = 317 }
+						NOT = { war_score = -99 }
+						using_cb = claim_iron_throne_ACOK
+					}	
+					end_war = reverse_demand
+				}
+			}	
+			if = { #Young griff vs Stannis
+				limit = { 
+					character = 125009
+					any_war = {
+						attacker = { character = ROOT }						
+						defender = { dynasty = 317 }
+						war_score = 100
+						using_cb = claim_stormlands_ACOK
+					}
+				}
+				any_war = {
+					limit = {
+						attacker = { character = ROOT }						
+						defender = { dynasty = 317 }
+						war_score = 100
+						using_cb = claim_stormlands_ACOK
+					}	
+					end_war = success	
+				}
+			}	
+		}
+		ai_will_do = {
+			factor = 1000
+		}
+	}
+
+	declare_dornish_rebellion = {
+		is_high_prio = yes
+		only_playable = yes
+		potential = {
+			has_global_flag = dorne_supressed
+			k_dorne = { ROOT = { has_strong_claim = PREV } }
+			NOT = { has_landed_title = k_dorne }		
+			independent = no
+		}
+		allow = {		
+			k_dorne = {
+				ROOT = {
+					dynasty_head = { 
+						OR = {
+							character = ROOT 
+							NOT = { has_strong_claim = PREVPREV }
+						}	
+					}
+				}
+				holder_scope = {
+					OR = {
+						is_liege_of = ROOT
+						same_liege = ROOT
+					}
+					NAND = {
+						culture_group = dornish
+						capital_scope = { region = world_dorne }
+					}
+				}
+			}	
+			NOT = { is_inaccessible_trigger = yes }	
+			war = no	
+		}
+		effect = {
+			set_global_flag = conquest_of_dorne
+			clr_global_flag = dorne_supressed
+			hidden_tooltip = {
+				k_dorne = { add_pressed_claim = ROOT }
+				any_demesne_title = {
+					limit = { 
+						NOT = { tier = BARON } 
+						NOT = { tier = EMPEROR }
+					}				
+					set_variable = { which = "de_facto_empire" which = 1 } 
+					set_variable = { which = "de_facto_kingdom" which = 7 } 
+				}
+			}
+			k_dorne = {
+				holder_scope = {
+					if = {
+						limit = { is_liege_of = ROOT }
+						ROOT = {
+							war = { 
+								target = PREV
+								casus_belli = claim_on_liege 
+								thirdparty_title = PREVPREV
+							}
+						}
+					}	
+					if = {
+						limit = { same_liege = ROOT }
+						ROOT = {
+							war = { 
+								target = PREV
+								casus_belli = claim
+								thirdparty_title = PREVPREV
+							}
+						}
+					}
+				}
+			}
+			custom_tooltip = {
+				text = TOOLTIPdornish_rebellion
+				hidden_tooltip = {
+					k_dorne = {
+						holder_scope = {
+							any_realm_lord = {	
+								limit = { 
+									capital_scope = { region = world_dorne } 
+									liege = { has_landed_title = k_dorne } # Only direct vassals of the LP join sides
+									NOT = { character = ROOT }
+									NOT = { tier = BARON }
+									NOT = {
+										e_iron_throne = {
+											holder_scope = {
+												reverse_has_opinion_modifier = { modifier = opinion_targaryen_loyalist who = PREVPREV }
+											}
+										}
+									}
+								}
+								character_event = { id = conquest_of_dorne.17 }
+							}
+						}
+					}
+				}
+			}
+			if = { #only give extra troops if lord of dorne has another kingdom
+				limit = {
+					k_dorne = {
+						holder_scope = {
+							OR = {
+								tier = EMPEROR
+								num_of_king_titles = 2
+							}	
+						}
+					}	
+				}
+				capital_scope = {
+					ROOT = {
+						spawn_unit = {
+							province = PREV
+							owner = ROOT
+							leader = none
+							earmark = conquest_of_dorne_troops
+							troops = {
+								light_infantry = { 1500 1500 }
+								heavy_infantry = { 700 700 }
+								pikemen = { 300 300 }
+							}
+							disband_on_peace = yes
+							attrition = 0.5
+							maintenance = no
+						}
+					}
+				}
+			}	
+		}
+		ai_check_interval = 3
+		ai_will_do = {
+			factor = 10
+		}
+	}
+	legitimise_daeron_the_good = {
+		is_high_prio = yes
+		only_independent = yes
+		potential = {
+			independent = yes
+			has_landed_title = e_iron_throne
+			dynasty = 496
+			year = 8196
+			c_77023 = {
+				dynasty = 496
+				trait = bastard
+				real_father_even_if_dead = { character = 77020 } #aegon the unworthy
+			}
+		}
+		allow = {
+			war = no	
+		}
+		effect = {
+			c_77023 = {
+				remove_trait = bastard
+				remove_nickname = nick_waters
+				give_nickname = nick_the_good
+				real_father_even_if_dead = {
+					save_event_target_as = real_father_aegon
+					tooltip = {
+						c_77023 = {
+							set_father = PREV
+						}	
+					}	
+				}
+			}
+			custom_tooltip = {
+				text = TOOLTIPtargaryenregnalnumbers
+				hidden_tooltip = {
+					d_daemon_blackfyres_host = { #record blackfyre lineage in case of restoration
+						copy_title_history = e_iron_throne
+					}
+					d_daemons_host = { 
+						gain_title = ROOT 
+					}
+					e_iron_throne = {
+						copy_title_history = d_daemons_host
+					}		
+					character_event = { id = blackfyre_rebellion.104 days = 1 } #destroy temp titles
+				}
+			}
+			hidden_tooltip = {
+				event_target:real_father_aegon = { c_77023 = { set_father = PREV } }
+			}
+		}
+		ai_check_interval = 3
+		ai_will_do = {
+			factor = 1000
+		}
+	}
+	bastardise_daeron_the_good = {
+		is_high_prio = yes
+		only_independent = yes
+		potential = {
+			independent = yes
+			has_landed_title = e_iron_throne
+			dynasty = 57 #blackfyre
+			year = 8196
+			c_77023 = {
+				dynasty = 496
+				NOT = { trait = bastard }
+				father_even_if_dead = { character = 77020 } #aegon the unworthy
+			}
+		}
+		allow = {
+			war = no	
+		}
+		effect = {
+			c_77023 = {
+				custom_tooltip = {
+					text = TOOLTIPBLACKFYRECBBASTARD
+				}	
+			}
+			custom_tooltip = {
+				text = TOOLTIPblackfyreregnalnumbers
+				hidden_tooltip = {
+					d_daemons_host = { #record targaryen lineage in case of restoration
+						copy_title_history = e_iron_throne
+					}
+					if = {
+						limit = { NOT = { character = 77024 } }
+						d_daemon_blackfyres_host = { 
+							gain_title = ROOT 
+						}
+					}	
+					e_iron_throne = {
+						copy_title_history = d_daemon_blackfyres_host
+					}
+					character_event = { id = blackfyre_rebellion.104 days = 2 } #destroy temp titles
+				}
+			}
+			hidden_tooltip = {
+				kingsguard = { 
+					limit = { character = 77022 } #The Dragonknight
+					c_77023 = {
+						add_trait = bastard
+						give_nickname = nick_waters
+						father_even_if_dead = { save_event_target_as = real_father_aegon }
+						set_father = PREV 					
+					}	
+				}	
+				event_target:real_father_aegon = { c_77023 = { set_real_father = PREV } }
+			}
+		}
+		ai_check_interval = 3
+		ai_will_do = {
+			factor = 1000
+		}
+	}
+	skagosi_rebuild_ships = {
+		is_high_prio = yes
+		only_independent = yes
+		potential = {
+			is_ruler = yes
+			culture = skagosi
+			OR = {
+				has_landed_title = c_kingshouse
+				has_landed_title = c_deepdown
+				has_landed_title = c_driftwoodhall
+			}
+			NOT = { d_skagos = { has_title_flag = skagosi_rebuild_ships } }
+		}
+		allow = {
+			custom_tooltip = {
+				text = TOOLTIPINDEPENDENTCONDITION
+				hidden_tooltip = {
+					independent = yes
+					OR = {
+						tier = EMPEROR
+						primary_title = { NOT = { check_variable = { which = "de_facto_empire" value = 1 } } }
+					}	
+				}
+			}
+			completely_controls = d_skagos
+			wealth = 100
+		}
+		effect = {
+			custom_tooltip = {
+				text = TOOLTIPskagosi_rebuild_ships
+				hidden_tooltip = {
+					30 = { 
+						set_province_flag = skagosi_rebuild_ships 
+						any_province_holding = { 
+							limit = { holding_type = castle }
+							add_building = ca_asoiaf_skagosishipyard
+						}
+						any_province_holding = { 
+							limit = { holding_type = city }
+							add_building = ct_asoiaf_skagosishipyard
+						}
+					}
+					31 = { 
+						set_province_flag = skagosi_rebuild_ships 
+						any_province_holding = { 
+							limit = { holding_type = castle }
+							add_building = ca_asoiaf_skagosishipyard
+						}
+						any_province_holding = { 
+							limit = { holding_type = city }
+							add_building = ct_asoiaf_skagosishipyard
+						}
+					}
+					32 = { 
+						set_province_flag = skagosi_rebuild_ships 
+						any_province_holding = { 
+							limit = { holding_type = castle }
+							add_building = ca_asoiaf_skagosishipyard
+						}
+						any_province_holding = { 
+							limit = { holding_type = city }
+							add_building = ct_asoiaf_skagosishipyard
+						}
+					}
+					d_skagos = { set_title_flag = skagosi_rebuild_ships }
+				}
+			}
+			prestige = 500
+			wealth = -100
+			narrative_event = { id = wildling.61 }
+		}
+		ai_check_interval = 3
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	destroy_skagosi_ships = {
+		is_high_prio = yes
+		only_independent = yes
+		potential = {
+			is_ruler = yes
+			d_skagos = { has_title_flag = skagosi_rebuild_ships }
+			NOT = { culture = skagosi }
+			any_realm_lord = {
+				OR = {
+					has_landed_title = c_kingshouse
+					has_landed_title = c_deepdown
+					has_landed_title = c_driftwoodhall
+				}
+				any_demesne_province = {
+					has_province_flag = skagosi_rebuild_ships
+				}
+			}
+		}
+		allow = {
+			completely_controls = d_skagos
+			wealth = 100
+		}
+		effect = {
+			custom_tooltip = {
+				text = TOOLTIPdestroy_skagosi_ships
+				hidden_tooltip = {
+					30 = { 
+						clr_province_flag = skagosi_rebuild_ships # Automatically invalidates buildings
+					}
+					31 = { 
+						clr_province_flag = skagosi_rebuild_ships 
+					}
+					32 = { 
+						clr_province_flag = skagosi_rebuild_ships 
+					}
+					d_skagos = { clr_title_flag = skagosi_rebuild_ships }
+				}
+			}
+			prestige = 500
+			wealth = -100
+			narrative_event = { id = wildling.62 }
+		}
+		ai_check_interval = 3
+		ai_will_do = {
+			factor = 100
+		}
+	}
+	discredit_arya_stark = { #reveal jeyne poole to be fake arya
+		is_high_prio = yes
+		only_playable = yes
+		potential = {
+			is_ruler = yes
+			year = 8300
+			OR = {
+				has_landed_title = e_north
+				has_landed_title = k_north
+				has_landed_title = e_iron_throne
+			}
+			dynasty = 59 #Stark			
+			c_99992095 = { #fake arya
+				dynasty = 59
+			}
+			father_even_if_dead = { character = 59 } #ned
+			# NOT = { character = 99992095 } #fake arya		
+			c_99992095 = { NOT = { character = PREV } } #fake arya	
+		}
+		allow = {
+			war = no	
+			c_99992095 = { #fake arya
+				OR = {
+					hidden_tooltip = { ROOT = { ai = yes } } #AI doesnt know to go look at her
+					is_alive = no
+					at_location = ROOT
+				}
+			}
+		}
+		effect = {
+			c_99992095 = {
+				custom_tooltip = {
+					text = TOOLTIPdiscredit_arya_stark
+					hidden_tooltip = { ROOT = { character_event = { id = feast_for_crows.13 } } }
+				}
+			}
+		}
+		ai_check_interval = 2
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}
+targetted_decisions = {	
+	affc_stannis_grant_north = {
+		ai_target_filter = none
+		filter = sub_realm
+		ai = no
+		
+		from_potential = {
+			ai = no
+			year = 8300
+			dynasty = 317
+			has_landed_title = k_north
+			has_character_modifier = stannis_granting_north	
+		}
+		potential = {
+			is_liege_or_above = FROM
+			NOT = { trait = dragon }
+		}
+		allow = {			
+			prisoner = no
+			NOT = { trait = incapable }
+			can_press_claims_trigger = yes
+		}
+		effect = {
+			k_north = { grant_title = ROOT }
+			d_winterfell = { 
+				if = {
+					limit = { holder_scope = { character = FROM } }
+					grant_title = ROOT
+				}	
+			}
+			c_winterfell = { 
+				if = {
+					limit = { 
+						holder_scope = { 
+							character = FROM 
+							num_of_count_titles = 2
+						} 
+					}
+					grant_title = ROOT
+				} 
+			}	
+			tooltip = {
+				opinion = {
+					who = FROM
+					modifier = opinion_granted_kingdom
+				}
+			}
+			custom_tooltip = {
+				text = TOOLTIPaffc_stannis_grant_north
+			}
+			FROM = {
+				hidden_tooltip = {				
+					character_event = { id = feast_for_crows.16 }
+				}
+			}	
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+}
+
+

@@ -1,0 +1,7199 @@
+namespace = dothraki
+
+#Jogos Nhai now also use dothraki nomad mechanics
+
+#dothraki.900 # Initialise Nomad provinces
+
+#dothraki.200  # I am a khal in my own right - begin my own dynasty DISABLED
+#dothraki.202 #Khaleesi is moved to Dosh kaleen upon Khal's death
+#dothraki.203 #Dosh Khaleen Maintenance
+
+#dothraki.300 #A province is overgrazed
+
+#dothraki.400 # Popular or prestigious khal gains strength
+#dothraki.401 #A Warrior Deserts
+#dothraki.403 #Starvation!
+#dothraki.404 #Kos are agitated
+#dothraki.406 # On death, if heir is not strong destroy higher titles
+#dothraki.407 # On death, check heir is strong enough to continue world leadership
+#dothraki.408-18 #Bloodrider events
+
+#dothraki.607 # Dothraki Raid tribute events
+
+#dothraki.610 #A Dothraki acquires new grazing province, province maintenance
+
+# Flavor event chains
+# 700	Teaching your child to ride
+# 750	Abandoning deformed children
+# 800	Stallion Heart ritual
+# dothraki.815 # Rich merchant caravan passing through
+
+#dothraki.820 # Force the AI to consider using raids/invasions on a five year pulse where possible
+#dothraki.830 #Mutilate defeated Khal?
+
+#60520  # Notify world about the greatest of Khans
+
+#dothraki.850 #New split clan maintenance
+#dothraki.851 #Tributary inheritance maintenance
+#dothraki.860 #Dothraki Modifiers
+
+# Initialise Nomad provinces
+character_event = {
+	id = dothraki.900
+	
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		any_playable_ruler = {
+			limit = { 
+				OR = {
+					culture = dothraki 
+					culture = jogos_nhai
+				}	
+			}
+			any_demesne_title = {
+				limit = { higher_tier_than = DUKE }
+				holder_scope = { set_character_flag = passive_slave_law_change }
+				add_law = slavery_2
+			}
+		}
+		
+		c_dosh_khaleen = {
+			holder_scope = {
+				if = {
+					limit = { is_female = yes }
+					add_trait = dosh_khaleen
+					set_character_flag = no_court_invites
+				}	
+				capital_scope = { set_province_flag = dothraki_sea }
+				any_courtier = {
+					limit = { is_female = yes }
+					add_trait = dosh_khaleen
+					set_character_flag = no_court_invites
+				}
+				any_courtier = {
+					limit = { is_female = no }
+					add_trait = eunuch
+				}
+			}
+			gender_succ = enatic
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}
+#WARNING- disabled due to causding CTDs
+# # I am a khal in my own right - begin my own dynasty 
+# character_event = { 
+	# id = dothraki.200
+	# desc = "EVTDESCDOTHRAKI200"
+	# picture = GFX_evt_dothraki
+	
+	# only_rulers = yes
+	# min_age = 14
+	# capable_only = yes
+	# prisoner = no
+	
+	# trigger = {
+		# NOT = { has_character_flag = flag_dothraki_dynasty_founded }
+		# OR = {
+			# culture = dothraki
+			# culture = jogos_nhai
+		# }
+		# higher_tier_than = COUNT
+		# NOT = { primary_title = { title = c_dosh_khaleen } }
+		# # Same-Dynasty parents must not hold any titles!
+		# NOT = {
+			# father = {
+				# is_alive = yes
+				# is_ruler = yes
+				# dynasty = ROOT
+			# }
+		# }
+		# NOT = {
+			# mother = {
+				# is_alive = yes
+				# is_ruler = yes
+				# dynasty = ROOT
+			# }
+		# }
+		# NOT = {
+			# father_even_if_dead = {
+				# father = {
+					# is_alive = yes
+					# is_ruler = yes
+					# dynasty = ROOT
+				# }	
+			# }
+		# }
+		# NOT = {
+			# mother_even_if_dead = {
+				# father = {
+					# is_alive = yes
+					# is_ruler = yes
+					# dynasty = ROOT
+				# }	
+			# }
+		# }
+		
+		# # Must not be the heir or a pretender to a title held by a character of the same dynasty
+		# NOT = { any_heir_title = { holder_scope = { higher_tier_than = ROOT dynasty = ROOT } } }
+		# NOT = { any_pretender_title = { holder_scope = { higher_tier_than = ROOT dynasty = ROOT } } }
+	# }
+	
+	# immediate = {
+		# any_vassal = { set_character_flag = abort_obj } #This is so they can evaluate independence
+	# }
+	
+	# option = {
+		# name = "EVTOPTADOTHRAKI200"
+		# hidden_tooltip = {
+			# # Inform other dynasty members
+			# any_dynasty_member = { 
+				# limit = { ai = no }
+				# character_event = { id = dothraki.201 days = 1 } 
+			# }
+		# }
+		# hidden_tooltip = {
+			# any_child = {
+				# limit = { 
+					# dynasty = ROOT 
+					# NOT = { has_character_flag = flag_dothraki_dynasty_founded }
+				# }
+				# set_character_flag = change_dynasty
+				# any_child = {
+					# limit = { 
+						# dynasty = ROOT 
+						# NOT = { has_character_flag = flag_dothraki_dynasty_founded }
+					# }
+					# set_character_flag = change_dynasty
+					# any_child = {
+						# limit = { 
+							# dynasty = ROOT 
+							# NOT = { has_character_flag = flag_dothraki_dynasty_founded }
+						# }
+						# set_character_flag = change_dynasty
+					# }
+				# }
+			# }
+			# any_courtier = { #Siblings, nephews and nieces may also change
+				# limit = { 
+					# dynasty = ROOT 
+					# NOT = { has_character_flag = flag_dothraki_dynasty_founded }
+					# OR = {
+						# AND = {
+							# sibling = ROOT
+							# OR = {
+								# father_even_if_dead = {
+									# dynasty = ROOT
+									# is_parent_of = ROOT
+									# OR = {
+										# is_alive = no
+										# is_ruler = no
+									# }
+								# }
+								# mother_even_if_dead = {
+									# dynasty = ROOT
+									# is_parent_of = ROOT
+									# OR = {
+										# is_alive = no
+										# is_ruler = no
+									# }
+								# }
+							# }
+						# }	
+						# father_even_if_dead = {
+							# sibling = ROOT
+							# dynasty = ROOT
+							# OR = {
+								# is_alive = no
+								# is_ruler = no
+							# }
+							# OR = {
+								# father_even_if_dead = {
+									# dynasty = ROOT
+									# is_parent_of = ROOT
+									# OR = {
+										# is_alive = no
+										# is_ruler = no
+									# }
+								# }
+								# mother_even_if_dead = {
+									# dynasty = ROOT
+									# is_parent_of = ROOT
+									# OR = {
+										# is_alive = no
+										# is_ruler = no
+									# }
+								# }
+							# }
+						# }
+						# mother_even_if_dead = {
+							# sibling = ROOT
+							# dynasty = ROOT
+							# OR = {
+								# is_alive = no
+								# is_ruler = no
+							# }
+							# OR = {
+								# father_even_if_dead = {
+									# dynasty = ROOT
+									# is_parent_of = ROOT
+									# OR = {
+										# is_alive = no
+										# is_ruler = no
+									# }
+								# }
+								# mother_even_if_dead = {
+									# dynasty = ROOT
+									# is_parent_of = ROOT
+									# OR = {
+										# is_alive = no
+										# is_ruler = no
+									# }
+								# }
+							# }
+						# }
+					# }
+				# }		
+				# set_character_flag = change_dynasty
+			# }
+		# }
+		# custom_tooltip = {
+			# text = TOOLTIPdothraki.200A
+			# hidden_tooltip = { dynasty = father_bastard }
+		# }	
+		# set_character_flag = flag_dothraki_dynasty_founded
+		# hidden_tooltip = {
+			# any_child = {
+				# limit = { has_character_flag = change_dynasty }
+				# dynasty = ROOT
+				# clr_character_flag = change_dynasty
+				# any_child = {
+					# limit = { has_character_flag = change_dynasty }
+					# dynasty = ROOT
+					# clr_character_flag = change_dynasty
+					# any_child = {
+						# limit = { has_character_flag = change_dynasty }
+						# dynasty = ROOT
+						# clr_character_flag = change_dynasty
+					# }
+				# }
+			# }
+			# any_courtier = { #Siblings, nephews and nieces may also change
+				# limit = { has_character_flag = change_dynasty }	
+				# father_even_if_dead = {
+					# if = {
+						# limit = {
+							# is_parent_of = ROOT
+							# dynasty = PREV
+							# OR = {
+								# is_alive = no
+								# is_ruler = no
+							# }
+						# }
+						# dynasty = ROOT
+					# }	
+				# }
+				# mother_even_if_dead = {
+					# if = {
+						# limit = {
+							# is_parent_of = ROOT
+							# dynasty = PREV
+							# OR = {
+								# is_alive = no
+								# is_ruler = no
+							# }
+						# }
+						# dynasty = ROOT
+					# }	
+				# }
+				
+				# father_even_if_dead = {
+					# if = {
+						# limit = {
+							# sibling = ROOT
+							# dynasty = PREV
+							# OR = {
+								# is_alive = no
+								# is_ruler = no
+							# }
+						# }
+						# dynasty = ROOT
+					# }	
+					# father_even_if_dead = {
+						# if = {
+							# limit = {
+								# is_parent_of = ROOT
+								# dynasty = PREVPREV
+								# OR = {
+									# is_alive = no
+									# is_ruler = no
+								# }
+							# }
+							# dynasty = ROOT
+						# }	
+					# }
+					# mother_even_if_dead = {
+						# if = {
+							# limit = {
+								# is_parent_of = ROOT
+								# dynasty = PREVPREV
+								# OR = {
+									# is_alive = no
+									# is_ruler = no
+								# }
+							# }
+							# dynasty = ROOT
+						# }	
+					# }
+				# }
+				# mother_even_if_dead = {
+					# if = {
+						# limit = {
+							# sibling = ROOT
+							# dynasty = PREV
+							# OR = {
+								# is_alive = no
+								# is_ruler = no
+							# }
+						# }
+						# dynasty = ROOT
+					# }	
+					# father_even_if_dead = {
+						# if = {
+							# limit = {
+								# is_parent_of = ROOT
+								# dynasty = PREVPREV
+								# OR = {
+									# is_alive = no
+									# is_ruler = no
+								# }
+							# }
+							# dynasty = ROOT
+						# }	
+					# }
+					# mother_even_if_dead = {
+						# if = {
+							# limit = {
+								# is_parent_of = ROOT
+								# dynasty = PREVPREV
+								# OR = {
+									# is_alive = no
+									# is_ruler = no
+								# }
+							# }
+							# dynasty = ROOT
+						# }	
+					# }
+				# }
+				# dynasty = ROOT
+			# }
+		# }
+	# }
+	
+	# option = {
+		# name = "EVTOPTBDOTHRAKI200"
+		# ai_chance = { factor = 0 }
+		# custom_tooltip = {
+			# text = TOOLTIPdothraki.200B
+		# }
+		# set_character_flag = flag_dothraki_dynasty_founded
+	# }
+# }
+
+# character_event = {
+	# id = dothraki.201
+	# desc = "EVTDESCDOTHRAKI201"
+	# picture = GFX_evt_dothraki
+	# is_triggered_only = yes
+	
+	# option = { name = OK }
+# }
+#Khaleesi is moved to Dosh kaleen upon Khal's death
+character_event = {
+	id = dothraki.202
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = { 
+		is_ruler = no 
+		is_female = yes
+	}
+	
+	option = { 
+		name = OK 
+		add_trait = dosh_khaleen
+		set_character_flag = no_court_invites
+		c_dosh_khaleen = { holder_scope = { ROOT = { move_character = PREV } } }
+	}
+	
+	option = { #Non may try to flee
+		trigger = { NOT = { culture = dothraki } }
+		name = OK 
+		random_list = {
+			50 = {
+				add_trait = dosh_khaleen
+				set_character_flag = no_court_invites
+				c_dosh_khaleen = { holder_scope = { ROOT = { imprison = PREV move_character = PREV } } }
+			}
+			50 = {
+				random_playable_ruler = {
+					limit = { culture = ROOT }
+					ROOT = { move_character = PREV }
+				}
+			}
+		}
+	}
+}
+#Dosh Khaleen Maintenance
+character_event = {
+	id = dothraki.203
+
+	is_triggered_only = yes
+	hide_window = yes
+	only_playable = yes
+	
+	trigger = { 
+		has_landed_title = c_dosh_khaleen
+	}
+	
+	immediate = {
+		#Make sure they are Dosh Khaleen
+		if = {
+			limit = { NOT = { trait = dosh_khaleen } }
+			random_character = {
+				limit = {
+					NOT = { character = ROOT }
+					is_ruler = no
+					trait = dosh_khaleen
+					religion = dothraki_pagan
+					is_female = yes
+				}
+				c_dosh_khaleen = { gain_title = PREV }
+				c_vaes_dothrak = { 
+					if = {
+						limit = { holder_scope = { culture = dothraki } }
+						gain_title = PREV 
+					}	
+				}
+				set_defacto_liege = THIS			
+				character_event = { id = dothraki.203 days = 2 }
+				break = yes
+			}
+			create_character = {
+				is_female = yes
+				random_traits = yes
+				culture = dothraki
+				religion = dothraki_pagan
+				dynasty = random
+				trait = dosh_khaleen
+			}
+			new_character = {
+				set_character_flag = no_court_invites
+				c_dosh_khaleen = { gain_title = PREV }
+				c_vaes_dothrak = { 
+					if = {
+						limit = { holder_scope = { culture = dothraki } }
+						gain_title = PREV 
+					}	
+				}
+				set_defacto_liege = THIS
+				character_event = { id = dothraki.203 days = 2 }
+			}
+			break = yes
+		}
+		#Make sure they are independent
+		if = {
+			limit = { 
+				independent = no
+			}
+			liege = { reverse_opinion = { who = ROOT modifier = opinion_subjugated_AGOT years = 20 multiplier = 2 } }
+			c_vaes_dothrak = { 
+				if = {
+					limit = { holder_scope = { culture = dothraki } }
+					gain_title = PREV 
+				}	
+			}
+			set_defacto_liege = ROOT
+		}
+		#Make sure they hold no other titles
+		any_demesne_title = {
+			limit = {
+				NOT = { title = c_dosh_khaleen }
+				NOT = { title = c_vaes_dothrak }
+				NOT = { dejure_liege_title = { title = c_vaes_dothrak } }
+			}
+			if = {
+				limit = { higher_tier_than = COUNT }
+				destroy_landed_title = THIS
+			}
+			if = {
+				limit = { lower_tier_than = DUKE }				
+				location = {
+					random_neighbor_province = {
+						limit = {
+							owner = {
+								NOT = { character = ROOT }
+							}
+						}
+						owner = { gain_title = PREVPREVPREV }
+					}
+				}
+			}
+		}
+		#Remove all claims
+		any_claim = {
+			limit = { NOT = { title = c_vaes_dothrak } }
+			remove_claim = PREV
+		}
+		any_courtier = {
+			limit = { trait = dosh_khaleen }
+			set_character_flag = no_court_invites
+		}
+	}
+	
+	option = { 
+		name = OK 
+	}
+}
+# A province is overgrazed
+character_event = {
+	id = dothraki.300
+	picture = GFX_evt_sand_desert
+	desc = "EVTDESCDOTHRAKI300"
+	
+	ai = no #AI does not know when to move capital
+	
+	trigger = {	
+		is_nomadic = yes 		
+		capital_scope = { 
+			NOT = { has_province_modifier = asoiaf_overgrazed } 
+			any_province_holding = { holding_type = nomad }
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 75
+		
+		# Terrain
+		modifier = {
+			factor = 2
+			capital_scope = { 
+				OR = {
+					terrain = plains
+					terrain = steppe
+					terrain = farmlands
+				}
+			}	
+		}
+		modifier = {
+			factor = 0.5
+			capital_scope = { 
+				OR = {
+					terrain = marsh
+					terrain = jungle
+					terrain = desert
+					terrain = coastal_desert
+					terrain = mountainpass
+					terrain = marshroad
+					terrain = highroad
+					terrain = moatcailin
+				}
+			}	
+		}
+		modifier = {
+			factor = 0.2
+			capital_scope = { 
+				OR = {
+					terrain = arctic
+					terrain = mountain
+					terrain = impassable_mountains
+				}
+			}	
+		}
+		
+		# Khalasar size
+		modifier = {
+			factor = 0.8
+			population_and_manpower = 15000
+		}
+		modifier = {
+			factor = 0.8
+			population_and_manpower = 30000
+		}
+		modifier = {
+			factor = 0.8
+			population_and_manpower = 45000
+		}
+		modifier = {
+			factor = 0.8
+			population_and_manpower = 60000
+		}
+		modifier = {
+			factor = 0.8
+			population_and_manpower = 90000
+		}
+		
+		# Winter is bad
+		modifier = {
+			factor = 0.8
+			capital_scope = { has_province_modifier = asoiaf_mild_winter }
+		}
+		modifier = {
+			factor = 0.5
+			capital_scope = { has_province_modifier = asoiaf_normal_winter }
+		}
+		modifier = {
+			factor = 0.2
+			capital_scope = { has_province_modifier = asoiaf_harsh_winter }
+		}
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI300"
+		capital_scope = { add_province_modifier = { name = asoiaf_overgrazed duration = 1095 } }# Testing at 3 year overgrazing
+	}
+}
+# Popular or prestigious khal gains strength
+character_event = {
+	id = dothraki.400
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI400"
+	
+	only_playable = yes
+	min_age = 14
+	capable_only = yes
+	prisoner = no
+	
+	trigger = {
+		is_nomadic = yes
+		NOT = { capital_scope = { has_province_modifier = asoiaf_overgrazed } }
+		prestige = 0 # Do not join disgraced khals
+		NOT = { trait = infirm }
+		NOT = { is_crippled_trigger = yes }
+		NOT = { trait = imbecile }
+		NOT = { trait = inbred }
+		NOT = { has_character_modifier = prestigious_khal }
+		NOT = { has_character_modifier = dothraki_defeated_khal }
+	}
+	
+	mean_time_to_happen = {
+		years = 75
+				
+		# Khal's prowess
+		modifier = {
+			factor = 1.33
+			NOT = {
+				OR = {
+					trait = poor_warrior
+					trait = trained_warrior
+					trait = skilled_warrior
+					trait = master_warrior
+				}
+			}	
+		}
+		modifier = {
+			factor = 1.18
+			trait = poor_warrior
+		}
+		modifier = {
+			factor = 0.85
+			trait = skilled_warrior
+		}
+		modifier = {
+			factor = 0.75
+			trait = master_warrior
+		}	
+		modifier = {
+			factor = 1.5
+			NOT = { martial = 2 }
+		}
+		modifier = {
+			factor = 1.5
+			NOT = { martial = 5 }
+		}
+		modifier = {
+			factor = 1.5
+			NOT = { martial = 8 }
+		}
+		modifier = {
+			factor = 0.8
+			martial = 11
+		}
+		modifier = {
+			factor = 0.8
+			martial = 14
+		}
+		modifier = {
+			factor = 0.8
+			martial = 17
+		}
+		modifier = {
+			factor = 0.8
+			martial = 20
+		}
+		modifier = {
+			factor = 0.9
+			martial = 23
+		}
+		modifier = {
+			factor = 0.9
+			martial = 26
+		}
+		
+		# Khal's personality
+		modifier = {
+			factor = 0.66
+			trait = authoritative
+		}
+		modifier = {
+			factor = 0.66
+			trait = brave
+		}
+		modifier = {
+			factor = 0.66
+			trait = just
+		}
+		modifier = {
+			factor = 0.66
+			is_strong_trigger = yes
+		}
+		modifier = {
+			factor = 2
+			trait = craven
+		}
+		modifier = {
+			factor = 2
+			trait = arbitrary
+		}
+		modifier = {
+			factor = 2
+			is_weak_trigger = yes
+		}
+		
+		# A khal who cannot ride is no khal
+		modifier = {
+			factor = 1.5
+			is_ill = yes
+		}
+		modifier = {
+			factor = 1.25
+			trait = wounded
+		}
+		modifier = {
+			factor = 2
+			has_severe_disability_trigger = yes
+		}
+		modifier = {
+			factor = 2
+			trait = dwarf
+		}
+		modifier = {
+			factor = 2
+			trait = hunchback
+		}
+		modifier = {
+			factor = 2
+			trait = clubfooted
+		}
+		modifier = {
+			factor = 4
+			trait = has_greyscale
+		}
+		
+		# Sexism
+		modifier = {
+			factor = 3
+			is_female = yes
+		}
+		
+		# Khal's prestige
+		modifier = {
+			factor = 0.9
+			prestige = 100
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 200
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 300
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 400
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 500
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 600
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 700
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 800
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 900
+		}
+		modifier = {
+			factor = 0.9
+			prestige = 1000
+		}
+		modifier = {
+			factor = 0.8
+			prestige = 1200
+		}
+		modifier = {
+			factor = 0.8
+			prestige = 1400
+		}
+		modifier = {
+			factor = 0.8
+			prestige = 1600
+		}
+		modifier = {
+			factor = 0.8
+			prestige = 1800
+		}
+		modifier = {
+			factor = 0.8
+			prestige = 2000
+		}
+		modifier = {
+			factor = 0.8
+			prestige = 2400
+		}
+		modifier = {
+			factor = 0.8
+			prestige = 2800
+		}
+		modifier = {
+			factor = 0.8
+			prestige = 3200
+		}
+		modifier = {
+			factor = 0.75
+			prestige = 3600
+		}
+		modifier = {
+			factor = 0.75
+			prestige = 4000
+		}
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI400"
+		add_character_modifier = {
+			name = prestigious_khal
+			duration = 730
+		}
+	}
+}
+# A warrior deserts (also triggered by defeat in anti-nomad war)
+character_event = {
+	id = dothraki.401
+
+	only_playable = yes
+	hide_window = yes
+	
+	trigger = {
+		is_nomadic = yes
+		population = 2000
+		OR = {
+			NOT = { has_character_flag = had_nomad_desrter }
+			had_character_flag = { flag = had_nomad_desrter days = 900 }
+		}
+	}
+	
+	mean_time_to_happen = {
+		years = 200
+		
+		modifier = {
+			factor = 0.5
+			prisoner = yes
+		}
+		# Overgrazed
+		modifier = {
+			factor = 0.1
+			capital_scope = { has_province_modifier = asoiaf_overgrazed }
+		}	
+		# Sexism
+		modifier = {
+			factor = 0.1
+			is_female = yes
+		}		
+		# Khal's prestige
+		modifier = {
+			factor = 0.5
+			has_character_modifier = dothraki_defeated_khal
+		}
+		modifier = {
+			factor = 0.1
+			NOT = { prestige = 0 }
+		}
+		modifier = {
+			factor = 1.5
+			prestige = 500
+		}
+		modifier = {
+			factor = 1.5
+			prestige = 750
+		}
+		modifier = {
+			factor = 1.5
+			prestige = 1000
+		}
+		# Child Khal
+		modifier = {
+			factor = 0.2
+			NOT = { age = 16 }
+		}
+		modifier = {
+			factor = 0.25
+			NOT = { age = 13 }
+		}
+		modifier = {
+			factor = 0.25
+			NOT = { age = 10 }
+		}
+		
+		# Khal's prowess
+		modifier = {
+			factor = 0.25
+			NOR = {
+				martial = 10
+				trait = skilled_warrior
+				trait = master_warrior
+			}
+		}
+		modifier = {
+			factor = 0.75
+			NOT = {
+				OR = {
+					trait = poor_warrior
+					trait = trained_warrior
+					trait = skilled_warrior
+					trait = master_warrior
+				}
+			}	
+		}
+		modifier = {
+			factor = 0.85
+			trait = poor_warrior
+		}
+		modifier = {
+			factor = 1.18
+			trait = skilled_warrior
+		}
+		modifier = {
+			factor = 1.33
+			trait = master_warrior
+		}	
+		modifier = {
+			factor = 0.8
+			NOT = { martial = 2 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { martial = 5 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { martial = 8 }
+		}
+		modifier = {
+			factor = 1.25
+			martial = 11
+		}
+		modifier = {
+			factor = 1.25
+			martial = 14
+		}
+		modifier = {
+			factor = 1.25
+			martial = 17
+		}
+		modifier = {
+			factor = 1.25
+			martial = 20
+		}
+		modifier = {
+			factor = 1.25
+			martial = 23
+		}
+		modifier = {
+			factor = 1.25
+			martial = 26
+		}
+		
+		# Khal's personality
+		modifier = {
+			factor = 2
+			trait = authoritative
+		}
+		modifier = {
+			factor = 2
+			trait = brave
+		}
+		modifier = {
+			factor = 2
+			trait = just
+		}
+		modifier = {
+			factor = 3
+			is_strong_trigger = yes
+		}
+		modifier = {
+			factor = 0.33
+			trait = craven
+		}
+		modifier = {
+			factor = 0.5
+			trait = arbitrary
+		}
+		modifier = {
+			factor = 0.1
+			is_weak_trigger = yes
+		}
+		modifier = {
+			factor = 0.5
+			trait = in_hiding
+		}
+		
+		# A khal who cannot ride is no khal
+		modifier = {
+			factor = 0.75
+			is_ill = yes
+		}
+		modifier = {
+			factor = 0.75
+			trait = wounded
+		}
+		modifier = {
+			factor = 0.25
+			has_severe_disability_trigger = yes
+		}
+		modifier = {
+			factor = 0.5
+			trait = dwarf
+		}
+		modifier = {
+			factor = 0.5
+			trait = eunuch
+		}
+		modifier = {
+			factor = 0.5
+			trait = hunchback
+		}
+		modifier = {
+			factor = 0.5
+			trait = clubfooted
+		}
+		modifier = {
+			factor = 0.5
+			trait = inbred
+		}
+		modifier = {
+			factor = 0.5
+			trait = imbecile
+		}
+		modifier = {
+			factor = 0.05
+			is_crippled_trigger = yes
+		}
+		modifier = {
+			factor = 0.2
+			trait = has_greyscale
+		}
+		modifier = {
+			factor = 0.1
+			trait = infirm
+		}
+		modifier = {
+			factor = 0.05
+			trait = incapable
+		}
+	}
+	
+	immediate = { #find splintered warrior
+		job_marshal = {
+			if = {
+				limit = {
+					is_ruler = no
+					is_female = no
+					culture = ROOT
+					religion = ROOT
+					NOT = { has_severe_disability_trigger = yes }	
+					is_ill = no
+					OR = {
+						martial = 12
+						diplomacy = 12
+						prestige = 400
+						trait = skilled_warrior
+						trait = master_warrior
+					}
+					OR = {
+						trait = ambitious
+						trait = greedy
+						NOT = { opinion = { who = ROOT value = 20 } }
+					}	
+					NOT = { trait = content }
+				}
+				character_event = { id = dothraki.491 }
+				break = yes
+			}	
+		}
+		job_castellan = {
+			if = {
+				limit = {
+					is_ruler = no
+					is_female = no
+					culture = ROOT
+					religion = ROOT
+					NOT = { has_severe_disability_trigger = yes }	
+					is_ill = no
+					OR = {
+						martial = 12
+						diplomacy = 12
+						prestige = 400
+						trait = skilled_warrior
+						trait = master_warrior
+					}
+					OR = {
+						trait = ambitious
+						trait = greedy
+						NOT = { opinion = { who = ROOT value = 20 } }
+					}
+					NOT = { trait = content }
+				}
+				character_event = { id = dothraki.491 }
+				break = yes
+			}	
+		}
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				is_female = no
+				culture = ROOT
+				religion = ROOT
+				NOT = { has_severe_disability_trigger = yes }	
+				prisoner = no
+				age = 16
+				NOT = { age = 40 }
+				is_ill = no
+				OR = {
+					martial = 12
+					diplomacy = 12
+					prestige = 400
+					trait = skilled_warrior
+					trait = master_warrior
+				}
+				OR = {
+					trait = ambitious
+					trait = greedy
+					NOT = { opinion = { who = ROOT value = 20 } }
+				}
+				NOT = { trait = content }
+			}
+			character_event = { id = dothraki.491 }
+			break = yes
+		}
+		if = {
+			limit = { has_character_flag = post_war_desertion }
+			create_random_soldier = {
+				random_traits = yes
+				dynasty = random
+				religion = ROOT
+				culture = ROOT
+				female = no
+			}
+			new_character = {
+				random_list = {
+					3 = { add_trait = master_warrior }
+					30 = { add_trait = skilled_warrior }
+					52 = { add_trait = trained_warrior }
+					15 = { add_trait = poor_warrior }
+				}
+				remove_trait = content
+				
+				remove_trait = inbred
+				remove_trait = imbecile
+				remove_trait = slow
+				remove_trait = infirm
+				remove_trait = incapable
+				remove_trait = dwarf
+				remove_trait = hunchback
+				remove_trait = clubfooted
+				remove_trait = weak
+				remove_trait = leper
+				remove_trait = possessed
+				remove_trait = ill
+				remove_trait = pneumonic
+				remove_trait = maimed
+				
+				character_event = { id = dothraki.491 }
+			}
+			break = yes
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}	
+character_event = { #ping to deserter
+	id = dothraki.491
+
+	is_triggered_only = yes
+	
+	trigger = { 
+		NOT = { character = FROM }
+		FROM = { is_nomadic = yes }
+		is_ruler = no
+	}
+	
+	immediate = { 
+		FROM = { character_event = { id = dothraki.402 } }
+	}
+	
+	option = {
+		name = OK
+	}
+}	
+character_event = {
+	id = dothraki.402
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI402"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		clr_character_flag = had_nomad_desrter
+		set_character_flag = had_nomad_desrter #cooldown
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI400"
+		save_event_target_as = previous_liege
+		capital_scope = { save_event_target_as = target_province }
+		FROM = {	
+			custom_tooltip = {
+				text = TOOLTIPdothraki.402
+				hidden_tooltip = {
+					ROOT = {
+						primary_title = {
+							create_title = {
+								tier = DUKE
+								landless = yes
+								adventurer = yes
+								culture = ROOT
+								name = "DOTHRAKI_ADVENTURE"
+								holder = PREVPREV
+								base_title = THIS
+							}
+						}
+					}	
+					set_defacto_liege = THIS
+					set_character_flag = raiding_adventurer
+					set_government_type = wildling_feudal_government					
+					character_event = { id = HL.105 } #create troops steppe
+					if = {
+						limit = { ROOT = { population = 30000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					if = {
+						limit = { ROOT = { population = 50000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					if = {
+						limit = { ROOT = { population = 70000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					if = {
+						limit = { ROOT = { population = 90000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					if = {
+						limit = { ROOT = { population = 130000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					create_random_soldier = {
+						random_traits = yes
+						dynasty = none
+						religion = ROOT
+						culture = ROOT
+						female = no
+					}
+					new_character = {
+						random_list = {
+							3 = { add_trait = master_warrior }
+							30 = { add_trait = skilled_warrior }
+							52 = { add_trait = trained_warrior }
+							15 = { add_trait = poor_warrior }
+						}
+						remove_trait = inbred
+						remove_trait = imbecile
+						remove_trait = slow
+						remove_trait = infirm
+						remove_trait = incapable
+						remove_trait = dwarf
+						remove_trait = hunchback
+						remove_trait = clubfooted
+						remove_trait = weak
+						remove_trait = leper
+						remove_trait = possessed
+						remove_trait = ill
+						remove_trait = pneumonic
+						remove_trait = maimed
+					}
+					create_random_soldier = {
+						random_traits = yes
+						dynasty = none
+						religion = ROOT
+						culture = ROOT
+						female = no
+					}
+					new_character = {
+						random_list = {
+							3 = { add_trait = master_warrior }
+							30 = { add_trait = skilled_warrior }
+							52 = { add_trait = trained_warrior }
+							15 = { add_trait = poor_warrior }
+						}
+						remove_trait = inbred
+						remove_trait = imbecile
+						remove_trait = slow
+						remove_trait = infirm
+						remove_trait = incapable
+						remove_trait = dwarf
+						remove_trait = hunchback
+						remove_trait = clubfooted
+						remove_trait = weak
+						remove_trait = leper
+						remove_trait = possessed
+						remove_trait = ill
+						remove_trait = pneumonic
+						remove_trait = maimed
+					}
+					ROOT = { #move any sympathetic courtiers
+						any_courtier = {
+							limit = {
+								is_ruler = no
+								liege = { character = ROOT }
+								opinion = { who = PREVPREV value = 10 }
+								
+								age = 14
+								prisoner = no
+								is_incapable = no
+								NOT = { trait = slave }
+								NOT_mythical_creature_trigger = yes
+								NOT = { is_consort = ROOT }
+								NOT = { is_married = ROOT }								
+								NOT = { opinion = { who = ROOT value = 40 } }
+								OR = {
+									NOT = { opinion = { who = ROOT value = 0 } }
+									trait = ambitious
+									trait = greedy
+								}
+								OR = {
+									NOT = { dynasty = ROOT }
+									dynasty = PREVPREV
+									NOT = { opinion = { who = ROOT value = -40 } }
+								}
+							}
+							move_character = PREVPREV
+						}
+					}
+					character_event = { id = HL.110 days = 1095 } # Ping to see if he's ready to settle, repeating every 3 years.
+				}	
+			}	
+		}
+		if = {
+			limit = { NOT = { has_character_flag = post_war_desertion } }
+			add_population_scaled = -0.2
+			manpower = -1000
+		}
+		if = {
+			limit = { has_character_flag = post_war_desertion }
+			add_population_scaled = -0.4
+			manpower = -2000
+			clr_character_flag = post_war_desertion
+		}	
+	}
+}
+# Starvation!
+character_event = {
+	id = dothraki.403
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI403"
+	
+	only_playable = yes
+	
+	trigger = {
+		is_nomadic = yes
+		capital_scope = { 
+			OR = {
+				has_province_modifier = asoiaf_overgrazed 
+				has_province_modifier = asoiaf_normal_winter
+				has_province_modifier = asoiaf_harsh_winter
+			}	
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 400
+		
+		modifier = {
+			factor = 0.5
+			capital_scope = { has_province_modifier = asoiaf_overgrazed  }	
+		}
+		# Winter
+		modifier = {
+			factor = 0.9
+			capital_scope = { has_province_modifier = asoiaf_mild_winter }	
+		}
+		modifier = {
+			factor = 0.75
+			capital_scope = { has_province_modifier = asoiaf_normal_winter }	
+		}
+		modifier = {
+			factor = 0.5
+			capital_scope = { has_province_modifier = asoiaf_harsh_winter }	
+		}
+				
+		modifier = {
+			factor = 0.8
+			NOT = { stewardship = 2 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { stewardship = 5 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { stewardship = 8 }
+		}
+		modifier = {
+			factor = 1.25
+			stewardship = 11
+		}
+		modifier = {
+			factor = 1.25
+			stewardship = 14
+		}
+		modifier = {
+			factor = 1.25
+			stewardship = 17
+		}
+		modifier = {
+			factor = 1.25
+			stewardship = 20
+		}
+		modifier = {
+			factor = 1.25
+			stewardship = 23
+		}
+		modifier = {
+			factor = 1.25
+			stewardship = 26
+		}	
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI403"
+		add_population_scaled = -0.15
+	}
+	option = {
+		name = "EVTOPTBDOTHRAKI403" #lose slaves
+		trigger = { capital_holding = { has_building = no_asoiaf_slavepit_1 } }
+		character_event = { id = slavery.1001 tooltip = "EVTTOOLTIPSLAVERY1001DOTH403" }
+		hidden_tooltip = { character_event = { id = slavery.1001 } }	 
+	}
+}
+# Khals agitated
+character_event = {
+	id = dothraki.404
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI404"
+	
+	only_playable = yes
+	
+	trigger = {
+		is_nomadic = yes
+		OR = {
+			ai = yes
+			capital_scope = { has_province_modifier = asoiaf_overgrazed }
+		}	
+	}
+	
+	mean_time_to_happen = {
+		months = 600
+		
+		modifier = {
+			factor = 0.33
+			capital_scope = { has_province_modifier = asoiaf_overgrazed }	
+		}
+		# Winter
+		modifier = {
+			factor = 0.9
+			capital_scope = { has_province_modifier = asoiaf_mild_winter }	
+		}
+		modifier = {
+			factor = 0.75
+			capital_scope = { has_province_modifier = asoiaf_normal_winter }	
+		}
+		modifier = {
+			factor = 0.5
+			capital_scope = { has_province_modifier = asoiaf_harsh_winter }	
+		}
+		
+		modifier = {
+			factor = 0.8
+			NOT = { diplomacy = 2 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { diplomacy = 5 }
+		}
+		modifier = {
+			factor = 0.8
+			NOT = { diplomacy = 8 }
+		}
+		modifier = {
+			factor = 1.25
+			diplomacy = 11
+		}
+		modifier = {
+			factor = 1.25
+			diplomacy = 14
+		}	
+	}
+	
+	immediate = {
+		clan_title = {
+			save_event_target_as = liege_clan
+		}
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI404"
+		trigger = {
+			diplomacy = 14
+		}
+		ai_chance = {
+			factor = 100
+		}
+		tooltip_info = diplomacy
+		prestige = 50
+	}
+	option = {
+		name = "EVTOPTBDOTHRAKI404" #Gifts
+		trigger = {
+			OR = {
+				AND = { 
+					NOT = { tier = EMPEROR }
+					wealth = 150
+				}
+				AND = { 
+					tier = EMPEROR
+					wealth = 300
+				}
+			}
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0
+				trait = greedy	
+			}
+			modifier = {
+				factor = 5
+				trait = charitable
+			}
+		}
+		if = { 
+			limit = { NOT = { tier = EMPEROR } }
+			wealth = -150
+		}
+		if = { 
+			limit = { tier = EMPEROR }
+			wealth = -300
+		}
+	}
+	option = {
+		name = "EVTOPTCDOTHRAKI404"
+		trigger = {
+			NOT = { diplomacy = 14 }
+		}
+		ai_chance = {
+			factor = 10
+		}	
+		any_vassal = {
+			limit = { is_nomadic = yes }
+			clan_title = {
+				clan_opinion = {
+					who = event_target:liege_clan
+					modifier = opinion_khal_overgraze
+				}
+			}
+		}
+		any_vassal = {
+			limit = {
+				culture = ROOT
+				is_nomadic = no
+			}
+			opinion = { 
+				who = ROOT
+				modifier = opinion_khal_overgraze
+			}	
+		}
+		any_courtier = {
+			limit = {
+				is_female = no
+				is_ruler = no
+				culture = ROOT
+			}
+			opinion = { 
+				who = ROOT
+				modifier = opinion_khal_overgraze
+			}	
+		}
+	}
+	option = {
+		name = "EVTOPTDDOTHRAKI404" #Challenge dissident to a duel
+		trigger = {
+			age = 14
+			is_female = no
+			NOT = { has_severe_disability_trigger = yes }	
+			any_courtier = {
+				is_female = no
+				culture = ROOT
+				age = 16
+				NOT = { has_severe_disability_trigger = yes }	
+				prisoner = no
+				combat_rating = 2
+				NOT = { is_child_of = ROOT }	
+				NOT = { opinion = { who = ROOT value = 40 } }
+				OR = {
+					trait = wroth
+					trait = ambitious
+					NOT = { opinion = { who = ROOT value = 0 } }
+				}
+				NOT = { trait = craven }
+				NOT = { trait = content }
+				NOT = { trait = patient }
+				NOT = { is_friend = ROOT }
+				NOT = { has_blood_oath_with = ROOT }
+				ai = yes
+			}
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0.1
+				NOT = { combat_rating = 2 }	
+			}
+			modifier = {
+				factor = 0.1
+				is_weak_trigger = yes
+			}
+			modifier = {
+				factor = 0.1
+				trait = craven	
+			}
+			modifier = {
+				factor = 0.1
+				trait = patient	
+			}
+			modifier = {
+				factor = 3
+				is_strong_trigger = yes
+			}
+			modifier = {
+				factor = 3
+				trait = brave	
+			}
+			modifier = {
+				factor = 3
+				trait = wroth
+			}
+			modifier = {
+				factor = 3
+				trait = skilled_warrior
+			}
+			modifier = {
+				factor = 5
+				trait = master_warrior
+			}
+		}
+		random_courtier = {
+			limit = {
+				is_female = no
+				culture = ROOT
+				age = 16
+				NOT = { has_severe_disability_trigger = yes }	
+				prisoner = no
+				combat_rating = 2
+				NOT = { is_child_of = ROOT }	
+				NOT = { opinion = { who = ROOT value = 40 } }
+				OR = {
+					trait = wroth
+					trait = ambitious
+					NOT = { opinion = { who = ROOT value = 0 } }
+				}
+				NOT = { trait = craven }
+				NOT = { trait = content }
+				NOT = { trait = patient }
+				NOT = { is_friend = ROOT }
+				NOT = { has_blood_oath_with = ROOT }
+				ai = yes
+			}
+			character_event = { id = dothraki.405 tooltip = TOOLTIPdothraki.405 }
+		}
+	}
+}
+character_event = {
+	id = dothraki.405
+	
+	is_triggered_only = yes
+	hide_window = yes
+
+	option = {
+		name = OK
+		e_rebels = { holder_scope = { character_event = { id = duel.0 } } }
+	}
+}	
+# On death, if heir is not strong destroy higher titles
+character_event = {
+	id = dothraki.406
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI406"
+	
+	only_rulers = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		is_nomadic = yes	
+		OR = {
+			is_female = yes
+			NOT = { age = 16 }
+			has_severe_disability_trigger = yes
+			is_weak_trigger = yes
+			trait = imbecile
+			trait = inbred
+			trait = dwarf
+			trait = clubfooted
+			trait = craven
+			has_character_modifier = dothraki_defeated_khal
+			NOR = {
+				prestige = 1000
+				martial = 14
+				diplomacy = 14
+				AND = {
+					OR = {
+						trait = skilled_warrior
+						trait = master_warrior
+					}
+					OR = {
+						is_strong_trigger = yes
+						trait = brave
+						trait = ambitious
+					}
+				}
+			}
+		}	
+	}
+	
+	immediate = { #find splintered warrior
+		job_marshal = {
+			if = {
+				limit = {
+					is_ruler = no
+					is_female = no
+					culture = ROOT
+					religion = ROOT
+					NOT = { trait = infirm }
+					NOT = { trait = incapable }
+					NOT = { is_crippled_trigger = yes }
+					is_ill = no
+					OR = {
+						martial = 12
+						diplomacy = 12
+						prestige = 400
+						trait = skilled_warrior
+						trait = master_warrior
+					}
+					OR = {
+						trait = ambitious
+						trait = wroth
+						trait = greedy
+						trait = authoritative
+						trait = brave
+					}
+					NOT = { trait = content }
+				}
+				set_character_flag = defecting_khal
+				break = yes
+			}	
+		}
+		job_castellan = {
+			if = {
+				limit = {
+					is_ruler = no
+					is_female = no
+					culture = ROOT
+					religion = ROOT
+					NOT = { trait = infirm }
+					NOT = { trait = incapable }
+					NOT = { is_crippled_trigger = yes }
+					is_ill = no
+					OR = {
+						martial = 12
+						diplomacy = 12
+						prestige = 400
+						trait = skilled_warrior
+						trait = master_warrior
+					}
+					OR = {
+						trait = ambitious
+						trait = wroth
+						trait = greedy
+						trait = authoritative
+						trait = brave
+					}
+					NOT = { trait = content }
+				}
+				set_character_flag = defecting_khal
+				break = yes
+			}	
+		}
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				is_female = no
+				culture = ROOT
+				religion = ROOT
+				NOT = { trait = infirm }
+				NOT = { trait = incapable }
+				NOT = { is_crippled_trigger = yes }
+				prisoner = no
+				age = 16
+				NOT = { age = 40 }
+				is_ill = no
+				OR = {
+					martial = 12
+					diplomacy = 12
+					prestige = 400
+					trait = skilled_warrior
+					trait = master_warrior
+				}
+				OR = {
+					trait = ambitious
+					trait = wroth
+					trait = greedy
+					trait = authoritative
+					trait = brave
+				}
+				NOT = { trait = content }
+			}
+			set_character_flag = defecting_khal
+			break = yes
+		}
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				is_female = no
+				culture = ROOT
+				religion = ROOT
+				NOT = { trait = infirm }
+				NOT = { trait = incapable }
+				NOT = { is_crippled_trigger = yes }
+				prisoner = no
+				age = 16
+				NOT = { age = 40 }
+				is_ill = no
+				OR = {
+					martial = 12
+					diplomacy = 12
+					prestige = 400
+					trait = skilled_warrior
+					trait = master_warrior
+				}
+				NOT = { trait = content }
+			}
+			set_character_flag = defecting_khal
+			break = yes
+		}	
+		#else create one
+		create_random_soldier = {
+			random_traits = yes
+			dynasty = random
+			religion = ROOT
+			culture = ROOT
+			female = no
+			age = 33
+		}
+		new_character = {
+			set_character_flag = defecting_khal
+			random_list = {
+				3 = { add_trait = master_warrior }
+				30 = { add_trait = skilled_warrior }
+				52 = { add_trait = trained_warrior }
+				15 = { add_trait = poor_warrior }
+			}
+			remove_trait = content
+			
+			remove_trait = inbred
+			remove_trait = imbecile
+			remove_trait = slow
+			remove_trait = infirm
+			remove_trait = incapable
+			remove_trait = dwarf
+			remove_trait = hunchback
+			remove_trait = clubfooted
+			remove_trait = weak
+			remove_trait = leper
+			remove_trait = possessed
+			remove_trait = ill
+			remove_trait = pneumonic
+			remove_trait = maimed
+		}
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI406"
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_DOTHRAKI_LOST_TITLES
+				portrait = [Root.GetID]
+			}
+		}
+		save_event_target_as = previous_liege
+		capital_scope = { save_event_target_as = target_province }
+		random_courtier = {
+			limit = { has_character_flag = defecting_khal }
+			tooltip = { show_portrait = yes }
+			custom_tooltip = {
+				text = TOOLTIPdefectingkhal
+				hidden_tooltip = {
+					clr_character_flag = defecting_khal
+					ROOT = {
+						primary_title = {
+							create_title = {
+								tier = DUKE
+								landless = yes
+								adventurer = yes
+								culture = ROOT
+								name = "DOTHRAKI_ADVENTURE"
+								holder = PREVPREV
+								base_title = THIS
+							}
+						}
+					}					
+					set_defacto_liege = THIS
+					set_character_flag = raiding_adventurer
+					set_government_type = wildling_feudal_government				
+					character_event = { id = HL.105 } #create troops steppe
+					if = {
+						limit = { ROOT = { population = 30000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					if = {
+						limit = { ROOT = { population = 50000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					if = {
+						limit = { ROOT = { population = 70000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					if = {
+						limit = { ROOT = { population = 90000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					if = {
+						limit = { ROOT = { population = 130000 } }
+						character_event = { id = HL.105 } #create troops steppe
+					}
+					create_random_soldier = {
+						random_traits = yes
+						dynasty = none
+						religion = ROOT
+						culture = ROOT
+						female = no
+						age = 30
+					}
+					new_character = {
+						random_list = {
+							3 = { add_trait = master_warrior }
+							30 = { add_trait = skilled_warrior }
+							52 = { add_trait = trained_warrior }
+							15 = { add_trait = poor_warrior }
+						}
+						remove_trait = inbred
+						remove_trait = imbecile
+						remove_trait = slow
+						remove_trait = infirm
+						remove_trait = incapable
+						remove_trait = dwarf
+						remove_trait = hunchback
+						remove_trait = clubfooted
+						remove_trait = weak
+						remove_trait = leper
+						remove_trait = possessed
+						remove_trait = ill
+						remove_trait = pneumonic
+						remove_trait = maimed
+					}
+					create_random_soldier = {
+						random_traits = yes
+						dynasty = none
+						religion = ROOT
+						culture = ROOT
+						female = no
+						age = 25
+					}
+					new_character = {
+						random_list = {
+							3 = { add_trait = master_warrior }
+							30 = { add_trait = skilled_warrior }
+							52 = { add_trait = trained_warrior }
+							15 = { add_trait = poor_warrior }
+						}
+						remove_trait = inbred
+						remove_trait = imbecile
+						remove_trait = slow
+						remove_trait = infirm
+						remove_trait = incapable
+						remove_trait = dwarf
+						remove_trait = hunchback
+						remove_trait = clubfooted
+						remove_trait = weak
+						remove_trait = leper
+						remove_trait = possessed
+						remove_trait = ill
+						remove_trait = pneumonic
+						remove_trait = maimed
+					}
+					ROOT = { #move any sympathetic courtiers
+						any_courtier = {
+							limit = {
+								is_ruler = no
+								liege = { character = ROOT }
+								opinion = { who = PREVPREV value = 10 }
+								
+								age = 14
+								prisoner = no
+								is_incapable = no
+								NOT = { trait = slave }
+								NOT_mythical_creature_trigger = yes
+								NOT = { is_consort = ROOT }
+								NOT = { is_married = ROOT }								
+								NOT = { opinion = { who = ROOT value = 40 } }
+								OR = {
+									NOT = { opinion = { who = ROOT value = 0 } }
+									trait = ambitious
+									trait = greedy
+								}
+								OR = {
+									NOT = { dynasty = ROOT }
+									dynasty = PREVPREV
+									NOT = { opinion = { who = ROOT value = -40 } }
+								}
+							}
+							move_character = PREVPREV
+						}
+					}
+					character_event = { id = HL.110 days = 1095 } # Ping to see if he's ready to settle, repeating every 3 years.
+				}
+			}
+		}	
+		add_population_scaled = -0.4
+		manpower = -2000
+		#Manage Empire Titles
+		if = {
+			limit = { tier = EMPEROR }
+			any_demesne_title = {
+				limit = {
+					tier = EMPEROR
+					is_titular = no
+				}
+				set_title_flag = to_be_destroyed
+				tooltip = { destroy_landed_title = THIS }
+			}
+			if = {
+				limit = {
+					NOT = {
+						any_demesne_title = {
+							tier = EMPEROR
+							NOT = { has_title_flag = to_be_destroyed }
+						}
+					}
+				}
+				primary_title = {
+					create_title = {
+						tier = EMPEROR
+						name = CUSTOM_KHALASAR
+						landless = no
+						temporary = no
+						custom_created = yes
+						culture = ROOT
+						holder = ROOT
+						base_title = THIS
+						copy_title_laws = yes
+						#nomad = yes
+					}
+				}	
+			}
+			any_demesne_title = {
+				limit = { has_title_flag = to_be_destroyed }
+				clr_title_flag = to_be_destroyed
+				destroy_landed_title = THIS
+			}
+		}			
+		any_demesne_title = {
+			limit = {
+				is_landless_type_title = no
+				tier = KING
+				NOT = { holder_scope = { clan_title = { title = PREVPREV } } }
+			}
+			destroy_landed_title = THIS
+		}
+		hidden_tooltip = {
+			any_vassal = { #Vassals may declare indepedence
+				limit = { NOT = { tier = BARON } }
+				character_event = { id = 63100 }
+			}
+		}	
+	}
+}
+# On death, check heir is strong enough to continue world leadership
+character_event = {
+	id = dothraki.407
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI407"
+	
+	only_rulers = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		is_nomadic = yes	
+	}
+	
+	immediate = {
+		if = {
+			limit = {
+				OR = {
+					AND = {
+						NOT = { num_of_count_titles_in_realm = 20 }
+						culture = jogos_nhai
+					}	
+					AND = {
+						NOT = { num_of_count_titles_in_realm = 26 }
+						culture = dothraki
+					}
+					is_female = yes
+					NOT = { age = 16 }
+					has_severe_disability_trigger = yes
+					is_weak_trigger = yes
+					trait = imbecile
+					trait = dwarf
+					trait = clubfooted
+					has_character_modifier = dothraki_defeated_khal
+					NOR = {
+						prestige = 1000
+						martial = 14
+						diplomacy = 14
+						combat_rating = 8
+					}
+				}
+			}
+			set_character_flag = lose_title
+		}
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI407" #Lose Title
+		trigger = {
+			has_character_flag = lose_title
+		}
+		clr_character_flag = lose_title
+		if = {
+			limit = {
+				has_character_modifier = greatest_of_khans
+			}
+			remove_character_modifier = greatest_of_khans
+		}
+		if = {
+			limit = {
+				has_character_modifier = jhattar_of_jogos_nhai
+			} 
+			remove_character_modifier = jhattar_of_jogos_nhai
+		}
+		#Manage Empire Titles
+		any_demesne_title = {
+			limit = {
+				tier = EMPEROR
+				OR = {
+					title = e_khalasar
+					title = e_jkhalasar
+				}
+			}
+			set_title_flag = to_be_destroyed
+			tooltip = { destroy_landed_title = THIS }
+		}
+		if = {
+			limit = {
+				NOT = {
+					any_demesne_title = {
+						tier = EMPEROR
+						NOT = { has_title_flag = to_be_destroyed }
+					}
+				}
+			}
+			primary_title = {
+				create_title = {
+					tier = EMPEROR
+					name = CUSTOM_KHALASAR
+					landless = no
+					temporary = no
+					custom_created = yes
+					culture = ROOT
+					holder = ROOT
+					base_title = THIS
+					copy_title_laws = yes
+					#nomad = yes
+				}
+			}	
+		}
+		any_demesne_title = {
+			limit = { has_title_flag = to_be_destroyed }
+			clr_title_flag = to_be_destroyed
+			destroy_landed_title = THIS
+		}		
+	}
+	option = {
+		name = "EVTOPTBDOTHRAKI407" #Gain Title
+		trigger = {
+			NOT = { has_character_flag = lose_title }
+		}
+		if = {
+			limit = { culture = dothraki }
+			set_special_character_title = nomadic_emperor_foa_dothraki
+			add_character_modifier = {
+				name = greatest_of_khans
+				duration = -1
+			}
+		}
+		if = {
+			limit = { culture = jogos_nhai }
+			set_special_character_title = emperor_jogos_nhai
+			add_character_modifier = {
+				name = jhattar_of_jogos_nhai
+				duration = -1
+			}
+		}
+	}
+}
+# Character asked to become Bloodrider
+character_event = {
+	id = dothraki.408
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI408"
+	
+	is_triggered_only = yes
+	show_from_from = yes
+	
+	trigger = { NOT = { FROMFROM = { has_opinion_modifier = { who = ROOT modifier = opinion_bloodrider } } } }
+	
+	option = {
+		name = "EVTOPTADOTHRAKI408" #Yes
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				is_rival = FROMFROM
+			}
+			modifier = {
+				factor = 100
+				has_blood_oath_with = FROMFROM
+			}
+			modifier = {
+				factor = 0.5
+				FROMFROM = { is_female = yes }
+			}
+			modifier = {
+				factor = 0.1
+				FROMFROM = { trait = incapable	}
+			}
+			modifier = {
+				factor = 0.25
+				FROMFROM = { 
+					OR = {
+						has_severe_disability_trigger = yes
+						is_weak_trigger = yes
+						trait = imbecile
+						trait = dwarf
+						trait = clubfooted
+					}	
+				}
+			}
+			modifier = {
+				factor = 1.5
+				FROMFROM = { prestige = 1000 }
+			}
+			modifier = {
+				factor = 1.5
+				FROMFROM = { prestige = 2000 }
+			}
+			modifier = {
+				factor = 2
+				FROMFROM = { prestige = 3000 }
+			}
+			modifier = {
+				factor = 0
+				NOT = { opinion = { who = FROMFROM value = -19 } }
+			}
+			modifier = {
+				factor = 1.5
+				opinion = { who = FROMFROM value = 20 } 
+			}
+			modifier = {
+				factor = 1.5
+				opinion = { who = FROMFROM value = 40 } 
+			}
+			modifier = {
+				factor = 2
+				opinion = { who = FROMFROM value = 60 } 
+			}
+			modifier = {
+				factor = 2
+				opinion = { who = FROMFROM value = 80 } 
+			}
+			modifier = {
+				factor = 2
+				opinion = { who = FROMFROM value = 100 } 
+			}
+			modifier = {
+				factor = 0.5
+				trait = craven
+			}
+			modifier = {
+				factor = 0.5
+				trait = content
+			}
+		}
+		give_minor_title = title_bloodrider
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_BLOODRIDER
+				portrait = [FromFrom.GetID]
+			}
+		}
+		FROMFROM = { 
+			opinion = { who = ROOT modifier = opinion_bloodrider years = 100 } 
+			hidden_tooltip = { character_event = { id = dothraki.409 } }
+			if = {
+				limit = { ai = no }
+				chronicle = {
+					entry = CHRONICLE_BLOODRIDER
+					portrait = [Root.GetID]
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBDOTHRAKI408" #No
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				is_friend = FROMFROM
+			}
+		}
+		hidden_tooltip = { remove_title = title_bloodrider }
+		FROMFROM = { 
+			opinion = { who = ROOT modifier = opinion_rejected_bloodrider years = 100 }
+			hidden_tooltip = { character_event = { id = dothraki.410 } }			
+		}
+	}
+}	
+#Inform accept
+character_event = {
+	id = dothraki.409
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI409"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTADOTHRAKI409"
+		hidden_tooltip = {
+			if = {
+				limit = { 
+					is_nomadic = yes
+					FROM = { 
+						is_nomadic = yes 
+						is_ruler = yes
+						vassal_of = ROOT
+					} 
+				}
+				FROM ={
+					clan_title = {
+						ROOT = {
+							clan_title = { create_oath = PREVPREV }
+						}	
+					}
+				}	
+			}	
+		}
+	}
+
+}
+#Inform reject
+character_event = {
+	id = dothraki.410
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI410"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTADOTHRAKI410"
+		# if = { #AI trys to find another
+			# limit = { ai = yes }
+			# character_event = { id = dothraki.415 days = 5 }
+		# }
+	}
+}	
+#Khal has died, Bloodrider dies also
+character_event = {
+	id = dothraki.411
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI411"
+	
+	is_triggered_only = yes
+	
+	trigger = { FROM = { is_alive = no } }
+
+	option = {
+		name = "EVTOPTADOTHRAKI411" #REVENGE!
+		trigger = { 
+			FROM = { 
+				OR = {
+					death_reason = death_battle
+					death_reason = death_duel
+				}	
+			} 
+			NOT = { trait = incapable }	
+			NOT = { trait = blinded }	
+			NOT = { trait = blinded_age }
+			NOT = { is_crippled_trigger = yes }
+			NOT = { trait = infirm }
+		}
+		FROM = {
+			if = {
+				limit = { killer = { is_alive = yes } }
+				random_list = {
+					20 = {
+						killer = {
+							character_event = { id = dothraki.412 tooltip = TOOLTIPdothraki.412 }
+						}
+					}
+					80 = {
+						character_event = { id = dothraki.413 tooltip = TOOLTIPdothraki.413 }
+					}
+				}	
+			}
+			if = {
+				limit = { NOT = { killer = { is_alive = yes } } }
+				character_event = { id = dothraki.413 tooltip = TOOLTIPdothraki.413 }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBDOTHRAKI411" #OK
+		trigger = { 
+			NOT = {
+				FROM = { 
+					OR = {
+						death_reason = death_battle
+						death_reason = death_duel
+					}	
+				}
+			}	
+		}
+		death = { death_reason = death_suicide }
+	}
+}	
+#You have killed a Khal, Bloodrider seeks revenge!
+character_event = {
+	id = dothraki.412
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI412"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTADOTHRAKI412"
+		# Set context flags for duel
+		set_character_flag = flag_duel_to_the_death
+		FROM = { set_character_flag = bloodrider_revenge_duel }
+		FROM = { set_character_flag = flag_duel_to_the_death }
+		
+		# Begin duel
+		hidden_tooltip = { e_rebels = { holder_scope = { character_event = { id = duel.0 } } } }
+	}
+}	
+#You're Khal has been killed in battle, go on suicidal rampage
+character_event = {
+	id = dothraki.413
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI413"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTADOTHRAKI413"
+		prestige = 150
+		death = {
+			death_reason = death_battle_bloodrider
+		}
+	}
+}	
+#Revenge successfully taken
+character_event = {
+	id = dothraki.414
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI414"
+	
+	is_triggered_only = yes
+	show_from_from = yes
+
+	option = {
+		name = "EVTOPTADOTHRAKI414"
+		death = { death_reason = death_suicide }
+	}
+}	
+# #AI selects a bloodrider
+# character_event = {
+	# id = dothraki.415
+	
+	# is_triggered_only = yes
+	# only_rulers = yes
+
+	# trigger = {
+		# ai = yes
+		# culture = dothraki
+		# is_adult = yes
+		# OR = {
+			# higher_tier_than = DUKE
+			# AND = {
+				# tier = DUKE
+				# independent = yes
+			# }
+		# }
+		# NOT = {
+			# any_courtier = {
+				# liege = { character = ROOT }
+				# has_minor_title = title_bloodrider
+				# count = 3
+			# }
+		# }
+	# }
+
+	# desc = "AI_EVENT"
+
+	# option = {
+		# name = "OK"
+		# random_courtier = {
+			# limit = {
+				# is_ruler = no
+				# is_adult = yes
+				# is_female = no
+				# liege = { character = ROOT }
+				# NOT = { is_close_relative = ROOT }
+				# NOT = { has_minor_title = title_bloodrider }
+				# NOT = { trait = incapable }
+				# NOT = { is_crippled_trigger = yes }
+				# NOT = { trait = infirm }
+				# reverse_opinion = { who = ROOT value = -19 }
+				# NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = opinion_rejected_bloodrider } }
+				# trait = master_warrior			
+			# }
+			# give_minor_title = title_bloodrider
+			# character_event = { id = dothraki.408 days = 2 }
+			# ROOT = { set_character_flag = bodyguard_found }
+		# }
+		# if = {
+			# limit = { NOT = { has_character_flag = bodyguard_found } }
+			# random_courtier = {
+				# limit = {
+					# is_ruler = no
+					# is_adult = yes
+					# is_female = no
+					# liege = { character = ROOT }
+					# NOT = { is_close_relative = ROOT }
+					# NOT = { has_minor_title = title_bloodrider }
+					# NOT = { trait = incapable }
+					# NOT = { is_crippled_trigger = yes }
+					# NOT = { trait = infirm }
+					# reverse_opinion = { who = ROOT value = -19 }
+					# NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = opinion_rejected_bloodrider } }
+					# trait = skilled_warrior
+				# }
+				# give_minor_title = title_bloodrider
+				# character_event = { id = dothraki.408 days = 2 }
+				# ROOT = { set_character_flag = bodyguard_found }
+			# }
+		# }
+		# if = {
+			# limit = { NOT = { has_character_flag = bodyguard_found } }
+			# random_courtier = {
+				# limit = {
+					# is_ruler = no
+					# is_adult = yes
+					# is_female = no
+					# liege = { character = ROOT }
+					# NOT = { is_close_relative = ROOT }
+					# NOT = { has_minor_title = title_bloodrider }
+					# NOT = { trait = incapable }
+					# NOT = { is_crippled_trigger = yes }
+					# NOT = { trait = infirm }
+					# reverse_opinion = { who = ROOT value = -19 }
+					# NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = opinion_rejected_bloodrider } }
+					# trait = trained_warrior
+				# }
+				# give_minor_title = title_bloodrider
+				# character_event = { id = dothraki.408 days = 2 }
+			# }
+		# }
+		# clr_character_flag = bodyguard_found
+	# }
+# }
+
+#Dothraki attack! Offer Tribute?
+character_event = { #from province looting
+	id = dothraki.697
+	
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = { 
+		OR = {		
+			is_nomadic = yes
+			culture = dothraki
+		}	
+		FROM = { 
+			owner = {
+				NOT = { is_nomadic = yes }
+				NOT = {
+					any_war = {
+						OR = {
+							attacker = { character = ROOT }
+							defender = { character = ROOT }
+						}
+					}
+				}
+				NOT = {
+					any_liege = {
+						any_war = {
+							OR = {
+								attacker = { character = ROOT }
+								defender = { character = ROOT }
+							}
+						}
+					}	
+				}
+				OR = {	
+					AND = {
+						NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = forbidden_raid_target } }
+						NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = rejected_raid_tribute } }
+						OR = {
+							NOT = { has_character_flag = dothraki_looting_tribute }
+							had_character_flag = { flag = dothraki_looting_tribute days = 300 }
+						}	
+					}
+					top_liege = {
+						NOT = { character = PREV }
+						NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = forbidden_raid_target } }
+						NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = rejected_raid_tribute } }
+						OR = {
+							NOT = { has_character_flag = dothraki_looting_tribute }
+							had_character_flag = { flag = dothraki_looting_tribute days = 300 }
+						}	
+					}
+				}				
+			}
+		}			
+	}
+	
+	immediate = {
+		FROM = {
+			owner = {
+				top_liege = {
+					if = {
+						limit = {
+							NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = forbidden_raid_target } }
+							NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = rejected_raid_tribute } }
+							OR = {
+								NOT = { has_character_flag = dothraki_looting_tribute }
+								had_character_flag = { flag = dothraki_looting_tribute days = 300 }
+							}
+						}	
+						set_character_flag = dothraki_looting_tribute
+						character_event = { id = dothraki.607 }
+						break = yes
+					}	
+				}
+				if = {
+					limit = {
+						NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = forbidden_raid_target } }
+						NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = rejected_raid_tribute } }
+						OR = {
+							NOT = { has_character_flag = dothraki_looting_tribute }
+							had_character_flag = { flag = dothraki_looting_tribute days = 300 }
+						}
+					}	
+					set_character_flag = dothraki_looting_tribute
+					character_event = { id = dothraki.607 }
+				}
+			}	
+		}
+	}
+	
+	option = {
+		name = OK	
+	}
+}	
+character_event = {
+	id = dothraki.607
+	desc = "EVTDESCdothraki.607"
+	picture = GFX_evt_dothraki
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		OR = {
+			war_with = FROM
+			has_character_flag = dothraki_looting_tribute
+		}	
+		#Must have enough gold to satisfy them
+		OR = {
+			yearly_income = 100
+			wealth = 300
+			AND = { #looting
+				has_character_flag = dothraki_looting_tribute
+				OR = {
+					yearly_income = 50
+					wealth = 150
+				}	
+			}
+			AND = {
+				has_raised_levies = THIS
+				higher_tier_than = DUKE
+			}
+			AND = { #can offer female relative
+				FROM = { 
+					is_female = no 
+					NOT = { trait = chaste }
+					NOT = { trait = celibate }
+					NOT = { trait = eunuch }
+					NOT = { trait = widowed }
+				}
+				any_courtier = {
+					liege = { character = ROOT }
+					OR = {
+						sibling = ROOT
+						is_child_of = ROOT
+						AND = {
+							is_close_relative = ROOT
+							trait = fair
+						}
+					}
+					age = 12
+					NOT = { age = 30 }
+					is_ruler = no
+					is_female = yes
+					is_married = no
+					is_consort = no
+					prisoner = no
+					is_ill = no
+					NOT = { trait = celibate }
+					NOT = { trait = incapable }				
+				}
+			}	
+		}	
+		OR = {
+			scaled_wealth = 3
+			NOT = { has_character_flag = loan_taken }
+		}
+	}
+	
+	immediate = { set_character_flag = considering_surrender }
+	
+	option = {
+		name = "EVTOPTAdothraki.607" #Surrender
+		trigger = { 
+			OR = {
+				NOT = { trait = slave_trader }
+				NOT = {
+					FROM = { 
+						demesne_size = 1
+						OR = {
+							family_palace = { has_building = fp_asoiaf_slavepit_1 }
+							capital_holding = { 
+								OR = {
+									has_building = ca_asoiaf_slavepit_1
+									has_building = ct_asoiaf_slavepit_1
+									has_building = tp_asoiaf_slavepit_1
+									has_building = no_asoiaf_slavepit_1
+								}	
+							}
+						}	
+					}
+				}	
+			}	
+		}
+		ai_chance = {
+			factor = 150
+			modifier = {
+				factor = 2
+				NOT = { age = 16 }
+			}
+			modifier = {
+				factor = 3
+				trait = content
+			}
+			modifier = {
+				factor = 3
+				trait = charitable
+			}
+			modifier = {
+				factor = 3
+				trait = craven
+			}
+			modifier = {
+				factor = 3
+				trait = humble
+			}
+			modifier = {
+				factor = 2
+				trait = diligent
+			}
+			modifier = {
+				factor = 2
+				trait = patient
+			}
+			modifier = {
+				factor = 2
+				tier = COUNT
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { has_character_modifier = greatest_of_khans }	
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { population_and_manpower = 15000 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { population_and_manpower = 30000 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 15 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 30 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 45 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 60 }		
+			}
+			
+			modifier = {
+				factor = 1.5
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 2
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 1
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.75
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.5
+					}
+				}	
+			}
+		}
+		FROM = { 	
+			letter_event = { id = dothraki.608 tooltip = TOOLTIPdothraki.608 days = 3 }
+		}
+		tooltip = {
+			if = {
+				limit = { NOT = { has_character_flag = dothraki_looting_tribute } }
+				if = {
+					limit = { yearly_income = 100 }
+					transfer_scaled_wealth = {
+						to = FROM
+						value = 3.0
+					}
+				}
+				if = {
+					limit = { NOT = { yearly_income = 100 } }
+					wealth = -300
+				}	
+			}	
+			if = {
+				limit = { has_character_flag = dothraki_looting_tribute }
+				if = {
+					limit = { yearly_income = 100 }
+					transfer_scaled_wealth = {
+						to = FROM
+						value = 0.5
+					}
+				}
+				if = {
+					limit = { NOT = { yearly_income = 100 } }
+					wealth = -50
+				}	
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTCdothraki.607" #Offer gifts for slaves
+		trigger = { 
+			trait = slave_trader 
+			FROM = { 
+				demesne_size = 1
+				OR = {
+					family_palace = { has_building = fp_asoiaf_slavepit_1 }
+					capital_holding = { 
+						OR = {
+							has_building = ca_asoiaf_slavepit_1
+							has_building = ct_asoiaf_slavepit_1
+							has_building = tp_asoiaf_slavepit_1
+							has_building = no_asoiaf_slavepit_1
+						}	
+					}
+				}	
+			}	
+		}
+		ai_chance = {
+			factor = 200
+			modifier = {
+				factor = 2
+				NOT = { age = 16 }
+			}
+			modifier = {
+				factor = 3
+				trait = content
+			}
+			modifier = {
+				factor = 3
+				trait = charitable
+			}
+			modifier = {
+				factor = 3
+				trait = craven
+			}
+			modifier = {
+				factor = 3
+				trait = humble
+			}
+			modifier = {
+				factor = 2
+				trait = diligent
+			}
+			modifier = {
+				factor = 2
+				trait = patient
+			}
+			modifier = {
+				factor = 2
+				tier = COUNT
+			}
+			
+			modifier = {
+				factor = 1.5
+				FROM = { has_character_modifier = greatest_of_khans }	
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { population_and_manpower = 15000 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { population_and_manpower = 30000 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 15 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 30 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 45 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 60 }		
+			}
+			modifier = {
+				factor = 1.5
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 2
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 1
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.75
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.5
+					}
+				}	
+			}
+		}
+		FROM = { 	
+			letter_event = { id = dothraki.1011 tooltip = TOOLTIPdothraki.1011 days = 3 }
+		}
+		tooltip = {
+			if = {
+				limit = { yearly_income = 100 }
+				transfer_scaled_wealth = {
+					to = FROM
+					value = 4.0
+				}
+			}
+			if = {
+				limit = { NOT = { yearly_income = 100 } }
+				wealth = -400
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTDdothraki.607" #Offer daughter/sister
+		trigger = { 
+			OR = {
+				NOT = { trait = slave_trader }
+				NOT = {
+					FROM = { 
+						demesne_size = 1
+						OR = {
+							family_palace = { has_building = fp_asoiaf_slavepit_1 }
+							capital_holding = { 
+								OR = {
+									has_building = ca_asoiaf_slavepit_1
+									has_building = ct_asoiaf_slavepit_1
+									has_building = tp_asoiaf_slavepit_1
+									has_building = no_asoiaf_slavepit_1
+								}	
+							}
+						}	
+					}
+				}	
+			}	
+			FROM = { 
+				is_female = no 
+				NOT = { trait = chaste }
+				NOT = { trait = celibate }
+				NOT = { trait = eunuch }
+				NOT = { trait = widowed }
+				OR = {
+					is_married = no
+					NOT = { num_of_consorts = 20 }
+				}
+			}
+			any_courtier = {
+				liege = { character = ROOT }
+				OR = {
+					sibling = ROOT
+					is_child_of = ROOT
+					AND = {
+						is_close_relative = ROOT
+						trait = fair
+					}
+				}
+				age = 12
+				NOT = { age = 30 }
+				is_ruler = no
+				is_female = yes
+				is_married = no
+				is_consort = no
+				prisoner = no
+				is_ill = no
+				NOT = { trait = celibate }
+				NOT = { trait = incapable }				
+			}
+		}
+		ai_chance = {
+			factor = 50
+			
+			modifier = {
+				factor = 0
+				FROM = { 
+					NOT = { demesne_size = 1 } 
+					NOT = { relative_power = { who = ROOT power = 1 } }
+				}		
+			}
+			modifier = {
+				factor = 0.1
+				relative_power = {
+					who = FROM
+					power = 2
+				}
+			}
+			modifier = {
+				factor = 2
+				FROM = { is_married = no } #would gain alliance
+			}
+			modifier = {
+				factor = 2
+				trait = ruthless
+			}
+			modifier = {
+				factor = 2
+				trait = arbitrary
+			}
+			modifier = {
+				factor = 2
+				trait = selfish
+			}
+			modifier = {
+				factor = 0
+				trait = familyperson
+			}
+			modifier = {
+				factor = 0.5
+				trait = honorable
+			}			
+			modifier = {
+				factor = 0.5
+				trait = just
+			}
+			
+			modifier = {
+				factor = 2
+				NOT = { age = 16 }
+			}
+			modifier = {
+				factor = 3
+				trait = content
+			}
+			modifier = {
+				factor = 3
+				trait = charitable
+			}
+			modifier = {
+				factor = 3
+				trait = craven
+			}
+			modifier = {
+				factor = 3
+				trait = humble
+			}
+			modifier = {
+				factor = 2
+				trait = diligent
+			}
+			modifier = {
+				factor = 2
+				trait = patient
+			}
+			modifier = {
+				factor = 2
+				tier = COUNT
+			}
+			
+			modifier = {
+				factor = 1.5
+				FROM = { has_character_modifier = greatest_of_khans }	
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { population_and_manpower = 15000 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { population_and_manpower = 30000 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 15 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 30 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 45 }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { num_of_count_titles_in_realm = 60 }		
+			}
+			modifier = {
+				factor = 1.5
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 2
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 1
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.75
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.5
+					}
+				}	
+			}
+		}
+		set_character_flag = tribute_daughter_offer
+		random_courtier = {
+			limit = {
+				liege = { character = ROOT }
+				OR = {
+					sibling = ROOT
+					is_child_of = ROOT
+					AND = {
+						is_close_relative = ROOT
+						trait = fair
+					}
+				}
+				age = 12
+				NOT = { age = 30 }
+				is_ruler = no
+				is_female = yes
+				is_married = no
+				is_consort = no
+				prisoner = no
+				is_ill = no
+				NOT = { trait = celibate }
+				NOT = { trait = incapable }
+			}
+			save_event_target_as = tribute_daughter_offer
+			custom_tooltip = { text = TOOLTIPdothraki.607DAUGHTER }
+		}
+		FROM = { 	
+			letter_event = { id = dothraki.608 tooltip = TOOLTIPdothraki.608 days = 3 }
+		}	
+		tooltip = {
+			if = {
+				limit = { NOT = { has_character_flag = dothraki_looting_tribute } }
+				if = {
+					limit = { yearly_income = 100 }
+					transfer_scaled_wealth = {
+						to = FROM
+						value = 1.5
+					}
+				}
+				if = {
+					limit = { NOT = { yearly_income = 100 } }
+					wealth = -150
+				}	
+			}	
+			if = {
+				limit = { has_character_flag = dothraki_looting_tribute }
+				if = {
+					limit = { yearly_income = 100 }
+					transfer_scaled_wealth = {
+						to = FROM
+						value = 0.25
+					}
+				}
+				if = {
+					limit = { NOT = { yearly_income = 100 } }
+					wealth = -25
+				}	
+			}			
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBdothraki.607" #Never!
+		ai_chance = {
+			factor = 20
+			
+			modifier = {
+				factor = 1.2
+				martial = 15
+			}
+			modifier = {
+				factor = 1.2
+				martial = 18
+			}
+			modifier = {
+				factor = 1.2
+				martial = 21
+			}
+			modifier = {
+				factor = 1.2
+				martial = 24
+			}
+			modifier = {
+				factor = 3
+				trait = greedy
+			}
+			modifier = {
+				factor = 3
+				trait = ambitious
+			}
+			modifier = {
+				factor = 3
+				trait = brave
+			}
+			modifier = {
+				factor = 3
+				trait = proud
+			}
+			modifier = {
+				factor = 2
+				trait = zealous
+			}
+			modifier = {
+				factor = 2
+				trait = wroth
+			}
+			modifier = {
+				factor = 2
+				tier = EMPEROR
+			}
+			
+			modifier = {
+				factor = 1.5
+				FROM = { NOT = { demesne_size = 1 } }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { NOT = { population_and_manpower = 5000 } }		
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { NOT = { num_of_count_titles_in_realm = 3 } }	
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { NOT = { num_of_count_titles_in_realm = 7 } }	
+			}
+			modifier = {
+				factor = 1.5
+				relative_power = {
+					who = FROM
+					power = 3
+				}
+			}
+			modifier = {
+				factor = 5
+				relative_power = {
+					who = FROM
+					power = 5
+				}	
+			}
+			modifier = {
+				factor = 5
+				relative_power = {
+					who = FROM
+					power = 6
+				}	
+			}
+		}
+		clr_character_flag = considering_surrender
+		clr_character_flag = dothraki_looting_tribute
+		hidden_tooltip = { 
+			character_event = { id = mega_wars.3 } #trigger mega war if valid	
+			reverse_opinion = { who = FROM modifier = rejected_raid_tribute months = 60 } 
+		}
+	}	
+}
+#Enemy offers tribute
+letter_event = {
+	id = dothraki.608
+	
+	is_triggered_only = yes
+	
+	desc = {
+		text = "EVTDESCdothraki.608"
+		trigger = { FROM = { NOT = { has_character_flag = tribute_daughter_offer } } }
+	}
+	desc = {
+		text = "EVTDESCdothraki.608B"
+		trigger = { FROM = { has_character_flag = tribute_daughter_offer } }
+	}
+	
+	trigger = {
+		war_with = FROM
+	}
+	
+	option = {
+		name = "EVTOPTAdothraki.608" #OK
+		ai_chance = {
+			factor = 80
+			
+			modifier = {
+				factor = 1.5
+				FROM = { has_character_flag = tribute_daughter_offer }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { has_character_flag = tribute_daughter_offer }
+				trait = lustful
+			}
+			modifier = {
+				factor = 0.33
+				FROM = { has_character_flag = tribute_daughter_offer }
+				trait = chaste
+			}
+			modifier = {
+				factor = 2
+				FROM = { has_character_flag = tribute_daughter_offer }
+				event_target:tribute_daughter_offer = { trait = fair }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { has_character_flag = tribute_daughter_offer }
+				event_target:tribute_daughter_offer = { trait = ugly }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { 
+					has_character_flag = tribute_daughter_offer 
+					higher_tier_than = DUKE
+				}
+			}
+			
+			
+			modifier = {
+				factor = 1.5
+				FROM = { yearly_income = 200 }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { yearly_income = 300 }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { yearly_income = 400 }
+			}	
+			modifier = {
+				factor = 3
+				trait = content
+			}
+			modifier = {
+				factor = 3
+				trait = craven
+			}
+			modifier = {
+				factor = 3
+				trait = humble
+			}
+			modifier = {
+				factor = 2
+				trait = diligent
+			}
+			modifier = {
+				factor = 2
+				trait = patient
+			}
+			modifier = {
+				factor = 2
+				tier = COUNT
+			}
+			modifier = {
+				factor = 1.5
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.8
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.5
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.25
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.1
+					}
+				}	
+			}
+		}
+		any_war = {
+			limit = {
+				using_cb = dothraki_raid
+				defender = { character = FROM }
+			}	
+			end_war = invalid
+		}
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_DOTHRAKI_RECEIVED_TRIBUTE
+				portrait = [From.GetID]
+			}
+		}
+		FROM = { 
+			if = {
+				limit = { ai = no }
+				chronicle = {
+					entry = CHRONICLE_DOTHRAKI_GAVE_TRIBUTE
+					portrait = [Root.GetID]
+				}
+			}
+			if = {
+				limit = { NOT = { has_character_flag = tribute_daughter_offer } }
+				if = {
+					limit = { NOT = { has_character_flag = dothraki_looting_tribute } }
+					if = {
+						limit = { yearly_income = 100 }
+						transfer_scaled_wealth = {
+							to = ROOT
+							value = 3.0
+						}
+					}
+					if = {
+						limit = { NOT = { yearly_income = 100 } }
+						wealth = -300
+						ROOT = { wealth = 300 }
+					}	
+				}	
+				if = {
+					limit = { has_character_flag = dothraki_looting_tribute }
+					if = {
+						limit = { yearly_income = 100 }
+						transfer_scaled_wealth = {
+							to = ROOT
+							value = 0.5
+						}
+					}
+					if = {
+						limit = { NOT = { yearly_income = 100 } }
+						wealth = -50
+						ROOT = { wealth = 50 }
+					}	
+				}
+			}	
+			if = {
+				limit = { has_character_flag = tribute_daughter_offer }
+				clr_character_flag = tribute_daughter_offer
+				event_target:tribute_daughter_offer = {
+					if = {
+						limit = {
+							ROOT = { is_married = yes }
+						}
+						add_consort = ROOT
+					}
+					if = {
+						limit = {
+							ROOT = { is_married = no }
+						}
+						add_spouse = ROOT
+					}
+				}	
+				if = {
+					limit = { NOT = { has_character_flag = dothraki_looting_tribute } }
+					if = {
+						limit = { yearly_income = 100 }
+						transfer_scaled_wealth = {
+							to = ROOT
+							value = 1.5
+						}
+					}
+					if = {
+						limit = { NOT = { yearly_income = 100 } }
+						wealth = -150
+						ROOT = { wealth = 150 }
+					}	
+				}	
+				if = {
+					limit = { has_character_flag = dothraki_looting_tribute }
+					if = {
+						limit = { yearly_income = 100 }
+						transfer_scaled_wealth = {
+							to = ROOT
+							value = 0.25
+						}
+					}
+					if = {
+						limit = { NOT = { yearly_income = 100 } }
+						wealth = -25
+						ROOT = { wealth = 25 }
+					}	
+				}			
+			}
+			#forbid further raids, 10 years if declared war, 5 years if only looting
+			if = {
+				limit = { NOT = { has_character_flag = dothraki_looting_tribute } }
+				hidden_tooltip = { reverse_opinion = { who = ROOT modifier = forbidden_raid_target months = 120 } }
+				ROOT = { set_truce = { who = ROOT_FROM years = 10 } }
+			}	
+			if = {
+				limit = { has_character_flag = dothraki_looting_tribute }
+				hidden_tooltip = { reverse_opinion = { who = ROOT modifier = forbidden_raid_target months = 60 } }
+				ROOT = { set_truce = { who = ROOT_FROM years = 5 } }
+			}
+			hidden_tooltip = {
+				character_event = { id = dothraki.609 }							
+			}
+		}
+				
+		hidden_tooltip = {
+			if = {
+				limit = { ai = yes }
+				character_event = { id = dothraki.820 days = 30 } #try another target
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBdothraki.608" #Never!
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 1.2
+				martial = 15
+			}
+			modifier = {
+				factor = 1.2
+				martial = 18
+			}
+			modifier = {
+				factor = 1.2
+				martial = 21
+			}
+			modifier = {
+				factor = 1.2
+				martial = 24
+			}
+			modifier = {
+				factor = 3
+				trait = ambitious
+			}
+			modifier = {
+				factor = 3
+				trait = brave
+			}
+			modifier = {
+				factor = 3
+				trait = proud
+			}
+			modifier = {
+				factor = 2
+				trait = zealous
+			}
+			modifier = {
+				factor = 2
+				trait = wroth
+			}
+			modifier = {
+				factor = 2
+				tier = EMPEROR
+			}
+			modifier = {
+				factor = 1.5
+				relative_power = {
+					who = FROM
+					power = 2
+				}
+			}
+			modifier = {
+				factor = 2
+				relative_power = {
+					who = FROM
+					power = 3
+				}	
+			}
+			modifier = {
+				factor = 2
+				relative_power = {
+					who = FROM
+					power = 4
+				}	
+			}
+		}
+		FROM = { 			
+			character_event = { id = dothraki.1010 }
+		}
+	}	
+}
+#Inform Tribute accepted
+character_event = {
+	id = dothraki.609
+	desc = "EVTDESCdothraki.609"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTAdothraki.609" 
+		if = {
+			limit = { has_character_flag = slave_gifts }
+			character_event = { id = slavery.1000 tooltip = "EVTTOOLTIPSLAVERY1000" }
+			clr_character_flag = slave_gifts
+			FROM = {
+				any_courtier = {
+					limit = {
+						trait = slave
+						has_character_flag = slave_gift
+					}
+					move_character = ROOT
+					hidden_tooltip = {
+						reverse_remove_opinion = { who = PREV modifier = opinion_my_slave }
+						remove_opinion = { who = PREV modifier = opinion_my_owner }
+						opinion = { who = ROOT modifier = opinion_my_owner }
+						reverse_opinion = { who = ROOT modifier = opinion_my_slave }
+						clr_character_flag = slave_gift
+						any_spouse = { remove_spouse = PREV }
+						consort = { remove_consort = PREV }
+					}
+				}
+			}
+		}	
+		clr_character_flag = considering_surrender
+		clr_character_flag = dothraki_looting_tribute
+	}
+}	
+#Inform Tribute rejected
+character_event = {
+	id = dothraki.1010
+	desc = "EVTDESCdothraki.1010"
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTAdothraki.1010" 
+		clr_character_flag = considering_surrender
+		clr_character_flag = dothraki_looting_tribute
+		hidden_tooltip = { 
+			character_event = { id = mega_wars.3 } #trigger mega war if valid
+			reverse_opinion = { who = FROM modifier = rejected_raid_tribute months = 60 } 
+		}	
+	}
+}	
+#Enemy offers tribute/gifts in exchange for slaves
+letter_event = {
+	id = dothraki.1011
+	desc = "EVTDESCdothraki.1011"
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		war_with = FROM
+	}
+	
+	immediate = {
+		random_courtier = {
+			limit = {
+				trait = slave
+				has_opinion_modifier = { who = ROOT modifier = opinion_my_owner }
+				NOT = { age = 40 }
+				NOT = { trait = incapable }
+			}
+			set_character_flag = slave_gift
+		}
+		random_courtier = {
+			limit = {
+				trait = slave
+				has_opinion_modifier = { who = ROOT modifier = opinion_my_owner }
+				NOT = { age = 40 }
+				NOT = { trait = incapable }
+				NOT = { has_character_flag = slave_gift }
+			}
+			set_character_flag = slave_gift
+		}
+		random_courtier = {
+			limit = {
+				trait = slave
+				has_opinion_modifier = { who = ROOT modifier = opinion_my_owner }
+				NOT = { age = 40 }
+				NOT = { trait = incapable }
+				NOT = { has_character_flag = slave_gift }
+			}
+			set_character_flag = slave_gift
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAdothraki.608" #OK
+		ai_chance = {
+			factor = 120
+			modifier = {
+				factor = 1.5
+				FROM = { yearly_income = 200 }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { yearly_income = 300 }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { yearly_income = 400 }
+			}	
+			modifier = {
+				factor = 3
+				trait = content
+			}
+			modifier = {
+				factor = 3
+				trait = craven
+			}
+			modifier = {
+				factor = 3
+				trait = humble
+			}
+			modifier = {
+				factor = 2
+				trait = diligent
+			}
+			modifier = {
+				factor = 2
+				trait = patient
+			}
+			modifier = {
+				factor = 2
+				tier = COUNT
+			}
+			modifier = {
+				factor = 1.5
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.8
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.5
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.25
+					}
+				}	
+			}
+			modifier = {
+				factor = 2
+				NOT = {
+					relative_power = {
+						who = FROM
+						power = 0.1
+					}
+				}	
+			}
+		}
+		any_war = {
+			limit = {
+				using_cb = dothraki_raid
+				defender = { character = FROM }
+			}	
+			end_war = invalid
+		}
+		character_event = { id = slavery.1001 tooltip = "EVTTOOLTIPSLAVERY1001" }
+		tooltip = {
+			any_courtier = {
+				limit = {
+					trait = slave
+					has_character_flag = slave_gift
+				}
+				move_character = FROM
+			}
+		}
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_DOTHRAKI_RECEIVED_TRIBUTE
+				portrait = [From.GetID]
+			}
+		}
+		FROM = { 
+			if = {
+				limit = { ai = no }
+				chronicle = {
+					entry = CHRONICLE_DOTHRAKI_GAVE_TRIBUTE
+					portrait = [Root.GetID]
+				}
+			}	
+			if = {
+				limit = { yearly_income = 100 }
+				transfer_scaled_wealth = {
+					to = ROOT
+					value = 4.0
+				}
+			}
+			if = {
+				limit = { NOT = { yearly_income = 100 } }
+				wealth = -400
+				ROOT = { wealth = 400 }
+			}
+			set_character_flag = slave_gifts
+			#forbid further raids, 10 years if declared war, 5 years if only looting
+			if = {
+				limit = { NOT = { has_character_flag = dothraki_looting_tribute } }
+				hidden_tooltip = { reverse_opinion = { who = ROOT modifier = forbidden_raid_target months = 120 } }
+				ROOT = { set_truce = { who = ROOT_FROM years = 10 } }
+			}	
+			if = {
+				limit = { has_character_flag = dothraki_looting_tribute }
+				hidden_tooltip = { reverse_opinion = { who = ROOT modifier = forbidden_raid_target months = 60 } }
+				ROOT = { set_truce = { who = ROOT_FROM years = 5 } }
+			}
+			hidden_tooltip = {
+				character_event = { id = dothraki.609 }
+			}
+		}
+		hidden_tooltip = {
+			if = {
+				limit = { ai = yes }
+				character_event = { id = dothraki.820 days = 30 } #try another target
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBdothraki.608" #Never!
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 1.2
+				martial = 15
+			}
+			modifier = {
+				factor = 1.2
+				martial = 18
+			}
+			modifier = {
+				factor = 1.2
+				martial = 21
+			}
+			modifier = {
+				factor = 1.2
+				martial = 24
+			}
+			modifier = {
+				factor = 3
+				trait = ambitious
+			}
+			modifier = {
+				factor = 3
+				trait = brave
+			}
+			modifier = {
+				factor = 3
+				trait = proud
+			}
+			modifier = {
+				factor = 2
+				trait = zealous
+			}
+			modifier = {
+				factor = 2
+				trait = wroth
+			}
+			modifier = {
+				factor = 2
+				tier = EMPEROR
+			}
+			modifier = {
+				factor = 1.5
+				relative_power = {
+					who = FROM
+					power = 2
+				}
+			}
+			modifier = {
+				factor = 2
+				relative_power = {
+					who = FROM
+					power = 3
+				}	
+			}
+			modifier = {
+				factor = 2
+				relative_power = {
+					who = FROM
+					power = 4
+				}	
+			}
+		}
+		FROM = { 			
+			character_event = { id = dothraki.1010 }
+		}
+		hidden_tooltip = {
+			any_courtier = {
+				limit = { has_character_flag = slave_gift }
+				clr_character_flag = slave_gift
+			}
+		}	
+	}	
+}
+
+#A Dothraki acquires new grazing province, province maintenance
+province_event = {
+	id = dothraki.610
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	immediate = {	
+		if = {
+			limit = { FROM = { culture = dothraki } }
+			culture = dothraki
+			religion = dothraki_pagan
+		}	
+		if = {
+			limit = { FROM = { culture = jogos_nhai } }
+			culture = jogos_nhai
+			religion = jogos_pagan
+		}
+		#If a colony is taken remove all relevent flags
+		remove_province_modifier = partial_colony
+		remove_province_modifier = colony
+		remove_province_modifier = ruined_province
+		clr_province_flag = colony_province
+		clr_province_flag = dredged
+		clr_province_flag = roads
+		clr_province_flag = scrolls_found
+		clr_province_flag = vault_found
+		clr_province_flag = restored_amphitheatre
+		clr_province_flag = dothraki_colony_province
+		if = {
+			limit = { has_dlc = "Reapers" }
+			set_variable = { which = prosperity_value value = 0 }
+			remove_province_modifier = prosperity_modifier_3
+			remove_province_modifier = prosperity_modifier_2
+			remove_province_modifier = prosperity_modifier_1
+		}
+		
+		#remove all non castle and low city holdings
+		county = {			
+			any_de_jure_vassal_title = {
+				limit = { 
+					tier = BARON 
+					NOT = { holding_type = nomad }
+					OR = {
+						NOT = { holding_type = city }
+						NOT = { base_value_4_trigger = yes }
+					}	
+				}
+				destroy_settlement = THIS
+			}	
+		}
+		capital_holding = {
+			if = {
+				limit = { NOT = { holding_type = nomad } }
+				revoke_capital_holding = yes
+				if = {
+					limit = { NOT = { holding_type = city } }
+					destroy_settlement = THIS
+				}	
+			}
+		}
+		#high city holdings become ruins
+		county = {		
+			any_de_jure_vassal_title = {
+				limit = { 
+					tier = BARON 
+					holding_type = city
+					base_value_4_trigger = yes
+				}
+				create_character = {
+					name = ""
+					religion="ruin_rel"
+					culture="ruin"	
+					dynasty=none
+					attributes = {
+						martial = 0
+						diplomacy = 0
+						intrigue = 0
+						stewardship = 0
+						learning = 0
+					}
+					trait = ruin
+				}
+				new_character = {
+					gain_title = PREV 
+					add_trait = ruin
+					set_defacto_liege = THIS
+					recalc_succession = yes
+				}
+				add_building = ct_sub_barony_ruin
+			}	
+			set_variable = { which = "de_facto_kingdom" value = 0 }
+			set_variable = { which = "de_facto_empire" value = 0 }
+			duchy = {
+				if = {
+					limit = { has_holder = no }
+					set_variable = { which = "de_facto_kingdom" value = 0 }
+					set_variable = { which = "de_facto_empire" value = 0 }
+				}
+			}			
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}	
+
+# Teaching a child to ride
+# Dothraki child is now old enough for their first horse
+character_event = {
+	id = dothraki.700
+	desc = "EVTDESCDOTHRAKI700"
+	picture = GFX_evt_horse_friend
+	
+	is_triggered_only = yes
+	min_age = 12
+	max_age = 14
+	only_capable = yes
+	prisoner = no
+	
+	trigger = {
+		NOT = { has_character_flag = flag_first_horse }
+		culture = dothraki
+		liege = {
+			culture = dothraki
+			prisoner = no
+			NOT = { trait = incapable }
+			is_parent_of = ROOT
+		}
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI700"
+		set_character_flag = flag_first_horse
+		liege = { character_event = { id = dothraki.701 tooltip = "EVTTOOLTIPDOTHRAKI701" } }
+	}
+}
+
+character_event = {
+	id = dothraki.701
+	desc = "EVTDESCDOTHRAKI701"
+	picture = GFX_evt_horse_friend
+	is_triggered_only = yes
+	
+	# Only the wildest stallion will do
+	option = {
+		trigger = { wealth = 25 }
+		name = "EVTOPTADOTHRAKI701"
+		wealth = -25
+		FROM = { hidden_tooltip = { character_event = { id = dothraki.702 } } }
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
+				trait = proud
+			}
+			modifier = {
+				factor = 0.5
+				trait = humble
+			}
+			modifier = {
+				factor = 2
+				trait = ambitious
+			}
+			modifier = {
+				factor = 0.5
+				trait = content
+			}
+			modifier = {
+				factor = 2
+				trait = wroth
+			}
+			modifier = {
+				factor = 0.5
+				trait = patient
+			}
+			modifier = {
+				factor = 4
+				FROM = { is_strong_trigger = yes }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { is_weak_trigger = yes }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 4
+				FROM = { trait = brave }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = craven }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = dwarf }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = clubfooted }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = hunchback }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { is_ill = yes }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = wounded }
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { has_severe_disability_trigger = yes}
+				NOT = { trait = lunatic }
+				NOT = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { is_female = yes }
+			}
+		}
+	}
+	
+	# A gentle mare, easily ridden
+	option = {
+		trigger = { wealth = 25 }
+		name = "EVTOPTBDOTHRAKI701"
+		FROM = { hidden_tooltip = { character_event = { id = dothraki.708 } } }
+		wealth = -25
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				trait = craven
+			}
+			modifier = {
+				factor = 0.5
+				trait = brave
+			}
+			modifier = {
+				factor = 2
+				trait = patient
+			}
+			modifier = {
+				factor = 0.5
+				trait = wroth
+			}
+		}
+	}
+	
+	# A fleabitten nag
+	option = {
+		name = "EVTOPTCDOTHRAKI701"
+		FROM = {
+			opinion = { who = ROOT modifier = opinion_mad_at_guardian months = 120 }
+			hidden_tooltip = { character_event = { id = dothraki.714 } }
+		}
+		prestige = -100
+		ai_chance = {
+			factor = 5
+			modifier = {
+				factor = 3
+				trait = greedy
+			}
+		}
+	}
+}
+
+# A wild stallion
+character_event = {
+	id = dothraki.702
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = { e_rebels = { holder_scope = { character_event = { id = dothraki.703 } } } }
+	
+	option = {
+		name = OK
+	}
+}
+
+character_event = {
+	id = dothraki.703
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = { has_landed_title = e_rebels }
+	
+	# Successfully tamed the wild stallion
+	option = {
+		FROM = { FROM = { character_event = { id = dothraki.704 } } }
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 2
+				FROM = { is_strong_trigger = yes }
+			}
+			 modifier = {
+				factor = 4
+				FROM = { trait = tall }
+			 }
+			modifier = {
+				factor = 2
+				FROM = { trait = brave }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { trait = proud }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { trait = diligent }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = {
+					OR = {
+						trait = wroth
+						trait = patient
+					}
+				}
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = dwarf }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { is_weak_trigger = yes }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { trait = craven }
+			}
+			modifier = {
+				factor = 0.8
+				FROM = { trait = humble }
+			}
+			modifier = {
+				factor = 0.8
+				FROM = { trait = slothful }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = clubfooted }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = hunchback }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = wounded }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { is_ill = yes }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { has_severe_disability_trigger = yes }
+			}
+			modifier = {
+				factor = 0.2
+				FROM = { is_crippled_trigger = yes }
+			}
+		}
+	}
+	
+	option = {
+		ai_chance = { factor = 25 }
+		FROM = { FROM = { character_event = { id = dothraki.706 } } }
+	}
+}
+
+# Your child has successfully tamed a wild stallion!
+character_event = {
+	id = dothraki.704
+	desc = "EVTDESCDOTHRAKI704"
+	picture = GFX_evt_horsemanship
+	is_triggered_only = yes
+	show_from_from = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI704"
+		prestige = 100
+		FROM = { FROM = { character_event = { id = dothraki.705 tooltip = "EVTTOOLTIPDOTHRAKI705" } } }
+	}
+}
+
+character_event = {
+	id = dothraki.705
+	desc = "EVTDESCDOTHRAKI705"
+	picture = GFX_evt_horsemanship
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI705"
+		prestige = 100
+	}
+}
+
+# Your child was bucked off by the wild stallion!
+character_event = {
+	id = dothraki.706
+	desc = "EVTDESCDOTHRAKI706"
+	picture = GFX_evt_dothraki_struggling
+	is_triggered_only = yes
+	show_from_from = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI706"
+		prestige = -25
+		FROM = { FROM = { character_event = { id = dothraki.707 tooltip = "EVTTOOLTIPDOTHRAKI707" } } }
+		random_list = {
+			8 = { }
+			4 = { FROM = { FROM = { add_trait = wounded } } }
+			2 = { FROM = { FROM = { mangle_effect = yes } } }
+			1 = { FROM = { FROM = { death = { death_reason = death_accident_horse } } } }
+		}
+	}
+}
+
+character_event = {
+	id = dothraki.707
+	desc = "EVTDESCDOTHRAKI707"
+	picture = GFX_evt_dothraki_struggling
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI707"
+		prestige = -25
+	}
+}
+
+# A gentle mare
+character_event = {
+	id = dothraki.708
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = { e_rebels = { holder_scope = { character_event = { id = dothraki.709 } } } }
+	
+	option = {
+		name = OK
+	}
+}
+
+character_event = {
+	id = dothraki.709
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = { has_landed_title = e_rebels }
+	
+	# Successfully tamed the wild stallion
+	option = {
+		FROM = { FROM = { character_event = { id = dothraki.710 } } }
+		ai_chance = {
+			factor = 90
+			modifier = {
+				factor = 2
+				FROM = { is_strong_trigger = yes }
+			}
+			 modifier = {
+				factor = 4
+				FROM = { trait = tall }
+			 }
+			modifier = {
+				factor = 2
+				FROM = { trait = brave }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { trait = proud }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { trait = diligent }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = {
+					OR = {
+						trait = wroth
+						trait = patient
+					}
+				}
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = dwarf }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { is_weak_trigger = yes }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { trait = craven }
+			}
+			modifier = {
+				factor = 0.8
+				FROM = { trait = humble }
+			}
+			modifier = {
+				factor = 0.8
+				FROM = { trait = slothful }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = clubfooted }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = hunchback }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { trait = wounded }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { is_ill = yes }
+			}
+			modifier = {
+				factor = 0.25
+				FROM = { has_severe_disability_trigger = yes }
+			}
+			modifier = {
+				factor = 0.2
+				FROM = { is_crippled_trigger = yes }
+			}
+		}
+	}
+	
+	option = {
+		ai_chance = { factor = 10 }
+		FROM = { FROM = { character_event = { id = dothraki.712 } } }
+	}
+}
+
+# Your child rode their first horse successfully
+character_event = {
+	id = dothraki.710
+	desc = "EVTDESCDOTHRAKI710"
+	picture = GFX_evt_horsemanship
+	is_triggered_only = yes
+	show_from_from = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI710"
+		prestige = 10
+		FROM = { FROM = { character_event = { id = dothraki.711 tooltip = "EVTTOOLTIPDOTHRAKI711" } } }
+	}
+}
+
+character_event = {
+	id = dothraki.711
+	desc = "EVTDESCDOTHRAKI711"
+	picture = GFX_evt_horsemanship
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI711"
+		prestige = 25
+	}
+}
+
+# Your child failed to ride even the gentlest mare!
+character_event = {
+	id = dothraki.712
+	desc = "EVTDESCDOTHRAKI712"
+	picture = GFX_evt_dothraki_struggling
+	is_triggered_only = yes
+	show_from_from = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI706"
+		prestige = -100
+		FROM = { FROM = { character_event = { id = dothraki.713 tooltip = "EVTTOOLTIPDOTHRAKI713" } } }
+		random_list = {
+			4 = { }
+			2 = { FROM = { FROM = { add_trait = wounded } } }
+			1 = { FROM = { FROM = { mangle_effect = yes } } }
+		}
+	}
+}
+
+character_event = {
+	id = dothraki.713
+	desc = "EVTDESCDOTHRAKI713"
+	picture = GFX_evt_dothraki_struggling
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI707"
+		prestige = -100
+		add_trait = stressed
+	}
+}
+
+# A fleabitten nag
+character_event = {
+	id = dothraki.714
+	desc = "EVTDESCDOTHRAKI714"
+	picture = GFX_evt_dothraki_struggling
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI714"
+		hidden_tooltip = { FROM = { character_event = { id = dothraki.715 } } }
+		prestige = -200
+	}
+}
+
+character_event = {
+	id = dothraki.715
+	desc = "EVTDESCDOTHRAKI715"
+	picture = GFX_evt_dothraki_struggling
+	is_triggered_only = yes
+	
+	option = { name = "EVTOPTADOTHRAKI715" }
+}
+
+# A child born to Dothraki parents is deformed
+# character_event = {
+	# id = dothraki.750 #MERGED WITH BIRTH.990
+	
+	# hide_window = yes	
+	# is_triggered_only = yes
+	
+	# option = {
+		# name = OK
+	# }
+# }
+
+character_event = {
+	id = dothraki.751
+	desc = "EVTDESCDOTHRAKI751"
+	picture = GFX_evt_birth
+	
+	is_triggered_only = yes
+	
+	trigger = { FROM = { is_alive = yes } }
+	
+	# Abandon the child to die
+	option = {
+		name = "EVTOPTADOTHRAKI751"
+		FROM = {
+			death = {
+				death_reason = death_sacrificed_abandoned
+				killer = ROOT
+			}
+			mother = {
+				if = {
+					limit = { NOT = { character = ROOT } }
+					character_event = { id = dothraki.752 tooltip = "EVTTOOLTIPDOTHRAKI752" }
+				}	
+			}
+			father = {
+				if = {
+					limit = { NOT = { character = ROOT } }
+					character_event = { id = dothraki.752 tooltip = "EVTTOOLTIPDOTHRAKI752" }
+				}	
+			}
+		}
+		ai_chance = {
+			factor = 25
+			# Establish a baseline
+			modifier = {
+				factor = 2
+				FROM = { is_weak_trigger = yes }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = inbred }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = dwarf }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = hunchback }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = clubfooted }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { is_strong_trigger = yes }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { trait = tall }
+			}
+			
+			# Personality
+			modifier = {
+				factor = 2
+				trait = proud
+			}
+			modifier = {
+				factor = 0.5
+				trait = humble
+			}
+			modifier = {
+				factor = 5
+				trait = cruel
+			}
+			modifier = {
+				factor = 0.2
+				trait = kind
+			}
+			modifier = {
+				factor = 2
+				trait = wroth
+			}
+			modifier = {
+				factor = 0.5
+				trait = patient
+			}
+		}
+	}
+	
+	# Don't do that
+	option = {
+		name = "EVTOPTBDOTHRAKI751"
+		#FROM = { set_character_flag = flag_spared_by_parents }
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+character_event = {
+	id = dothraki.752
+	desc = "EVTDESCDOTHRAKI752"
+	picture = GFX_evt_dothraki_struggling
+	is_triggered_only = yes
+	
+	# Murderer!
+	option = {
+		trigger = { NOT = { culture = dothraki } }
+		name = "EVTOPTADOTHRAKI752"
+		FROM = { character_event = { id = dothraki.753 tooltip = "EVTTOOLTIPDOTHRAKI753" } }
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				trait = zealous
+			}
+			modifier = {
+				factor = 0.5
+				trait = cynical
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -99 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -89 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -79 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -69 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -59 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -49 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -39 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -29 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -19 } }
+			}
+			modifier = {
+				factor = 1.25
+				NOT = { opinion = { who = FROM value = -9 } }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 10 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 20 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 30 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 40 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 50 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 60 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 70 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 80 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 90 }
+			}
+			modifier = {
+				factor = 0.8
+				opinion = { who = FROM value = 100 }
+			}
+		}
+	}
+	
+	# I understand
+	option = {
+		name = "EVTOPTBDOTHRAKI752"
+		ai_chance = { factor = 50 }
+	}
+}
+
+character_event = {
+	id = dothraki.753
+	desc = "EVTDESCDOTHRAKI753"
+	picture = GFX_evt_quarrel
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI753"
+		reverse_opinion = { who = FROM modifier = opinion_vengeance }
+	}
+}
+
+# Flavor event chain - stallion heart ceremony
+# Khaleesi undertakes the stallion heart ceremony
+character_event = {
+	id = dothraki.800
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		trait = pregnant
+		has_character_flag = flag_stallion_heart_ceremony
+	}
+	
+	immediate = { e_rebels = { holder_scope = { character_event = { id = dothraki.801 } } } }
+	
+	option = {
+		name = OK
+	}
+}
+
+character_event = {
+	id = dothraki.801
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = { has_landed_title = e_rebels }
+	
+	# Success!
+	option = {
+		FROM = { character_event = { id = dothraki.802 } }
+		ai_chance = {
+			factor = 25
+			modifier = {
+				factor = 1.25
+				FROM = { health = 1 }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { health = 2 }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { health = 3 }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { health = 4 }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { health = 5 }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { health = 6 }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { health = 7 }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { health = 8 }
+			}
+			modifier = {
+				factor = 1.25
+				FROM = { health = 9 }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = brave }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = ambitious }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = stubborn }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = proud }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { trait = craven }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { trait = content }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { trait = humble }
+			}
+		}
+	}
+	
+	# Failure!
+	option = {
+		FROM = { character_event = { id = dothraki.804 } }
+		ai_chance = { factor = 100 }
+	}
+}
+
+# Khaleesi successfully consumes the heart!
+character_event = {
+	id = dothraki.802
+	desc = "EVTDESCDOTHRAKI802"
+	picture = GFX_evt_vaes_dothrak
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI802"
+		hidden_tooltip = {
+			random = {
+				chance = 75
+				clr_character_flag = flag_stillbirth
+			}
+		}
+		prestige = 100
+		if = {
+			limit = { religion = dothraki_pagan }
+			piety = 50
+		}
+		if = {
+			limit = { father_of_unborn = { religion = dothraki_pagan } }
+			father_of_unborn = { opinion = { who = ROOT modifier = opinion_proud months = 60 } }
+		}
+		father_of_unborn = { character_event = { id = dothraki.803 tooltip = "EVTTOOLTIPDOTHRAKI803" } }
+		clr_character_flag = flag_stallion_heart_ceremony
+		set_character_flag = flag_stallion_heart_successful
+		
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_DOTHRAKI_HEART_CEREMONY
+				picture = GFX_evt_vaes_dothrak
+			}
+		}
+		event_target:chronicle_player = {
+			if = {
+				limit = {
+					is_married = ROOT
+				}
+				chronicle = {
+					entry = CHRONICLE_DOTHRAKI_HEART_CEREMONY
+					portrait = [Root.GetID]
+				}
+			}
+		}
+	}
+}
+character_event = {
+	id = dothraki.803
+	desc = "EVTDESCDOTHRAKI803"
+	picture = GFX_evt_vaes_dothrak
+	is_triggered_only = yes
+	
+	option = {
+		trigger = { religion = dothraki_pagan }
+		name = "EVTOPTADOTHRAKI803"
+		prestige = 25
+		piety = 25
+	}
+	
+	option = {
+		trigger = { NOT = { religion = dothraki_pagan } }
+		name = "EVTOPTBDOTHRAKI803"
+		prestige = 25
+	}
+}
+# Khaleesi fails to consume the heart
+character_event = {
+	id = dothraki.804
+	desc = "EVTDESCDOTHRAKI804"
+	picture = GFX_evt_vaes_dothrak
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI804"
+		# Still better than nothing
+		hidden_tooltip = {
+			random = {
+				chance = 25
+				clr_character_flag = flag_stillbirth
+			}
+		}
+		prestige = -25
+		if = {
+			limit = { religion = dothraki_pagan }
+			piety = 25
+		}
+		if = {
+			limit = { father_of_unborn = { religion = dothraki_pagan } }
+			father_of_unborn = { opinion = { who = ROOT modifier = opinion_disappointed months = 60 } }
+		}
+		father_of_unborn = { character_event = { id = dothraki.805 tooltip = "EVTTOOLTIPDOTHRAKI805" } }
+		clr_character_flag = flag_stallion_heart_ceremony
+		set_character_flag = flag_stallion_heart_failure
+	}
+}
+character_event = {
+	id = dothraki.805
+	desc = "EVTDESCDOTHRAKI805"
+	picture = GFX_evt_vaes_dothrak
+	is_triggered_only = yes
+	
+	option = {
+		trigger = { religion = dothraki_pagan }
+		name = "EVTOPTADOTHRAKI805"
+		prestige = -25
+		piety = 25
+	}
+	
+	option = {
+		trigger = { NOT = { religion = dothraki_pagan } }
+		name = "EVTOPTBDOTHRAKI805"
+		prestige = -25
+	}
+}
+# Pregnant khaleesi (wife of khal)
+character_event = {
+	id = dothraki.806
+	
+	is_triggered_only = yes
+	hide_window = yes
+	#only_women = yes
+	#min_age = 12
+	#max_age = 50
+	
+	trigger = {
+		#trait = pregnant
+		NOT = { has_character_flag = flag_stallion_heart_ceremony }
+		NOT = { has_character_flag = flag_stallion_heart_success }
+		NOT = { has_character_flag = flag_stallion_heart_failure }
+		NOT = { higher_tier_than = COUNT }
+		father_of_unborn = {
+			religion = dothraki_pagan
+			is_ruler = yes
+			higher_tier_than = COUNT
+			is_liege_of = ROOT
+			NOT = { has_severe_disability_trigger = yes }
+			prisoner = no
+			is_married = ROOT
+		}
+		NOT = { has_severe_disability_trigger = yes }
+		prisoner = no
+		NOT = { has_character_flag = flag_no_cuckoo }
+	}
+	
+	immediate = {
+		set_character_flag = flag_stallion_heart_ceremony
+		father_of_unborn = { character_event = { id = dothraki.807 } }
+	}
+	option = {
+		name = OK
+	}
+}
+
+character_event = {
+	id = dothraki.807
+	desc = "EVTDESCDOTHRAKI807"
+	picture = GFX_evt_birth
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI807"
+		trigger = {
+			OR = {
+				AND = {
+					wealth = 40
+					higher_tier_than = DUKE
+				}
+				AND = {
+					wealth = 20
+					tier = DUKE
+				}				
+			}
+		}		
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 4
+				trait = zealous
+			}
+			modifier = {
+				factor = 0.25
+				trait = cynical
+			}
+			modifier = {
+				factor = 2
+				trait = proud
+			}
+			modifier = {
+				factor = 0.5
+				trait = humble
+			}
+		}
+		if = {
+			limit = { tier = DUKE }
+			wealth = -20
+		}
+		if = {
+			limit = { higher_tier_than = DUKE }
+			wealth = -40
+		}			
+		FROM = { 
+			character_event = { id = dothraki.800 days = 30 random = 15 tooltip = "EVTTOOLTIPDOTHRAKI800" } 
+			hidden_tooltip = { character_event = { id = dothraki.812 days = 270 } } #flag check
+		}	
+	}
+	
+	option = {
+		name = "EVTOPTBDOTHRAKI807"
+		trigger = {
+			OR = {
+				AND = {
+					wealth = 40
+					higher_tier_than = DUKE
+				}
+				AND = {
+					wealth = 20
+					tier = DUKE
+				}				
+			}
+		}
+		ai_chance = { factor = 25 }
+		if = {
+			limit = { tier = DUKE }
+			piety = -30
+		}
+		if = {
+			limit = { higher_tier_than = DUKE }
+			piety = -60	
+		}
+		FROM = { clr_character_flag = flag_stallion_heart_ceremony }
+	}
+	
+	option = {
+		name = "EVTOPTCDOTHRAKI807"
+		trigger = {
+			NOT = {
+				OR = {
+					AND = {
+						wealth = 40
+						higher_tier_than = DUKE
+					}
+					AND = {
+						wealth = 20
+						tier = DUKE
+					}				
+				}
+			}
+		}		
+		if = {
+			limit = { tier = DUKE }
+			prestige = -35
+		}
+		if = {
+			limit = { higher_tier_than = DUKE }
+			prestige = -70
+		}
+		FROM = { clr_character_flag = flag_stallion_heart_ceremony }		
+	}
+}
+# Khaleesi in her own right is pregnant
+character_event = {
+	id = dothraki.808
+	desc = "EVTDESCDOTHRAKI808"
+	picture = GFX_evt_birth
+	
+	is_triggered_only = yes
+	only_playable = yes
+	religion = dothraki_pagan
+	
+	trigger = {
+		#trait = pregnant
+		NOT = { has_character_flag = flag_stallion_heart_ceremony }
+		NOT = { has_character_flag = flag_stallion_heart_success }
+		NOT = { has_character_flag = flag_stallion_heart_failure }		
+		higher_tier_than = COUNT
+		NOT = { has_severe_disability_trigger = yes }
+		prisoner = no
+	}
+	
+	immediate = { set_character_flag = flag_stallion_heart_ceremony }
+	
+	option = {
+		name = "EVTOPTADOTHRAKI807"
+		trigger = {
+			OR = {
+				AND = {
+					wealth = 50
+					higher_tier_than = DUKE
+				}
+				AND = {
+					wealth = 25
+					tier = DUKE
+				}				
+			}
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 4
+				trait = zealous
+			}
+			modifier = {
+				factor = 0.25
+				trait = cynical
+			}
+			modifier = {
+				factor = 2
+				trait = brave
+			}
+			modifier = {
+				factor = 0.5
+				trait = craven
+			}
+			modifier = {
+				factor = 2
+				trait = proud
+			}
+			modifier = {
+				factor = 0.5
+				trait = humble
+			}
+		}	
+		if = {
+			limit = { tier = DUKE }
+			wealth = -25
+		}
+		if = {
+			limit = { higher_tier_than = DUKE }
+			wealth = -50
+		}
+		hidden_tooltip = { father_of_unborn = { character_event = { id = dothraki.809 } } }
+		character_event = { id = dothraki.800 days = 30 random = 15 tooltip = "EVTTOOLTIPDOTHRAKI800" }
+
+		hidden_tooltip = { character_event = { id = dothraki.812 days = 270 } } #flag check
+	}
+	
+	option = {
+		name = "EVTOPTBDOTHRAKI807"
+		trigger = {
+			OR = {
+				AND = {
+					wealth = 50
+					higher_tier_than = DUKE
+				}
+				AND = {
+					wealth = 25
+					tier = DUKE
+				}				
+			}
+		}
+		ai_chance = { factor = 25 }
+		if = {
+			limit = { tier = DUKE }
+			piety = -50
+		}
+		if = {
+			limit = { higher_tier_than = DUKE }
+			piety = -100	
+		}
+		clr_character_flag = flag_stallion_heart_ceremony
+	}
+	
+	option = {
+		name = "EVTOPTCDOTHRAKI807"
+		trigger = {
+			NOT = {
+				OR = {
+					AND = {
+						wealth = 50
+						higher_tier_than = DUKE
+					}
+					AND = {
+						wealth = 25
+						tier = DUKE
+					}				
+				}
+			}
+		}	
+		if = {
+			limit = { tier = DUKE }
+			prestige = -50
+		}
+		if = {
+			limit = { higher_tier_than = DUKE }
+			prestige = -100
+		}
+		clr_character_flag = flag_stallion_heart_ceremony
+	}
+}
+
+# Khaleesi goes to Vaes Dothrak - inform the father
+character_event = {
+	id = dothraki.809
+	desc = "EVTDESCDOTHRAKI809"
+	picture = GFX_evt_dothraki
+	is_triggered_only = yes
+	
+	option = {
+		trigger = { religion = dothraki_pagan }
+		name = "EVTOPTADOTHRAKI809"
+		piety = 25
+	}
+	option = {
+		trigger = { NOT = { religion = dothraki_pagan } }
+		name = "EVTOPTBDOTHRAKI809"
+	}
+}
+# A child whose mother successfully consumed the heart is born
+# character_event = {
+	# id = dothraki.810 #MERGED WITH BIRTH.990
+	# hide_window = yes
+	
+	# is_triggered_only = yes
+	
+	# option = {
+		# name = OK
+	# }
+# }
+# A child whose mother failed to consume the heart is born
+# character_event = {
+	# id = dothraki.811 MERGED WITH BIRTH.990
+	
+	# hide_window = yes
+	# is_triggered_only = yes
+	
+	# option = {
+		# name = OK
+	# }
+# }
+# Bad flags
+character_event = {
+	id = dothraki.812
+	
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = {
+		is_pregnant = no
+		OR = {
+			has_character_flag = flag_stallion_heart_ceremony
+			has_character_flag = flag_stallion_heart_successful
+			has_character_flag = flag_stallion_heart_failure
+		}
+	}
+	
+	immediate = {
+		clr_character_flag = flag_stallion_heart_ceremony
+		clr_character_flag = flag_stallion_heart_successful
+		clr_character_flag = flag_stallion_heart_failure
+	}
+	
+	option = {
+		name = OK
+	}
+}
+
+# Rich merchant caravan passing through
+character_event = {
+	id = dothraki.815
+	picture = GFX_evt_market_altaic
+	desc = "EVTDESCDOTHRAKI815"
+	
+	only_playable = yes
+	is_triggered_only = yes
+	
+	trigger = {	
+		is_nomadic = yes 		
+		capital_scope = { 
+			NOT = { has_province_modifier = asoiaf_overgrazed } 
+			any_province_holding = { holding_type = nomad }
+		}
+	}
+	
+	weight_multiplier = {
+		days = 1
+		
+		modifier = {
+			factor = 2
+			capital_scope = { has_trade_post = yes }
+		}
+		modifier = {
+			factor = 2
+			capital_scope = { 	
+				OR = {
+					trade_route = northern_trade_route
+					trade_route = central_trade_route
+				}	
+			}
+		}
+			
+		# Winter is bad
+		modifier = {
+			factor = 0.8
+			capital_scope = { has_province_modifier = asoiaf_mild_winter }
+		}
+		modifier = {
+			factor = 0.5
+			capital_scope = { has_province_modifier = asoiaf_normal_winter }
+		}
+		modifier = {
+			factor = 0.2
+			capital_scope = { has_province_modifier = asoiaf_harsh_winter }
+		}
+	}
+	
+	immediate = {
+		hidden_tooltip = {
+			#Find random slave culture/religion
+			random_playable_ruler = {
+				limit = {
+					demesne_size = 1
+					is_within_diplo_range = ROOT
+				}
+				capital_scope = { save_event_target_as = slave_home }
+			}
+			#Find random trader culture/religion
+			random_playable_ruler = {
+				limit = {
+					demesne_size = 1
+					higher_tier_than = COUNT
+					is_nomadic = no
+					capital_scope = {
+						OR = {
+							region = world_free_cities
+							region = world_slavers_bay
+							region = world_qarth
+							region = world_yi_ti
+						}
+					}
+				}
+				capital_scope = { save_event_target_as = trader_home }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTADOTHRAKI815" #Take traditional gifts
+		ai_chance = {
+			factor = 50
+		}
+		wealth = 100
+		manpower = -250	
+	}
+	option = {
+		name = "EVTOPTBDOTHRAKI815" #Take a slave
+		trigger = {
+			NOT = {
+				crownlaw_title = {
+					OR = {
+						has_law = slavery_0
+						has_law = slavery_1
+						has_law = slavery_3
+					}
+				}
+			}
+		}
+		ai_chance = {
+			factor = 5
+		}
+		custom_tooltip = {
+			text = TOOLTIPdothrak815SLAVES
+			hidden_tooltip = {
+				create_character = {
+					random_traits = yes
+					culture = event_target:slave_home
+					religion = event_target:slave_home
+					dynasty = none
+					historical = yes
+				}
+				new_character = {
+					add_trait = slave
+					opinion = { who = ROOT modifier = opinion_my_owner }
+					reverse_opinion = { who = ROOT modifier = opinion_my_slave }
+					move_character = ROOT
+					if = {
+						limit = { 
+							OR = {
+								is_female = no 
+								culture_group = hyrkoon_group
+							}	
+						}
+						random_list = {
+							40 = { }
+							30 = { add_trait = poor_warrior }
+							25 = { add_trait = trained_warrior }
+							5 = { add_trait = skilled_warrior }
+						}				
+					}
+					if = { #Invalid Kingslander
+						limit = {
+							226 = { NOT = { has_province_flag = kings_landing_established } }
+							culture = crownlander
+						}
+						culture = riverlander
+					}
+				}
+				create_character = {
+					random_traits = yes
+					culture = event_target:slave_home
+					religion = event_target:slave_home
+					dynasty = none
+					historical = yes
+				}
+				new_character = {
+					add_trait = slave
+					opinion = { who = ROOT modifier = opinion_my_owner }
+					reverse_opinion = { who = ROOT modifier = opinion_my_slave }
+					move_character = ROOT
+					if = {
+						limit = { 
+							OR = {
+								is_female = no 
+								culture_group = hyrkoon_group
+							}	
+						}
+						random_list = {
+							40 = { }
+							30 = { add_trait = poor_warrior }
+							25 = { add_trait = trained_warrior }
+							5 = { add_trait = skilled_warrior }
+						}				
+					}
+					if = { #Invalid Kingslander
+						limit = {
+							226 = { NOT = { has_province_flag = kings_landing_established } }
+							culture = crownlander
+						}
+						culture = riverlander
+					}
+				}
+				create_character = {
+					random_traits = yes
+					culture = event_target:slave_home
+					religion = event_target:slave_home
+					dynasty = none
+					historical = yes
+				}
+				new_character = {
+					add_trait = slave
+					opinion = { who = ROOT modifier = opinion_my_owner }
+					reverse_opinion = { who = ROOT modifier = opinion_my_slave }
+					move_character = ROOT
+					if = {
+						limit = { 
+							OR = {
+								is_female = no 
+								culture_group = hyrkoon_group
+							}	
+						}
+						random_list = {
+							40 = { }
+							30 = { add_trait = poor_warrior }
+							25 = { add_trait = trained_warrior }
+							5 = { add_trait = skilled_warrior }
+						}				
+					}
+					if = { #Invalid Kingslander
+						limit = {
+							226 = { NOT = { has_province_flag = kings_landing_established } }
+							culture = crownlander
+						}
+						culture = riverlander
+					}
+				}
+			}
+		}
+		manpower = -250
+	}
+	option = {
+		name = "EVTOPTCDOTHRAKI815" #Take them and their wears!
+		trigger = {
+			NOT = { trait = honorable }
+			NOT = { trait = just }
+		}
+		ai_chance = {
+			factor = 10
+			modifier = {
+				factor = 0
+				NOR = {
+					trait = ruthless
+					trait = arbitrary
+				}
+			}
+			modifier = {
+				factor = 2
+				AND = {
+					trait = ruthless
+					trait = arbitrary
+				}
+			}
+			modifier = {
+				factor = 0.25
+				trait = honest
+			}
+			modifier = {
+				factor = 0.25
+				trait = kind
+			}
+			modifier = {
+				factor = 0.25
+				trait = humble
+			}
+			modifier = {
+				factor = 0.25
+				trait = charitable
+			}
+			modifier = {
+				factor = 2
+				trait = deceitful
+			}
+			modifier = {
+				factor = 2
+				trait = cruel
+			}
+			modifier = {
+				factor = 2
+				trait = proud
+			}
+			modifier = {
+				factor = 2
+				trait = greedy
+			}
+		}
+		wealth = 500
+		prestige = -200
+		piety = -200
+		change_variable = { which = "dishonorable" value = 10 } 
+		hidden_tooltip = { character_event = { id = maintenance.3 } }#dishonour trait
+		add_character_modifier = {
+			name = nomad_traders_afraid
+			duration = 1825
+		}
+		custom_tooltip = {
+			text = TOOLTIPdothrak815KIDNAP
+			hidden_tooltip = {
+				create_random_steward = {
+					random_traits = yes
+					culture = event_target:trader_home
+					religion = event_target:trader_home
+					dynasty = random
+				}
+				new_character = {
+					add_trait = slave
+					opinion = { who = ROOT modifier = opinion_my_owner }
+					reverse_opinion = { who = ROOT modifier = opinion_my_slave }
+					opinion = { who = ROOT modifier = opinion_enslaved_me }
+					move_character = ROOT
+					change_stewardship = 4
+					if = { #Invalid Kingslander
+						limit = {
+							226 = { NOT = { has_province_flag = kings_landing_established } }
+							culture = crownlander
+						}
+						culture = riverlander
+					}
+				}
+				create_random_steward = {
+					random_traits = yes
+					culture = event_target:trader_home
+					religion = event_target:trader_home
+					dynasty = none
+				}
+				new_character = {
+					add_trait = slave
+					opinion = { who = ROOT modifier = opinion_my_owner }
+					reverse_opinion = { who = ROOT modifier = opinion_my_slave }
+					opinion = { who = ROOT modifier = opinion_enslaved_me }
+					move_character = ROOT
+					if = {
+						limit = { 
+							OR = {
+								is_female = no 
+								culture_group = hyrkoon_group
+							}	
+						}
+						random_list = {
+							40 = { }
+							30 = { add_trait = poor_warrior }
+							25 = { add_trait = trained_warrior }
+							5 = { add_trait = skilled_warrior }
+						}				
+					}
+					if = { #Invalid Kingslander
+						limit = {
+							226 = { NOT = { has_province_flag = kings_landing_established } }
+							culture = crownlander
+						}
+						culture = riverlander
+					}
+				}
+				create_random_soldier = {
+					random_traits = yes
+					culture = event_target:trader_home
+					religion = event_target:trader_home
+					dynasty = none
+				}
+				new_character = {
+					add_trait = slave
+					opinion = { who = ROOT modifier = opinion_my_owner }
+					reverse_opinion = { who = ROOT modifier = opinion_my_slave }
+					opinion = { who = ROOT modifier = opinion_enslaved_me }
+					move_character = ROOT
+					if = {
+						limit = { 
+							OR = {
+								is_female = no 
+								culture_group = hyrkoon_group
+							}	
+						}
+						random_list = {
+							40 = { add_trait = poor_warrior }
+							40 = { add_trait = trained_warrior }
+							20 = { add_trait = skilled_warrior }
+						}				
+					}
+					if = { #Invalid Kingslander
+						limit = {
+							226 = { NOT = { has_province_flag = kings_landing_established } }
+							culture = crownlander
+						}
+						culture = riverlander
+					}
+				}
+			}
+		}
+	}
+}
+
+# Force the AI to consider using raids on a yearly pulse where possible
+character_event = {
+	id = dothraki.820
+	desc = "Hey, AI, you want to raid this person?"
+	
+	is_triggered_only = yes
+	only_independent = yes
+	ai = yes
+	war = no
+	
+	trigger = {
+		is_nomadic = yes
+		higher_tier_than = DUKE
+		demesne_size = 1
+		
+		NAND = { 
+			has_landed_title = c_dosh_khaleen 
+			trait = dosh_khaleen
+		}
+		NOT = { trait = kingsguard }
+		NOT = { trait = archmaester }
+		NOT = { trait = nightswatch }
+		OR = {
+			NOT = { has_global_flag = war_cooldown_period } 
+			had_global_flag = { flag = war_cooldown_period days = 25 }
+		}	
+	}
+		
+	immediate = {
+		# Invasion!
+		if = {
+			limit = {
+				independent = yes
+				OR = {
+					has_character_modifier = greatest_of_khans
+					has_character_modifier = jhattar_of_jogos_nhai
+				}
+			}
+			random_independent_ruler = { #neighboring realm in nomad lands
+				limit = {
+					demesne_size = 1
+					NOT = { culture_group = unoccupied_group } 
+					NOT = { culture_group = winter_group } 
+					is_nomadic = no
+					NOT = { suzerain = { character = ROOT } }
+					NOT = { ROOT = { suzerain = { character = PREVPREV } } }
+					NOT = { reverse_has_truce = ROOT }
+					NOT = { primary_title = { title = d_kingsguard } }
+					NAND = { 
+						has_landed_title = c_dosh_khaleen 
+						trait = dosh_khaleen
+					}
+					
+					NOT = { relative_power = { who = ROOT power = 5 } }
+					OR = { #Cannot attack vassals split by mega war
+						NOT = { has_opinion_modifier = { who = ROOT modifier = opinion_de_facto_liege } }
+						NOT = { ROOT = { higher_tier_than = PREV } }
+					}				
+					any_realm_province = {
+						traditional_nomad_territory_trigger = yes  ###nomad lands
+						any_neighbor_province = {
+							owner = {
+								OR = {
+									character = ROOT
+									is_liege_or_above = ROOT
+								}
+							}
+						}
+					}
+				}
+				save_event_target_as =  opinion_raid_target_evaluation
+				break = yes
+			}
+			random_independent_ruler = { #neighboring realm in anywhere
+				limit = {
+					demesne_size = 1
+					NOT = { culture_group = unoccupied_group } 
+					NOT = { culture_group = winter_group } 
+					is_nomadic = no
+					NOT = { suzerain = { character = ROOT } }
+					NOT = { ROOT = { suzerain = { character = PREVPREV } } }
+					NOT = { reverse_has_truce = ROOT }
+					NOT = { primary_title = { title = d_kingsguard } }
+					NAND = { 
+						has_landed_title = c_dosh_khaleen 
+						trait = dosh_khaleen
+					}
+					
+					NOT = { relative_power = { who = ROOT power = 5 } }
+					OR = { #Cannot attack vassals split by mega war
+						NOT = { has_opinion_modifier = { who = ROOT modifier = opinion_de_facto_liege } }
+						NOT = { ROOT = { higher_tier_than = PREV } }
+					}				
+					any_realm_province = {
+						any_neighbor_province = {
+							owner = {
+								OR = {
+									character = ROOT
+									is_liege_or_above = ROOT
+								}
+							}
+						}
+					}
+				}
+				save_event_target_as =  opinion_raid_target_evaluation
+				break = yes
+			}
+		}	
+		
+		# Opinion flag a target
+		random_independent_ruler = {
+			limit = {
+				demesne_size = 1
+				NOT = { culture_group = unoccupied_group } 
+				NOT = { culture_group = winter_group } 
+				is_nomadic = no
+				NOT = { suzerain = { character = ROOT } }
+				NOT = { ROOT = { suzerain = { character = PREVPREV } } }
+				NOT = { reverse_has_truce = ROOT }
+				NOT = { primary_title = { title = d_kingsguard } }
+				NAND = { 
+					has_landed_title = c_dosh_khaleen 
+					trait = dosh_khaleen
+				}
+				OR = {
+					yearly_income = 100
+					wealth = 300
+					NOT = { relative_power = { who = ROOT power = 1.5 } }
+				}
+				NOT = { relative_power = { who = ROOT power = 5 } }
+				OR = { #Cannot attack vassals split by mega war
+					NOT = { has_opinion_modifier = { who = ROOT modifier = opinion_de_facto_liege } }
+					NOT = { ROOT = { higher_tier_than = PREV } }
+				}
+							
+				# One of the following must be true:
+				# The enemy borders the attacker's realm/demesne
+				# The enemies capital is in the same dejure empire/region as my capital
+				OR = {
+					AND = { #Free City targets
+						capital_scope = { region = world_free_cities }
+						ROOT = { capital_scope = { region = world_free_cities } }
+					}
+					AND = { #Summer Sea
+						capital_scope = { region = world_summer_sea }
+						ROOT = { capital_scope = { region = world_summer_sea } }
+					}
+					AND = { #Westeros
+						capital_scope = { region = world_westeros }
+						ROOT = { capital_scope = { region = world_westeros } }
+					}
+					AND = { #East/Bone Mountains/Slaver's Bay
+						capital_scope = {
+							OR = {
+								region = world_ghiscar
+								region = world_dothraki_sea
+								region = world_qarth
+								region = world_bone_mountains
+								region = world_lhazar
+							}
+						}	
+						ROOT = { 
+							capital_scope = {
+								OR = {
+									region = world_ghiscar
+									region = world_dothraki_sea
+									region = world_qarth
+									region = world_bone_mountains
+									region = world_lhazar
+								}
+							}
+						}
+					}
+					AND = { #Ibben
+						capital_scope = {
+							OR = {
+								region = world_ibben
+								region = world_dothraki_sea
+							}
+						}	
+						ROOT = { capital_scope = { region = world_ibben } }
+					}
+					
+					AND = { #Jogos Nhai
+						capital_scope = { region = world_jogos_nhai }
+						ROOT = { 
+							capital_scope = {
+								OR = {
+									region = world_jogos_nhai
+									region = world_bone_mountains
+									region = world_yi_ti
+								}
+							}
+						}
+					}
+					AND = { #Jade Sea
+						capital_scope = { region = world_jade_sea }
+						ROOT = { capital_scope = { region = world_jade_sea } }
+					}
+					any_realm_province = {		
+						any_neighbor_province = {
+							owner = {
+								OR = {
+									character = ROOT
+									is_liege_or_above = ROOT
+								}
+							}
+						}
+					}
+				}
+				#Not Islands!
+				any_realm_province = {		
+					any_neighbor_province = {
+						is_land = yes
+					}
+					NOT = { region = world_stepstones }
+					NOT = { region = world_basilisk_isles }
+					NOT = { region = world_dragonstone }
+					NOT = { region = world_iron_isles }
+					NOT = { duchy = { title = d_the_sisters } }
+					NOT = { duchy = { title = d_isle_of_cedars } }
+					NOT = { region = world_moraq }
+					NOT = { region = world_leng }
+					OR = {
+						NOT = { region = world_ibben }
+						duchy = { title = d_ibbish }
+					}
+				}
+			}
+			save_event_target_as =  opinion_raid_target_evaluation
+		}
+	}
+	
+	option = {
+		name = "Let's do it!"
+		ai_chance = {
+			factor = 200
+			modifier = {
+				factor = 4
+				trait = ambitious
+			}
+			modifier = {
+				factor = 0.5
+				trait = content
+			}
+			modifier = {
+				factor = 2
+				trait = greedy
+			}
+			modifier = {
+				factor = 0.5
+				trait = charitable
+			}
+			modifier = {
+				factor = 2
+				trait = cruel
+			}
+			modifier = {
+				factor = 0.5
+				trait = kind
+			}
+			modifier = {
+				factor = 2
+				trait = ruthless
+			}
+			modifier = {
+				factor = 0.5
+				trait = honorable
+			}
+			modifier = {
+				factor = 2
+				event_target:opinion_raid_target_evaluation = {
+					NOT = {
+						relative_power = {
+							who = ROOT
+							power = 0.25
+						}
+					}	
+				}
+			}
+			modifier = {
+				factor = 2
+				event_target:opinion_raid_target_evaluation = {
+					NOT = {
+						relative_power = {
+							who = ROOT
+							power = 0.1
+						}
+					}	
+				}
+			}
+		}
+		event_target:opinion_raid_target_evaluation = {
+			primary_title = {
+				if = {
+					limit = {
+						ROOT = {
+							independent = yes
+							OR = {
+								has_character_modifier = greatest_of_khans
+								has_character_modifier = jhattar_of_jogos_nhai
+							}
+						}	
+					}
+					reverse_war = {
+						target = ROOT
+						casus_belli = dothraki_invasion
+					}
+				}	
+				reverse_war = {
+					target = ROOT
+					casus_belli = dothraki_raid
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = "Let's not do it!"
+		ai_chance = {
+			factor = 50
+		}
+	}
+}
+
+#Mutilate defeated Khal?
+character_event = {
+	id = dothraki.830	
+	picture = "GFX_burn_alive" 
+	
+	is_triggered_only = yes	
+	show_from_from = yes
+	
+	desc = {
+		text = "EVTDESCdothraki.830"
+		trigger = {
+			NOT = {
+				any_courtier = {
+					prisoner = yes
+					host = { character = ROOT }
+					NOT = { character = FROMFROM }
+					is_close_relative = FROMFROM
+					NOT = { is_close_relative = ROOT }
+				}
+			}
+		}
+	}
+	desc = {
+		text = "EVTDESCdothraki.830B" #Plus relatives
+		trigger = {
+			any_courtier = {
+				prisoner = yes
+				host = { character = ROOT }
+				NOT = { character = FROMFROM }
+				is_close_relative = FROMFROM
+				NOT = { is_close_relative = ROOT }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAdothraki.830"  #burn him!
+		# ai_chance = {
+			# factor = 50 
+			# modifier = {
+				# factor = 20
+				# trait = cruel
+			# }
+			# modifier = {
+				# factor = 5
+				# trait = impaler
+			# }
+			# modifier = {
+				# factor = 3
+				# trait = lunatic
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = wroth
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = arbitrary
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = possessed
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = paranoid
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = ruthless
+			# }
+			# modifier = { #kind does not cancel out the crazy
+				# factor = 0.2
+				# trait = kind
+			# }
+			# modifier = {
+				# factor = 3
+				# religion = rhllor
+			# }
+		# }
+			
+		any_courtier = {
+			limit = {
+				prisoner = yes
+				host = { character = ROOT }
+				NOT = { character = FROMFROM }
+				is_close_relative = FROMFROM
+				NOT = { is_close_relative = ROOT }
+			}
+			hidden_tooltip = { character_event = { id = dothraki.832 } }
+			tooltip = {
+				death = {
+					death_reason = death_execution_dothraki_mutilation
+					killer = ROOT
+				}
+				#add_trait = burned_alive
+				#add_trait = disfigured_AGOT
+				if = {
+					limit = {
+						is_female = no
+						NOT = { trait = eunuch }
+					}
+					add_trait = eunuch
+				}
+			}	
+		}
+		#hidden_tooltip = {
+			FROMFROM = {
+				#add_trait = burned_alive
+				#add_trait = disfigured_AGOT
+				add_trait = eunuch
+				if = { 
+					limit = { 
+						father = { 
+							NOT = { character = ROOT } 
+							is_alive = yes 
+						}  		
+					}
+					father = {
+						character_event = { id = dothraki.831 days = 1 tooltip = EVTTOOLTIP999900082 }
+					}
+				}
+				if = {
+					limit = { 
+						mother = { 
+							NOT = { character = ROOT } 
+							is_alive = yes 
+						} 
+					}
+					mother = {
+						character_event = { id = dothraki.831 days = 1 tooltip = EVTTOOLTIP999900082}
+					}
+				}
+				any_dynasty_member = {
+					limit = { 
+						is_close_relative = ROOT_FROMFROM  
+						NOT = { any_child = { character = ROOT_FROMFROM } }
+						NOT = { character = ROOT }  
+					}
+					character_event = { id = dothraki.831 days = 1 tooltip = EVTTOOLTIP999900082}
+				}	
+				spouse = {
+					if = { 
+						limit = { 
+							NOT = { character = ROOT } 
+							is_alive = yes 
+							OR = {
+								NOT = { dynasty = ROOT_FROMFROM }
+								NOT = { is_close_relative = ROOT_FROMFROM }
+							}
+						}
+						character_event = { id = dothraki.831 days = 1 tooltip = EVTTOOLTIP999900082}
+					}
+				}
+			}	
+		#}
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_DOTHRAKI_MUTILATION
+				portrait = [From.GetID]
+			}
+		}
+		event_target:chronicle_player = {
+			if = {
+				limit = {
+					NOT = { character = ROOT }
+					OR = {		
+						dynasty = ROOT
+						is_close_relative = ROOT
+						is_liege_or_above = ROOT
+					}
+				}
+				chronicle = {
+					entry = CHRONICLE_DOTHRAKI_MUTILATION_ROOT
+					portrait = [From.GetID]
+				}
+			}			
+		}
+		FROMFROM = {
+			event_target:chronicle_player = {
+				if = {
+					limit = {
+						NOT = { character = ROOT }
+						OR = {		
+							dynasty = PREV
+							is_close_relative = PREV
+							is_liege_or_above = PREV
+						}
+					}
+					chronicle = {
+						entry = CHRONICLE_DOTHRAKI_MUTILATION_FROM
+						portrait = [Prev.GetID]
+					}
+				}
+			}	
+		}
+		if = {
+			limit = { religion = rhllor }		
+			piety = 30
+			if = {
+				limit = { NOT = { trait = zealous } }
+				random = {
+					chance = 10
+					add_trait = zealous
+					hidden_tooltip = { character_event = { id = 38269 } }
+				}
+			}
+			FROMFROM = { increase_red_god_magic = yes }			
+		}
+	}
+	
+	# option = {
+		# name = "EVTOPTBdothraki.830"  #mercy
+		# ai_chance = {
+			# factor = 95
+			# modifier = {
+				# factor = 0.2
+				# trait = cruel
+			# }
+			# modifier = {
+				# factor = 10
+				# trait = kind
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = patient
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = just
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = honorable
+			# }
+			# modifier = {
+				# factor = 2
+				# trait = trusting
+			# }
+			# modifier = {
+				# factor = 0.2
+				# religion = rhllor
+			# }
+		# }
+	# }
+}
+
+#Burned alive!
+character_event = {
+	id = dothraki.831
+	desc = "EVTDESCdothraki.831"
+	picture = "GFX_burn_alive" 
+	
+	is_triggered_only = yes	
+	
+	option = {
+		name = "EVTOPTAdothraki.831"  #
+		opinion = {
+			modifier = opinion_burned_closed_relative
+			who = FROM
+			years = 25
+		}
+	}
+}
+character_event = {
+	id = dothraki.832
+	desc = "EVTDESCdothraki.832"
+	picture = "GFX_burn_alive" 
+	
+	is_triggered_only = yes	
+	
+	option = {
+		name = "EVTOPTAdothraki.832"
+		#add_trait = burned_alive
+		#add_trait = disfigured_AGOT
+		if = {
+			limit = {
+				is_female = no
+				NOT = { trait = eunuch }
+			}
+			add_trait = eunuch
+		}
+		#set_character_flag = special_execution_found
+		hidden_tooltip = { 
+			FROM = { save_event_target_as = executioner }
+			character_event = { id = 45342 } #Universal execution event	
+		}	
+		FROM_murder_red_god_resurrect_effect = yes #check for rhllor resurrection
+		death = {
+			death_reason = death_execution_dothraki_mutilation
+			killer = FROM
+		}
+		FROM = { character_event = { id = dothraki.833 } }
+	}
+}
+character_event = {
+	id = dothraki.833
+	hide_window = yes
+	is_triggered_only = yes	
+	immediate = {
+		FROM = { increase_red_god_magic = yes }
+	}
+}
+# Notify world about the greatest of Khans
+narrative_event = {
+	id = 60520
+	title = EVTNAME60520
+	desc = EVTDESC60520
+	is_triggered_only = yes
+	
+	picture = GFX_evt_dothraki
+	border = GFX_event_narrative_frame_war
+	
+	option = {
+		name = EVTOPTA_60520
+		trigger = {
+			character = FROM
+		}
+		if = { # Find a target to invade
+			limit = { 
+				ai = yes 
+				war = no
+			}
+			if = { #Mengo goes for sarnor
+				limit = { 
+					# character = 100600207
+					c_100600207 = { character = PREV }
+					has_character_flag = sarnor_invasion
+				}
+				clr_character_flag = sarnor_invasion
+				random_independent_ruler = {
+					limit = {
+						demesne_size = 1
+						capital_scope = { region = world_sarnor }
+						is_nomadic = no									
+						any_realm_province = {		
+							any_neighbor_province = {
+								owner = {
+									OR = {
+										character = ROOT
+										is_liege_or_above = ROOT
+									}
+								}
+							}
+						}
+					}
+					primary_title = {
+						reverse_war = {
+							target = ROOT
+							casus_belli = dothraki_invasion
+						}
+					}
+					break = yes
+				}
+			}	
+			random_independent_ruler = {
+				limit = {
+					demesne_size = 1
+					NOT = { culture_group = unoccupied_group } 
+					NOT = { culture_group = winter_group } 
+					is_nomadic = no
+					NOT = { suzerain = { character = ROOT } }
+					NOT = { ROOT = { suzerain = { character = PREVPREV } } }
+					NOT = { reverse_has_truce = ROOT }
+					NOT = { primary_title = { title = d_kingsguard } }
+					NAND = { 
+						has_landed_title = c_dosh_khaleen 
+						trait = dosh_khaleen
+					}
+					NOT = { relative_power = { who = ROOT power = 2 } }
+					OR = { #Cannot attack vassals split by mega war
+						NOT = { has_opinion_modifier = { who = ROOT modifier = opinion_de_facto_liege } }
+						NOT = { ROOT = { higher_tier_than = PREV } }
+					}										
+					any_realm_province = {		
+						any_neighbor_province = {
+							owner = {
+								OR = {
+									character = ROOT
+									is_liege_or_above = ROOT
+								}
+							}
+						}
+					}
+				}
+				primary_title = {
+					reverse_war = {
+						target = ROOT
+						casus_belli = dothraki_invasion
+					}
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTB_60520
+		trigger = {
+			NOT = {
+				character = FROM
+			}
+			NOT = {
+				any_liege = {
+					character = FROM
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTC_60520
+		trigger = {
+			any_liege = {
+				character = FROM
+			}
+		}
+	}
+}
+# Ai - reinforcement event for Genghis decision
+character_event = {
+	id = 60530
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		capital_scope = {
+			ROOT = {
+				spawn_unit = {
+					province = PREV
+					troops =
+					{
+						horse_archers = { 2700 2700 }
+						light_cavalry = { 1600 1600 }
+						light_infantry = { 541 541 }
+						heavy_infantry = { 210 210 }
+						knights = { 47 47 }
+					}
+					attrition = 0.5
+					earmark = dummy #needed for CTD
+				}
+				spawn_unit = {
+					province = PREV
+					troops =
+					{
+						horse_archers = { 2700 2700 }
+						light_cavalry = { 1600 1600 }
+						light_infantry = { 541 541 }
+						heavy_infantry = { 210 210 }
+						knights = { 47 47 }
+					}
+					attrition = 0.5
+					earmark = dummy #needed for CTD
+				}
+				spawn_unit = {
+					province = PREV
+					troops =
+					{
+						horse_archers = { 2700 2700 }
+						light_cavalry = { 1600 1600 }
+						light_infantry = { 541 541 }
+						heavy_infantry = { 210 210 }
+						knights = { 47 47 }
+					}
+					attrition = 0.5
+					earmark = dummy #needed for CTD
+				}
+				spawn_unit = {
+					province = PREV
+					troops =
+					{
+						horse_archers = { 2700 2700 }
+						light_cavalry = { 1600 1600 }
+						light_infantry = { 541 541 }
+						heavy_infantry = { 210 210 }
+						knights = { 47 47 }
+					}
+					attrition = 0.5
+					earmark = dummy #needed for CTD
+				}
+			}
+		}
+	}
+}
+
+#New split clan maintenance
+character_event = {
+	id = dothraki.850
+	
+	is_triggered_only = yes	
+
+	trigger = {
+		is_nomadic = yes
+		tier = KING
+		clan_title = { 
+			NOT = {
+				any_previous_holder = {
+					NOT = { character = ROOT }
+				}
+			}
+		}
+		#FROMFROM = { is_liege_of = ROOT }
+		FROM = { tier = COUNT }
+		NOT = { num_of_count_titles = 2 }
+		NOR = {
+			trait = master_warrior
+			trait = skilled_warrior
+			trait = trained_warrior
+			trait = poor_warrior
+		}	
+		age = 16
+		is_female = no		
+	}
+	
+	immediate = {
+		#Give these randoms fighter traits
+		random_list = {
+			3 = { add_trait = master_warrior }
+			30 = { add_trait = skilled_warrior }
+			52 = { add_trait = trained_warrior }
+			15 = { add_trait = poor_warrior }
+		}
+		father_even_if_dead = {
+			random_list = {
+				1 = { add_trait = master_warrior }
+				20 = { add_trait = skilled_warrior }
+				54 = { add_trait = trained_warrior }
+				25 = { add_trait = poor_warrior }
+			}
+		}
+		any_child = {
+			limit = { is_female = no }
+			random_list = {
+				1 = { add_trait = master_warrior }
+				20 = { add_trait = skilled_warrior }
+				54 = { add_trait = trained_warrior }
+				25 = { add_trait = poor_warrior }
+			}
+		}
+		any_sibling = {
+			limit = { is_female = no }
+			random_list = {
+				1 = { add_trait = master_warrior }
+				20 = { add_trait = skilled_warrior }
+				54 = { add_trait = trained_warrior }
+				25 = { add_trait = poor_warrior }
+			}
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}
+#Tributary inheritance maintenance
+character_event = {
+	id = dothraki.851
+	desc = "EVTDESCdothraki.851"
+	
+	is_triggered_only = yes	
+	only_rulers = yes
+	
+	trigger = {
+		is_tributary = no
+		event_target:old_suzerain = {
+			is_alive = yes
+			is_ruler = yes
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAdothraki.851"
+		event_target:old_suzerain = {
+			make_tributary = { who = ROOT percentage = 0.4 }
+		}		
+	}
+}
+
+#Dothraki modifiers
+character_event = {
+	id = dothraki.860
+
+	only_playable = yes
+	hide_window = yes
+	
+	trigger = {
+		is_nomadic = yes		
+		NOT = { trait = dosh_khaleen }
+		NOT = { has_character_flag = dothraki_modifier }
+		OR = {
+			NOT = { age = 16 }
+			is_female = yes
+			is_weak_khal_trigger = yes
+		}
+	}
+	
+	immediate = {
+		set_character_flag = dothraki_modifier
+		character_event = { id = dothraki.861 days = 1 }
+	}
+	
+	option = {
+		name = OK
+	}
+}
+character_event = {
+	id = dothraki.861
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = {
+		has_character_flag = dothraki_modifier
+	}
+	
+	immediate = {
+		remove_character_modifier = dothraki_child_khal
+		remove_character_modifier = dothraki_female_khal
+		remove_character_modifier = dothraki_weak_khal
+		if = {
+			limit = {
+				OR = {
+					is_ruler = no
+					is_nomadic = no
+					trait = dosh_khaleen
+					NOR = {
+						NOT = { age = 16 }
+						is_female = yes
+						is_weak_khal_trigger = yes
+					}
+				}
+			}
+			clr_character_flag = dothraki_modifier		
+			clear_delayed_event = { id = dothraki.861 }
+			break = yes
+		}
+		character_event = { id = dothraki.861 days = 90 } #check modifier tri-monthly		
+		if = {
+			limit = { NOT = { age = 16 } }
+			add_character_modifier = { name = dothraki_child_khal duration = -1 }
+		}
+		if = {
+			limit = { is_female = yes }
+			add_character_modifier = { name = dothraki_female_khal duration = -1 }
+		}
+		if = {
+			limit = { is_weak_khal_trigger = yes }
+			add_character_modifier = { name = dothraki_weak_khal duration = -1 }
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}
+#Unmarried sons get married on day 0, to prevent Ai marriage offer spam
+character_event = {
+	id = dothraki.870
+
+	is_triggered_only = yes
+	hide_window = yes
+	only_rulers = yes
+	
+	trigger = { is_nomadic = yes }
+	
+	immediate = {
+		any_courtier = {
+			limit = {
+				is_female = no
+				is_ruler = no
+				dynasty = ROOT
+				can_marry_trigger = yes
+				age = 14
+			}
+			character_event = { id = dothraki.871 days = 2 random = 2 }
+		}
+	}
+	
+	option = {
+		name = OK
+	}
+}
+character_event = {
+	id = dothraki.871
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	immediate = {
+		random_playable_ruler = {
+			limit = {	
+				is_nomadic = yes
+				culture = FROM
+				NOT = { higher_tier_than = FROM }	
+				NOT = { character = FROM }
+				is_within_diplo_range = FROM
+				NOT = { war_with = FROM }
+				NOT = { any_liege = { war_with = FROM } }
+				NOT = { FROM = { any_liege = { war_with = PREVPREV } } }
+				ai = yes										
+				NOT = { dynasty = 0 }
+				any_courtier = {
+					is_female = yes
+					NOT = { age = 35 }
+					ai = yes	
+					dynasty = PREV
+					is_close_relative = PREV
+					can_marry_trigger = yes
+					is_pregnant = no
+					prisoner = no
+					NOT = { trait = celibate }
+					NOT = { trait = incapable }
+					NOT = { trait = inbred }
+					NOT = { same_sex = ROOT }
+					NOT = { sibling = ROOT }
+					NOT = { is_child_of = ROOT }
+					NOT = { is_father = ROOT }
+					NOT = { is_mother = ROOT }
+					OR = {
+						NOT = { age_diff = { who = ROOT years = 10 } }
+						AND = {
+							ROOT = { age = 18 }
+							age = 18
+							NOT = { age = 30 }
+						}
+					}
+				}
+			}
+			random_courtier = {
+				limit = {
+					is_female = yes
+					NOT = { age = 35 }
+					ai = yes	
+					dynasty = PREV
+					is_close_relative = PREV
+					can_marry_trigger = yes
+					is_pregnant = no
+					prisoner = no
+					NOT = { trait = celibate }
+					NOT = { trait = incapable }
+					NOT = { trait = inbred }
+					NOT = { same_sex = ROOT }
+					NOT = { sibling = ROOT }
+					NOT = { is_child_of = ROOT }
+					NOT = { is_father = ROOT }
+					NOT = { is_mother = ROOT }
+					OR = {
+						NOT = { age_diff = { who = ROOT years = 10 } }
+						AND = {
+							ROOT = { age = 18 }
+							age = 18
+							NOT = { age = 30 }
+						}
+					}
+				}
+				add_spouse = ROOT
+				if = {
+					limit = {
+						age = 14
+						ROOT = { age = 14 }
+					}
+					ROOT = { 
+						if = {
+							limit = {
+								NOT = { any_spouse = { is_main_spouse = no } }	
+							}
+							add_character_modifier = {
+								name = "wedding"
+								duration = 60
+							}
+						}
+						clr_character_flag = keep_lowborn_marriage
+					}
+				}					
+				child_fertility_debuff = yes
+				ROOT = {				
+					child_fertility_debuff = yes
+				}
+				
+				###old block, betrothal command is broken  NOW WORKS...or maybe not
+				# if = {
+					# limit = {
+						# age = 14
+						# ROOT = { age = 14 }
+					# }
+					# add_spouse = ROOT
+					# ROOT = { 
+						# if = {
+							# limit = {
+								# NOT = { any_spouse = { is_main_spouse = no } }	
+							# }
+							# add_character_modifier = {
+								# name = "wedding"
+								# duration = 60
+							# }
+						# }
+						# clr_character_flag = keep_lowborn_marriage
+					# }
+				# }
+				# if = {
+					# limit = {
+						# OR = {
+							# NOT = { age = 14 }
+							# ROOT = { NOT = { age = 14 } }
+						# }	
+					# }
+					# ROOT = { 
+						# remove_character_modifier = wedding
+						# add_betrothal = PREV 
+					# }
+					# add_betrothal = ROOT
+				# }
+				break = yes
+			}
+		}	
+		#Generate a random as last resort
+		set_character_flag = no_wedding_event
+		liege = {
+			capital_scope = {
+				ROOT = {
+					create_character = {
+						random_traits = yes
+						dynasty = none
+						culture = PREV
+						religion = PREV
+						female = yes
+					}
+					new_character = {
+						set_character_flag = no_wedding_event
+						add_spouse = ROOT
+						remove_trait = imbecile
+						remove_trait = inbred
+						remove_trait = celibate
+						remove_trait = infirm
+						remove_trait = incapable
+						remove_trait = leper
+						remove_trait = possessed
+						remove_trait = ill
+						remove_trait = pneumonic
+						remove_trait = maimed
+						clr_character_flag = no_wedding_event	
+						
+						set_character_flag = new_spouse
+					}	
+				}	
+			}
+		}
+		clr_character_flag = no_wedding_event
+	}
+	
+	option = {
+		name = OK
+	}
+}
+#Lost war, negative modifiers
+character_event = { #on_war_ended_victory
+	id = dothraki.880
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = { is_nomadic = yes }
+	
+	immediate = {
+		character_event = { id = dothraki.882 }
+	}
+	
+	option = {
+		name = OK
+	}
+}
+character_event = { #on_war_ended_defeat
+	id = dothraki.881
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = { FROM = { is_nomadic = yes } }
+	
+	immediate = {
+		FROM = { character_event = { id = dothraki.882 } }
+	}
+	
+	option = {
+		name = OK
+	}
+}
+character_event = {
+	id = dothraki.882
+	picture = GFX_evt_dothraki
+	desc = "EVTDESCDOTHRAKI882"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTADOTHRAKI882"
+		prestige = -300
+		add_character_modifier = {
+			name = dothraki_defeated_khal
+			duration = 1825
+		}
+		if = {
+			limit = { has_character_modifier = prestigious_khal }
+			remove_character_modifier = prestigious_khal
+		}
+	}
+}	

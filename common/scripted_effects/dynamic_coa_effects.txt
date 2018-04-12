@@ -1,0 +1,798 @@
+set_dynamic_coa_effect = {
+	###Crownlands###
+	if = {
+		limit = { holder_scope = { dynasty = 496 } }
+		set_coa = d_daemons_host #Targaryen
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 57 } }
+		set_coa = d_daemon_blackfyres_host #Blackfyre
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 7000 } }
+		set_coa = c_bittersteel #Bittersteel
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 52 } }
+		   set_coa = c_velaryon #Velaryon
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 364 } }
+		   set_coa = c_darklyn #Darklyn
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 38 } }
+		   set_coa = c_rosbycoa #Rosby
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 30 } }
+		   set_coa = c_thorne #Thorne
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 1440 } }
+			set_coa = c_blackwater #Blackwater
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 36 } }
+			set_coa = c_rykker #Rykker
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 50 } }
+			set_coa = c_celtigar #Celtigar
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 41 } }
+		   set_coa = c_staunton #Staunton
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 174411 } }
+		   set_coa = c_cave #Cave
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 42 } }
+		   set_coa = c_brune #Brune
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 1197 } }
+		   set_coa = c_crabb #Crabb
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 174410 } }
+		   set_coa = c_boggs #Boggs
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 51 } }
+			set_coa = c_sunglass #Sunglass
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 45 } }
+		set_coa = c_bywatercoa #Bywater
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 46 } }
+		set_coa = c_massey #Massey
+	}
+	###North###
+	if = {
+		limit = { holder_scope = { dynasty = 59 } }
+		set_coa = c_stark
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 1559 } }
+		set_coa = c_stark_targaryen
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 87 } }
+		set_coa = c_bolton
+	}	
+	if = {
+		   limit = { holder_scope = { dynasty = 93 } }
+		   set_coa = c_umber #Umber
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 89 } }
+		   set_coa = c_karstark #Karstark
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 80 } }
+		   set_coa = c_manderly #Manderly
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 62 } }
+		   set_coa = c_glover #Glover
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 68 } }
+		   set_coa = c_ryswell #Ryswell
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 79 } }
+		   set_coa = c_dustin #Dustin
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 84 } }
+		   set_coa = c_flint #Flint
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 126 } }
+		   set_coa = c_reed #Reed
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 102 } }
+		   set_coa = c_mormont #Mormont
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 63859 } }
+			set_coa = c_greystark #Greystark
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 1443 } }
+			set_coa = c_forrester #Forrester
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 70 } }
+			set_coa = c_whitehill #Whitehill
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 83 } }
+			set_coa = c_hornwood_coa #Hornwood
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 101 } }
+			set_coa = c_tallhart #Tallhart
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 60 } }
+			set_coa = c_cassel #Cassel
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 61 } }
+			set_coa = c_cerwyn #Cerwyn
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 88 } }
+			set_coa = c_locke #Locke
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 104 } }
+			set_coa = c_magnar #Magnar
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 105 } }
+			set_coa = c_crowl #Crowl
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 106 } }
+			set_coa = c_stane #Stane
+	}
+	###Riverlands###
+	if = {
+		limit = { holder_scope = { dynasty = 159 } }
+		set_coa = c_tully
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 601 } }
+		set_coa = c_baelish #Baelish (Mockingbird}
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 127 } }
+		   set_coa = c_frey #Frey
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 149 } }
+		   set_coa = c_bracken #Bracken
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 150 } }
+		   set_coa = c_blackwood #Blackwood
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 128 } }
+		   set_coa = c_malister #Malister
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 153 } }
+		   set_coa = c_vance #Vance
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 157 } }
+		   set_coa = c_piper #Piper
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 137 } }
+		   set_coa = c_darrycoa #Darry
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 174435 } }
+			set_coa = c_teague #Teague
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 174430 } }
+			set_coa = c_fisher #Fisher
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 174432 } }
+			set_coa = c_justman #Justman
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 174399 } }
+			set_coa = c_mudd #Mudd
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 355 } }
+			set_coa = c_lothston #Lothston
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 146 } }
+			set_coa = c_whent #Whent
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 356 } }
+			set_coa = c_strong #Strong
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 143 } }
+			set_coa = c_butterwell #Butterwell
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 359 } }
+			set_coa = c_qoherys #Qoherys
+	}
+	###Vale###
+	if = {
+		limit = { holder_scope = { dynasty = 178 } }
+		set_coa = c_the_eyrie #Arryn
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 161 } }
+		   set_coa = c_belmore #Belmore
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 174 } }
+		   set_coa = c_lynderly #Lynderly
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 187 } }
+		   set_coa = c_royce #Royce
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 177 } }
+		   set_coa = c_hunter #hunter
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 182 } }
+		   set_coa = c_waynwood #Waynwood
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 186 } }
+		   set_coa = c_grafton #Grafton
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 176 } }
+		   set_coa = c_corbray #Corbray
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 189 } }
+		   set_coa = c_waxley #Waxley
+	}
+	###Westerlands###
+	if = {
+		limit = { holder_scope = { dynasty = 190 } }
+		if = {
+			limit = { holder_scope = { has_character_flag = lannister_baratheon } }
+			set_coa = c_lannister_baratheon
+		}	
+		if = {
+			limit = { holder_scope = { NOT = { has_character_flag = lannister_baratheon } } }
+			set_coa = c_lannister
+		}
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 197 } }
+			set_coa = c_reyne #Reyne
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 196 } }
+			set_coa = c_prester #Prester
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 227 } }
+			set_coa = c_crakehallcoa #Crakehall
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 228 } }
+			set_coa = c_swyft #Swyft
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 221 } }
+			set_coa = c_serret #Serret
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 208 } }
+			set_coa = c_payne #Payne
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 216 } }
+			set_coa = c_brax #Brax
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 233 } }
+			set_coa = c_sarsfieldcoa #Sarsfieldcoa
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 199 } }
+			set_coa = c_westerling #Westerling
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 207 } }
+			set_coa = c_lorch #Lorch
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 213 } }
+			set_coa = c_lefford #Lefford
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 230 } }
+			set_coa = c_clegane #Clegane
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 217 } }
+		   set_coa = c_lydden #Lydden
+	} 
+	if = {
+		   limit = { holder_scope = { dynasty = 225 } }
+		   set_coa = c_tarbeck #Tarbeck
+	} 
+	if = {
+		   limit = { holder_scope = { dynasty = 200 } }
+		   set_coa = c_banefortcoa #Banefort
+	} 
+	if = {
+		   limit = { holder_scope = { dynasty = 212 } }
+		   set_coa = c_marbrand #Marbrand
+	} 
+	if = {
+		   limit = { holder_scope = { dynasty = 203 } }
+		   set_coa = c_vikary #Vikary
+	} 
+	###Reach###
+	if = {
+		limit = { holder_scope = { dynasty = 253 } }
+		set_coa = c_tyrell
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 1254 } }
+		set_coa = c_gardener
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 296 } }
+			set_coa = c_tarly #Tarly
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 285 } }
+		   set_coa = c_hightower #Hightower
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 281 } }
+		   set_coa = c_florent #Florent
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 235 } }
+		   set_coa = c_osgrey #Osgrey
+	} 
+	if = {
+		   limit = { holder_scope = { dynasty = 250 } }
+		   set_coa = c_rowan #Rowan
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 298 } }
+		   set_coa = c_peake #Peake
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 270 } }
+		   set_coa = c_meadows #Meadows
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 1428 } }
+		   set_coa = c_strickland #Srickland
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 288 } }
+		   set_coa = c_redwyne #Redwyne
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 261 } }
+		   set_coa = c_fossoway #Fossoway
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 247 } }
+		   set_coa = c_roxton #Roxton
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 258 } }
+		   set_coa = c_varner #Varner
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 265 } }
+		   set_coa = c_ashfordcoa #Ashford
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 260 } }
+		   set_coa = c_ball #Ball
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 237 } }
+		   set_coa = c_oakheart #Oakheart
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 234 } }
+		   set_coa = c_crane #Crane
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 248 } }
+		   set_coa = c_footly #Footly
+	}
+	###Stormlands###
+	if = {
+		limit = { holder_scope = { dynasty = 317 } }
+		if = {
+			limit = { holder_scope = { religion = rhllor } }
+			set_coa = c_baratheon_rhllor
+		}	
+		if = {
+			limit = { holder_scope = { NOT = { religion = rhllor } } }
+			set_coa = c_baratheon
+		}
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 498 } }
+		set_coa = c_baratheon_old #Baratheon (pre stormlands)
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 1544 } }
+		set_coa = c_baratheon #Durrandon
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 316 } }
+		   set_coa = c_connington #Connington
+	}
+	 if = {
+		limit = { holder_scope = { dynasty = 330 } }
+		set_coa = c_estermontcoa #Estermont
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 329 } }
+		set_coa = c_wylde #Wylde
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 306 } }
+		set_coa = c_swann #Swann
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 307 } }
+		set_coa = c_toyne #Toyne
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 319 } }
+		set_coa = c_buckler #Buckler
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 54 } }
+		set_coa = c_tarthcoa #Tarth
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 303 } }
+		set_coa = c_dondarrion #Dondarrion
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 301 } }
+		set_coa = c_caron #Caron
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 9110 } }
+		set_coa = c_seaworth #Seaworth
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 302 } }
+		   set_coa = c_selmy #Selmy
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 304 } }
+		   set_coa = c_trant #Trant
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 321 } }
+		   set_coa = c_morrigen #Morrigen
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 327 } }
+		   set_coa = c_mertyns #Mertyns
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 322 } }
+		   set_coa = c_rogers #Rogers
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 311 } }
+		   set_coa = c_horpe #Horpe
+	}
+	###Dorne###
+	if = {
+		limit = { holder_scope = { dynasty = 1 } }
+		set_coa = c_martell
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 16 } }
+			set_coa = c_dayne #Dayne
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 14 } }
+			set_coa = c_fowler #Fowler
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 12 } }
+			set_coa = c_yronwoodcoa #Yronwood
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 13 } }
+			set_coa = c_uller #Uller
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 10 } }
+			set_coa = c_jordayne #Jordayne
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 9 } }
+			set_coa = c_allyrion #Allyrion
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 15 } }
+			set_coa = c_qorgyle #Qorgyle
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 18 } }
+			set_coa = c_blackmontcoa #Blackmont
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 20 } }
+			set_coa = c_manwoody #Manwoody
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 4 } }
+			set_coa = c_toland #Toland
+	}
+	###Iron Islands###
+	if = {
+		limit = { holder_scope = { dynasty = 107 } }
+		set_coa = c_greyjoy
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 66 } }
+		set_coa = c_hoare
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 174419 } }
+			set_coa = c_codd #Codd
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 110 } }
+			set_coa = c_merlyn #Merlyn
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 120 } }
+			set_coa = c_stonetreecoa #Stonetree
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 116 } }
+			set_coa = c_orkwood #Orkwood
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 118 } }
+			set_coa = c_blacktyde #Blacktyde
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 174421 } }
+			set_coa = c_humble #Humble
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 174419 } }
+			set_coa = c_codd #Codd
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 174420 } }
+			set_coa = c_greyiron #Greyiron
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 122 } }
+		set_coa = c_harlaw
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 112 } }
+		set_coa = c_goodbrother
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 121 } }
+		set_coa = c_drumm
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 114 } }
+		set_coa = c_farwynd
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 119 } }
+		set_coa = c_volmarkcoa
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 109 } }
+		set_coa = c_saltcliffecoa
+	}
+	###Cadet###
+	if = {
+		   limit = { holder_scope = { dynasty = 450204 } }
+		   set_coa = c_redwyrm #Redwyrm
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450205 } }
+		   set_coa = c_truedrake #Truedrake
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450206 } }
+		   set_coa = c_fyreblood #Fyreblood
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450207 } }
+		   set_coa = c_goldfyre #Goldfyre
+	} 	
+	if = {
+		   limit = { holder_scope = { dynasty = 450228 } }
+		   set_coa = c_bloodrose #Bloodrose
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450229 } }
+		   set_coa = c_blackrose #Blackrose
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450230 } }
+		   set_coa = c_smallrose #Smallrose
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450231 } }
+		   set_coa = c_greenrose #Greenrose
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 450200 } }
+			set_coa = c_whitewolf #Whitewolf
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 450201 } }
+			set_coa = c_goldfang #Goldfang
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 450202 } }
+			set_coa = c_dreadwolf #Dreadwolf
+	}
+	if = {
+			limit = { holder_scope = { dynasty = 450203 } }
+			set_coa = c_winterhold #Winterhold
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450209 } }
+		set_coa = c_redclaw
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450210 } }
+		set_coa = c_roaring
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450211 } }
+		set_coa = c_lionford
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450208 } }
+		   set_coa = c_silvermane #Silvermane
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450212 } }
+		   set_coa = c_darksun #Darksun
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450213 } }
+		   set_coa = c_sunviper #Sunviper
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450214 } }
+		   set_coa = c_blackadder #Blackadder
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450215 } }
+		   set_coa = c_snakespear #Snakespear
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450216 } }
+		   set_coa = c_redriver #Redriver
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450217 } }
+		   set_coa = c_darkfish #Darkfish
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450218 } }
+		   set_coa = c_goldfish #Goldfish
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450219 } }
+		   set_coa = c_steeltrout #Steeltrout
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450236 } }
+		set_coa = c_twinchild
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450237 } }
+		set_coa = c_goldcross
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450238 } }
+		set_coa = c_tollbridge
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450239 } }
+		set_coa = c_northbridge
+	}	
+	if = {
+		limit = { holder_scope = { dynasty = 450220 } }
+		set_coa = c_redwing #Redwing
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450221 } }
+		set_coa = c_kestrel #Kestrel
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450222 } }
+		set_coa = c_bluebird #Bluebird
+	}
+	if = {
+		limit = { holder_scope = { dynasty = 450223 } }
+		set_coa = c_skywarden #Skywarden
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450224 } }
+		   set_coa = c_stagborn #Stagborn
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450225 } }
+		   set_coa = c_stormhart #Stormhart
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450226 } }
+		   set_coa = c_durrande #Durrande
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450227 } }
+		   set_coa = c_deer #Deer
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450232 } }
+		   set_coa = c_silverink #Silverink
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450233 } }
+		   set_coa = c_redjoy #Redjoy
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450234 } }
+		   set_coa = c_ironkraken #Ironkraken
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 450235 } }
+		   set_coa = c_hardman #Hardman
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 496029 } }
+		   set_coa = e_aurions_host #Varezys
+	}
+	if = {
+		   limit = { holder_scope = { dynasty = 184 } }
+		   set_coa = c_bite_coast #Hardyng
+	}
+}
