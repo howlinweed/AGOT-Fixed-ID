@@ -2,10 +2,10 @@
 
 Version 2.8 of CK2 introduced a bug wherein character and dynasty ID values over a certain value (aprox. 1,000,000) fail to evaluate when using the dynasty and character scopes.
 
-any_character = { # This scope will never evaluate to true.
-	limit = { character = 4242424 }
-}
-c_4242424 = { # Current preferred method
+any_character = { # This scope will never evaluate to true.  
+	limit = { character = 4242424 }  
+}  
+c_4242424 = { # Current preferred method  
 
 }
 
