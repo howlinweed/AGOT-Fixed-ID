@@ -16,4 +16,6 @@ The following aspects of the A Game of Thrones submod are fixed by this submod:
 * Targ coin flip for Targ cadet dynasties
 * Dynamic COA for cadet dynasties
 * House customizer
-* Some missing localisation
+* Some missing localisation  
+
+After extracing the top folder from the archive into your mod directory, run the setup.bat file contained within it.
